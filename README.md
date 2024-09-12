@@ -1,6 +1,8 @@
 # Post_Office_DB
 Post Office Project
 
+NOTICE: PLACE YOUR WORK ONTO SIDE BRANCH NAMED AFTER YOU. MERGE WITH MAIN AFTER TESTING AND MAKE SURE IT DOESNT CONFLICT WITH OTHER PEOPLE'S BRANCH
+
 Gathers data concerning the packages going in and out of the post office, where they are going, and who is sending them, built with React, Redux, JavaScript, and CSS.
 
 Project Status
