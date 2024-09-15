@@ -24,11 +24,43 @@ To set up and run this project locally, follow these steps:
     yarn start
     ```
 
-## Scripts
-Common scripts you can use with Yarn:
+### Node.js
+To install Node.js, follow these steps:
 
+1. **Download Node.js** from the official website: [Node.js Downloads](https://nodejs.org/)
+2. **Choose the LTS version** for stability.
+3. **Run the installer** and follow the instructions for your operating system.
+
+   - **For macOS**: You can also use Homebrew:
+     ```bash
+     brew install node
+     ```
+
+4. **Verify the installation**:
+    ```bash
+    node -v
+    npm -v
+    ```
+
+### Yarn
+To install Yarn, follow these steps:
+
+1. **Install Yarn** using npm (Node.js package manager):
+    ```bash
+    npm install --global yarn
+    ```
+
+   - **For macOS**: You can also use Homebrew:
+     ```bash
+     brew install yarn
+     ```
+
+2. **Verify the installation**:
+    ```bash
+    yarn -v
+    ```
+
+## Scripts
 - **Start the app**: `yarn start`
 - **Build the app for production**: `yarn build`
-- **Run tests**: `yarn test`
 - **Lint your code**: `yarn lint`
-- **Format code**: `yarn format`
