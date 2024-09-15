@@ -1,29 +1,8 @@
-# Post_Office_DB
-Post Office Project
+# React + Vite
 
-Gathers data concerning the packages going in and out of the post office, where they are going, and who is sending them, built with React, Redux, JavaScript, and CSS.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Project Status
-This project is currently in development. Currently still in early development with no pages or functions.
+Currently, two official plugins are available:
 
-Project Screen Shot(s)
-*INSERT PICS HERE IG*
-
-Installation and Setup Instructions
-Clone down this repository. You will need node and npm installed globally on your machine.
-
-Installation:
-
-npm install
-
-To Run Test Suite:
-
-npm test
-
-To Start Server:
-
-npm start
-
-To Visit App:
-
-localhost:3000/ideas
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
