@@ -1,5 +1,6 @@
 import { useState } from 'react'
-// testing desktop import { useAuth } from "./auth/SessionProvider"; make session provider for authentication 
+
+// testing desktop import { useAuth } from "./auth/SessionProvider"; make session provider for authentication? ~davis 
 
 import reactLogo from './assets/react.svg'
 import './styles/App.css'
