@@ -1,12 +1,16 @@
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
-import './styles/App.css'
+import './styles/test.css'
+
+import Signup from "./pages/Signup";
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
+    /*
     <>
+    
       <div>
         <a href="https://react.dev" target="_blank">
           <img src={reactLogo} className="logo react" alt="React logo" />
@@ -24,7 +28,13 @@ function App() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
+    
+      
     </>
+    */
+    <main className="App">
+      <Signup />
+    </main>
   )
 }
 
