@@ -1,10 +1,8 @@
 import { useState } from 'react'
 
 // testing desktop import { useAuth } from "./auth/SessionProvider"; make session provider for authentication? ~davis 
-
 import reactLogo from './assets/react.svg'
 import './styles/test.css'
-
 import Signup from "./pages/Signup";
 
 function App() {
