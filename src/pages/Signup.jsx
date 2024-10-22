@@ -88,11 +88,6 @@ const Signup = () => {
                     onFocus={() => setUserFocus(true)}
                     onBlur={() => setUserFocus(false)}
                 />
-                <p id="uidnote" className={userFocus && user && !validName ? "instructions" : "offscreen"}>
-                    <FontAwesomeIcon icon={faInfoCircle} />
-                    4 to 24 characters.
-                    Letters, numbers, underscores, hyphens allowed.
-                </p>
 
                 <label htmlFor="password">
                     Password:
@@ -110,12 +105,6 @@ const Signup = () => {
                     onFocus={() => setPwdFocus(true)}
                     onBlur={() => setPwdFocus(false)}
                 />
-                <p id="pwdnote" className={pwdFocus && !validPwd ? "instructions" : "offscreen"}>
-                    <FontAwesomeIcon icon={faInfoCircle} />
-                    8 to 24 characters.<br />
-                    Must include uppercase and lowercase letters, a number and a special character.<br />
-                    Allowed special characters: <span aria-label="exclamation mark">!</span> <span aria-label="dollar sign">$</span> 
-                </p>
 
                 <label htmlFor="confirmPwd">
                     Confirm Password:
@@ -133,10 +122,6 @@ const Signup = () => {
                     onFocus={() => setMatchFocus(true)}
                     onBlur={() => setMatchFocus(false)}
                 />
-                <p id="confirmnote" className={matchFocus && !validMatch ? "instructions" : "offscreen"}>
-                    <FontAwesomeIcon icon={faInfoCircle} />
-                    Password must match to continue...
-                </p>
 
                 <button disabled={!validName || !validPwd || !validMatch ? true : false}>Sign Up</button>
             </form>
@@ -147,7 +132,7 @@ const Signup = () => {
                 </span>
             </p>
         </section>
-            )}
+        )}
     </>
     )
 }
