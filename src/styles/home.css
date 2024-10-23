@@ -16,9 +16,15 @@
     color: white;
     display: flex;
     justify-content: space-between;
-    align-items: stretch;
+    align-items: center;
     gap: 2rem;
     padding: 0 1rem;
+    overflow: auto;
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 0;
+    width: 60%;
   }
   
   .homePage {
@@ -30,16 +36,19 @@
     margin: 0;
     list-style: none;
     display: flex;
-    gap: 1rem;
+    justify-content: space-between;
+    align-items: center;
+    flex: 1;
   }
   
   .nav a {
     color: inherit;
     text-decoration: none;
     height: 100%;
+    float: center;
     display: flex;
     align-items: center;
-    padding: .25rem;
+    padding: 1rem;
   }
   
   .nav li.active {
