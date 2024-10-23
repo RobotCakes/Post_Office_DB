@@ -2,7 +2,7 @@ import { useRef, useState, useEffect } from "react";
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { Link, Routes, Route, useMatch, useResolvedPath } from "react-router-dom"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import TrackPackage from './trackPac';
+import TrackPackage from './trackPackage';
 import Register from './Signup'; 
 import Login from './Login'; 
 import '../styles/Home.css';
@@ -29,7 +29,6 @@ const Home = () => {
                 Site Name
             </Link>
             <ul>
-                <CustomLink to="/home">Home</CustomLink>
                 <CustomLink to="/track-package">Track Package</CustomLink>
                 <CustomLink to="/signup">Sign Up</CustomLink>
                 <CustomLink to="/login">Login</CustomLink>

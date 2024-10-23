@@ -8,7 +8,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import Signup from "./pages/Signup";
-import Tracking from "./pages/trackPac";
+import Tracking from "./pages/trackPackage";
 
 import AdminHome from "./pages/admin/adminHome";
 import CustomerHome from "./pages/customer/customerHome";
@@ -93,3 +93,9 @@ const adminRoutes = [
     {path: "admin-profile", element: <Profile />, label: "Profile",isNav: false},
 ];
 
+const AppRoutes = () => {
+
+
+}
+
+export default AppRoutes;
