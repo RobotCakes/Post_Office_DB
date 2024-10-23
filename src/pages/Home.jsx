@@ -1,8 +1,11 @@
 import { useRef, useState, useEffect } from "react";
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
-import { Link, useMatch, useResolvedPath } from "react-router-dom"
+import { Link, Routes, Route, useMatch, useResolvedPath } from "react-router-dom"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import '../styles/home.css';
+import TrackPackage from './trackPac';
+import Register from './Signup'; 
+import Login from './Login'; 
+import '../styles/Home.css';
 
 const Home = () => {
     function CustomLink({ to, children, ...props }) {
@@ -17,17 +20,32 @@ const Home = () => {
           </li>
         )
     }
+    
     return (
+      <div className="container">
+
         <nav className = "nav">
-            <Link to="/" className="homePage">
+            <Link to="/home" className="homePage">
                 Site Name
             </Link>
             <ul>
+                <CustomLink to="/home">Home</CustomLink>
                 <CustomLink to="/track-package">Track Package</CustomLink>
-                <CustomLink to="/register">Register</CustomLink>
+                <CustomLink to="/signup">Sign Up</CustomLink>
                 <CustomLink to="/login">Login</CustomLink>
             </ul>
-        </nav>
+        </nav>  
+
+
+        <Routes>
+          <Route path="/" element={<></>} />
+          <Route path="/track-package" element={<TrackPackage />} />
+          <Route path="/signup" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+        </Routes>
+
+      </div>
+        
     )
 }
 

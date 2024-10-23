@@ -6,6 +6,7 @@ import reactLogo from './assets/react.svg'
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
+import { BrowserRouter } from 'react-router-dom';
 //import './styles/App.css'
 
 
@@ -37,9 +38,10 @@ function App() {
       
     </>
     */
-    <main className="App">
-      <Home />
-    </main>
+      <main className="App">
+        <Home />
+      </main>
+      
   )
 }
 
