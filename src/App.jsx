@@ -1,22 +1,26 @@
-import { useState } from 'react'
+// src/App.jsx
+import { useState } from "react";
+import { useAuth } from "./auth/SessionProvider"; // Import useAuth hook
+import reactLogo from "./assets/react.svg";
+import "./styles/App.css";
 
-// testing desktop import { useAuth } from "./auth/SessionProvider"; make session provider for authentication? ~davis 
-import reactLogo from './assets/react.svg'
-//import './styles/test.css'
-import Signup from "./pages/Signup";
-import Login from "./pages/Login";
-import Home from "./pages/Home";
-import { BrowserRouter } from 'react-router-dom';
-//import './styles/App.css'
+
 
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
+  const { user, login, logout } = useAuth(); // Access user, login, and logout from useAuth
+
+
+
+  const handleLogin = () => {
+    // Mock user data
+    const userData = { name: "John dou", email: "john@example.com" };
+    login(userData); // Call login to set the user data
+  };
 
   return (
-    /*
     <>
-    
       <div>
         <a href="https://react.dev" target="_blank">
           <img src={reactLogo} className="logo react" alt="React logo" />
@@ -27,22 +31,25 @@ function App() {
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
         </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
+        <p>Edit <code>src/App.jsx</code> and save to test HMR</p>
       </div>
+
+      <div className="auth-section">
+        {user ? (
+          <div>
+            <p>Welcome, {user.name}!</p>
+            <button onClick={logout}>Logout</button>
+          </div>
+        ) : (
+          <button onClick={handleLogin}>Login</button>
+        )}
+      </div>
+
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
-    
-      
     </>
-    */
-      <main className="App">
-        <Home />
-      </main>
-      
-  )
+  );
 }
 
-export default App
+export default App;
