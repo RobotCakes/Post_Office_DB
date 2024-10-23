@@ -3,7 +3,7 @@ import { Link, useMatch, useResolvedPath } from "react-router-dom"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import '../../styles/home.css';
 
-const Home = () => {
+const managerHome = () => {
     function CustomLink({ to, children, ...props }) {
         const resolvedPath = useResolvedPath(to)
         const isActive = useMatch({ path: resolvedPath.pathname, end: true })
@@ -35,3 +35,5 @@ const Home = () => {
         </nav>
     )
 }
+
+export default managerHome;

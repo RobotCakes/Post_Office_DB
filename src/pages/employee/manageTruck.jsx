@@ -3,9 +3,8 @@ import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icon
 import { Link, Routes, Route, useMatch, useResolvedPath } from "react-router-dom"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const Profile = () => {
-
+const manageTruck = () => {
 
 
 }
-export default Profile;
+export default manageTruck;
