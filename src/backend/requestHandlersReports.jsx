@@ -730,6 +730,7 @@ module.exports = {
     ManagerEmployeeWorkload,
     ManagerTotalPackagesDeleted
 }; 
+// Admin // 
 exports.AdminIncomeBasedOnPayment = AdminIncomeBasedOnPayment;
 exports.AdminIncomeBasedOnPackage = AdminIncomeBasedOnPackage;
 exports.AdminTotalPacketsIncomingNOutgoing = AdminTotalPacketsIncomingNOutgoing;
