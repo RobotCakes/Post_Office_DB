@@ -43,3 +43,5 @@ function UpdateCustomer(response, postData){
 
 
     })}
+    
+exports.UpdateCustomer = UpdateCustomer;
