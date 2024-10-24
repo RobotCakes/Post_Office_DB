@@ -43,8 +43,4 @@ function UpdateCustomer(response, postData){
 
 
     })}
-<<<<<<< HEAD
-    
 exports.UpdateCustomer = UpdateCustomer;
-=======
->>>>>>> 1105dc5 (started some of the qeuries and added some assets.)
