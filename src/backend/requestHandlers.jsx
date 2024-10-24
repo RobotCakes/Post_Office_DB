@@ -118,3 +118,5 @@ function sendEJSFile(response, filename, msgtxt) {
         return;
       });
 }
+
+exports.loginverify = loginverify;
