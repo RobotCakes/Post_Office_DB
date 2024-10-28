@@ -8,7 +8,6 @@ import Login from './Login';
 import '../styles/Home.css';
 
 const Home = () => {
-  // CustomLink function to highlight active links
   function CustomLink({ to, children, ...props }) {
     const resolvedPath = useResolvedPath(to);
     const isActive = useMatch({ path: resolvedPath.pathname, end: true });
@@ -21,7 +20,6 @@ const Home = () => {
     );
   }
 
-  // State for search bar input
   const [searchQuery, setSearchQuery] = useState("");
 
   const handleSearchChange = (e) => {
@@ -30,12 +28,11 @@ const Home = () => {
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
-    console.log("Search submitted:", searchQuery); // You can customize the search functionality here
+    console.log("Search submitted:", searchQuery);
   };
 
   return (
     <div className="container">
-      {/* Navigation bar */}
       <nav className="nav">
         <Link to="/home" className="homePage">United Mail Services</Link>
         <ul>
@@ -46,87 +43,53 @@ const Home = () => {
         </ul>
       </nav>
 
-      {/* Main content area */}
       <Routes>
         <Route path="/home" element={
-          <div className="home-content" style={{ 
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            minHeight: 'calc(100vh - 200px)', // Adjust this value based on your nav and footer height
-            textAlign: 'center',
-            padding: '50px'
-          }}>
-            {/* Centered main content */}
-            <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+          <div className="home-content">
+            <div className="content-wrapper">
               <h1>Welcome to United Mail Services</h1>
               <p>Track your packages, register for an account, or log in to access more features.</p>
-            </div>
+            
+              <form onSubmit={handleSearchSubmit} className="search-form">
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={handleSearchChange}
+                  placeholder="Search our services..."
+                  className="search-input"
+                />
+                <button type="submit" className="btn">Search</button>
+              </form>
 
-            {/* Search bar */}
-            <form onSubmit={handleSearchSubmit} style={{ margin: '20px 0', width: '100%', maxWidth: '500px' }}>
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={handleSearchChange}
-                placeholder="Search our services..."
-                style={{
-                  width: '100%',
-                  padding: '10px',
-                  fontSize: '16px',
-                  borderRadius: '5px',
-                  border: '1px solid #ccc',
-                  marginBottom: '20px'
-                }}
-              />
-              <button type="submit" className="btn btn-primary" style={{ padding: '10px 20px' }}>Search</button>
-            </form>
-
-            {/* Services section */}
-            <div style={{ 
-              marginTop: 'auto',
-              width: '100%',
-              maxWidth: '600px',
-              textAlign: 'center',
-              padding: '20px'
-            }}>
-              <h2>Our Services</h2>
-              <ul style={{
-                listStyle: 'none',
-                padding: 0,
-                display: 'grid',
-                gridTemplateColumns: 'repeat(2, 1fr)',
-                gap: '10px',
-                margin: '20px 0'
-              }}>
-                <li>Track Packages</li>
-                <li>Send and Receive Parcels</li>
-                <li>Find Post Office Locations</li>
-                <li>Shipping Rates Calculator</li>
-              </ul>
-              <p>
-                <Link to="/signup" className="btn btn-primary">
+              <div className="services-section">
+                <h2>Our Services</h2>
+                <ul>
+                  <li>Track Packages</li>
+                  <li>Send and Receive Parcels</li>
+                  <li>Find Post Office Locations</li>
+                  <li>Shipping Rates Calculator</li>
+                </ul>
+                <Link to="/signup" className="btn">
                   Get Started with a New Account
                 </Link>
-              </p>
+              </div>
             </div>
           </div>
         } />
         
-        {/* Other routes */}
         <Route path="/track-package" element={<TrackPackage />} />
         <Route path="/signup" element={<Register />} />
         <Route path="/login" element={<Login />} />
       </Routes>
 
-      {/* Footer */}
-      <footer className="footer">
-        <p>&copy; 2024 United Mail Services. All rights reserved.</p>
-        <ul>
-          <li><Link to="/privacy-policy">Privacy Policy</Link></li>
-          <li><Link to="/terms-of-service">Terms of Service</Link></li>
-        </ul>
+      <footer>
+        <div className="content-wrapper">
+          <p>&copy; 2024 United Mail Services. All rights reserved.</p>
+          <ul>
+            <li><Link to="/privacy-policy">Privacy Policy</Link></li>
+            <li><Link to="/terms-of-service">Terms of Service</Link></li>
+          </ul>
+        </div>
       </footer>
     </div>
   );
