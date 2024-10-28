@@ -1,7 +1,8 @@
 import { useRef, useState, useEffect } from "react";
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
-import { Link, useNavigate  } from 'react-router-dom';
+import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import '../styles/Login.css';
 
 const Login = () => {
   const userRef = useRef();
@@ -14,21 +15,22 @@ const Login = () => {
 
   useEffect(() => {
       userRef.current.focus();
-  }, [])
+  }, []);
 
   useEffect(() => {
       setErrMsg('');
-  }, [user, pwd])
+  }, [user, pwd]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(user,password);
+    console.log(user, pwd);
     setSuccess(true);
-  }
+  };
+
   return (
     <>
       {success ? (
-          <section>
+          <section className="login-container">
               <h1>You are logged in!</h1>
               <br />
               <p>
@@ -36,41 +38,42 @@ const Login = () => {
               </p>
           </section>
       ) : (
-      <section>
+      <section className="login-container">
         <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
-        <h1>Sign In</h1>
-        <form onSumbit={handleSubmit}>
-          <label htmlFor="username">Username:</label>
-          <input
-              type="text"
-              id="username"
-              ref={userRef}
-              autoComplete="off"
-              onChange={(e) => setUser(e.target.value)}
-              value={user}
-              required
-          />
+        <div className="login-form">
+          <h1>Sign In</h1>
+          <form onSubmit={handleSubmit}>
+            <label htmlFor="username">Username:</label>
+            <input
+                type="text"
+                id="username"
+                ref={userRef}
+                autoComplete="off"
+                onChange={(e) => setUser(e.target.value)}
+                value={user}
+                required
+                className="login-input"
+            />
 
-          <label htmlFor="password">Password:</label>
+            <label htmlFor="password">Password:</label>
             <input
                 type="password"
                 id="password"
                 onChange={(e) => setPwd(e.target.value)}
                 value={pwd}
                 required
+                className="login-input"
             />
-            <button>Sign In</button>
-        </form>
-        <p>
-            Need an Account?<br />
-            <span className="line">
-                {/*put router link here*/}
-                <Link to="/signup">Sign Up</Link>
-            </span>
-        </p>
+            <button className="login-button">Sign In</button>
+          </form>
+          <p className="line">
+              Need an Account? <Link to="/signup">Sign Up</Link>
+          </p>
+        </div>
       </section>
     )}
   </>
-)
+  );
 };
+
 export default Login;

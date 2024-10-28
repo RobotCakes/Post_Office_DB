@@ -1,0 +1,123 @@
+/* Center the signup container and give it a fixed width */
+.signup-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #242424;
+}
+
+.signup-form {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    width: 320px;
+    text-align: center;
+}
+
+.signup-form h1 {
+    font-size: 2em;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.signup-form label {
+    font-size: 1em;
+    font-weight: bold;
+    color: #555;
+    display: block;
+    margin-bottom: 5px;
+    text-align: left;
+}
+
+.signup-input {
+    width: calc(100% - 30px); /* Adjust width to account for the button */
+    padding: 12px;
+    font-size: 1em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+}
+
+.password-container {
+    position: relative; /* To position the button correctly */
+    margin-bottom: 15px; /* Spacing between inputs */
+}
+
+.password-container button {
+    position: absolute; /* Position button inside the input field */
+    right: 5px; /* Space from the right edge */
+    top: 50%;
+    transform: translateY(-50%); /* Center button vertically */
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #007bff;
+    padding: 5px; /* Smaller button size */
+    font-size: 0.9em; /* Adjust font size */
+}
+
+.signup-button {
+    width: 100%;
+    padding: 12px;
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.signup-button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+.signup-button:hover:enabled {
+    background-color: #0056b3;
+}
+
+.errmsg {
+    color: #b30000;
+    background-color: #f8d7da;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+.offscreen {
+    display: none;
+}
+
+.line {
+    margin-top: 15px;
+    font-size: 0.9em;
+    color: #007bff;
+}
+
+.line a {
+    color: #007bff;
+    text-decoration: underline;
+}
+
+.line a:hover {
+    color: #0056b3;
+    text-decoration: none;
+}
+
+.valid {
+    color: green;
+    margin-left: 5px;
+}
+
+.invalid {
+    color: red;
+    margin-left: 5px;
+}
+
+.hide {
+    display: none;
+}
