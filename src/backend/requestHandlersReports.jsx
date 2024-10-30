@@ -729,7 +729,7 @@ module.exports = {
     ManagerTotalSuppliesSold,
     ManagerEmployeeWorkload,
     ManagerTotalPackagesDeleted
-}; 
+};
 // Admin // 
 exports.AdminIncomeBasedOnPayment = AdminIncomeBasedOnPayment;
 exports.AdminIncomeBasedOnPackage = AdminIncomeBasedOnPackage;
