@@ -1,8 +1,8 @@
 import React from 'react';
 import { useContext, useEffect } from "react";
 import { Route, Routes, useRoutes } from "react-router-dom";
-import { Session } from "../../server/trpc/auth/auth";
-import { AuthContext, AuthProvider } from "./auth/SessionProvider";
+//import { Session } from "../../server/trpc/auth/auth";
+//import { AuthContext, AuthProvider } from "./auth/SessionProvider";
 
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -10,7 +10,7 @@ import Profile from "./pages/Profile";
 import Signup from "./pages/Signup";
 import Tracking from "./pages/trackPackage";
 
-import AdminHome from "./pages/admin/adminHome";
+//import AdminHome from "./pages/admin/adminHome";
 import CustomerHome from "./pages/customer/customerHome";
 import PackageHistory from "./pages/customer/packageHistory";
 import PackageStatus from "./pages/customer/packageStatus";
@@ -23,7 +23,7 @@ import ManageEmployee from "./pages/employee/manageEmployee";
 import ManageTruck from "./pages/employee/manageTruck";
 import ManagerHome from "./pages/employee/managerHome";
 
-import ManageAllLocations from "./pages/admin/manageAllLocations";
+import ManageAllLocations from "./pages/admin/manageLocations";
 import ManageAllOffices from "./pages/admin/manageAllOffices";
 import ManageAllPackages from "./pages/admin/manageAllPackages";
 import ManageAllSupplies from "./pages/admin/manageAllSupplies";
@@ -94,7 +94,7 @@ const adminRoutes = [
 ];
 
 const AppRoutes = () => {
-
+    
 
 }
 

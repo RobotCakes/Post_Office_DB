@@ -2,6 +2,7 @@ import { useRef, useState, useEffect } from "react";
 import { faCheck, faTimes, faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { GuestNavbar } from "../components/Navbars";
 import '../styles/Signup.css';
 
 const USER_REGEX = /^[A-z0-9-_]{4,20}$/;
@@ -59,6 +60,7 @@ const Signup = () => {
 
     return (
         <>
+            <GuestNavbar />
             {success ? (
                 <section className="signup-container">
                     <h1>Success!</h1>
