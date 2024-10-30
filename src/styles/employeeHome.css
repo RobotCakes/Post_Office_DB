@@ -1,0 +1,51 @@
+/* employeeHome.css */
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+  }
+    
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      max-width: 800px;
+      padding: 10px;
+      background-color: #333;
+      color: #fff;
+    }
+    
+    .nav ul {
+      list-style: none;
+      display: flex;
+      gap: 10px;
+    }
+    
+    .nav .homePage {
+      font-size: 1.5rem;
+    }
+    
+    .quick-stats, .dashboard-links {
+      margin-top: 20px;
+    }
+    
+    .dashboard-links .dashboard-tile {
+      padding: 20px;
+      background-color: #eee;
+      text-align: center;
+      border-radius: 5px;
+      text-decoration: none;
+      color: #333;
+    }
+    
+    .footer {
+      margin-top: auto;
+      text-align: center;
+      padding: 10px;
+      width: 100%;
+      background-color: #f1f1f1;
+    }
+    
