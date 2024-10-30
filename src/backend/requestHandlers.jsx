@@ -119,4 +119,17 @@ function sendEJSFile(response, filename, msgtxt) {
       });
 }
 
+async function displayingCustomerPackages(response){
+    /**/ 
+}
+async function displayingEmployeePackages(response){
+    /**/
+}
+async function displayingAdminPackages(response){
+    /**/
+}
+module.exports = {
+    displayingPackages
+}
 exports.loginverify = loginverify;
+exports.displayingPackages(reponse)
