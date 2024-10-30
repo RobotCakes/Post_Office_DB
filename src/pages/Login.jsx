@@ -2,11 +2,13 @@ import { useRef, useState, useEffect } from "react";
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import axios from 'axios';
 import '../styles/Login.css';
 
 const Login = () => {
   const userRef = useRef();
   const errRef = useRef();
+  const navigate = useNavigate();
 
   const [user, setUser] = useState('');
   const [pwd, setPwd] = useState('');
@@ -23,8 +25,36 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(user, pwd);
-    setSuccess(true);
+    setErrMsg('');
+
+    try {
+        const response = await axios.post('http://localhost:3000/auth/login', {
+            username: user,
+            password: pwd,
+        });
+
+        if (response.data.message === 'Login successful') {
+            const role = response.data.user.role;
+
+            if (role === 'admin') {
+                navigate('/admin-home');
+            } else if (role === 'employee') {
+                navigate('/employee-home');
+            } else if (role === 'customer') {
+                navigate('/customer-home');
+            }
+            setSuccess(true);
+        }
+    } catch (error) {
+        console.error('Login error:', error); // Log the error for debugging
+        if (error.response) {
+            setErrMsg(error.response.data.message);
+        } else if (error.request) {
+            setErrMsg('No response received from server');
+        } else {
+            setErrMsg('Error setting up the request');
+        }
+    }
   };
 
   return (

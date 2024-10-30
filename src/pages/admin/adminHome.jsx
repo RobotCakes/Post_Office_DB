@@ -19,7 +19,7 @@ const Home = () => {
     return (
         <nav className = "nav">
             <Link to="/" className="homePage">
-                Home
+                Admin Home
             </Link>
             <ul>
                 {/* NOT REAL PAGE, JUST PLACEHOLDER*/}

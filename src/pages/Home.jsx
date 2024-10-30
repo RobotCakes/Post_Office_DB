@@ -34,7 +34,7 @@ const Home = () => {
   return (
     <div className="container">
       <nav className="nav">
-        <Link to="/home" className="homePage">United Mail Services</Link>
+        <Link to="/home" className="homePage">Texas Mail Services</Link>
         <ul>
           <CustomLink to="/home">Home</CustomLink>
           <CustomLink to="/track-package">Track Package</CustomLink>
@@ -47,7 +47,7 @@ const Home = () => {
         <Route path="/home" element={
           <div className="home-content">
             <div className="content-wrapper">
-              <h1>Welcome to United Mail Services</h1>
+              <h1>Welcome to Texas Mail Services</h1>
               <p>Track your packages, register for an account, or log in to access more features.</p>
             
               <form onSubmit={handleSearchSubmit} className="search-form">
@@ -84,7 +84,7 @@ const Home = () => {
 
       <footer>
         <div className="content-wrapper">
-          <p>&copy; 2024 United Mail Services. All rights reserved.</p>
+          <p>&copy; 2024 Texas Mail Services. All rights reserved.</p>
           <ul>
             <li><Link to="/privacy-policy">Privacy Policy</Link></li>
             <li><Link to="/terms-of-service">Terms of Service</Link></li>
