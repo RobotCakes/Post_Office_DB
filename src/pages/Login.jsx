@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from 'axios';
 import '../styles/Login.css';
+import { GuestNavbar } from "../components/Navbars";
 
 const Login = () => {
   const userRef = useRef();
@@ -59,6 +60,7 @@ const Login = () => {
 
   return (
     <>
+        <GuestNavbar />
       {success ? (
           <section className="login-container">
               <h1>You are logged in!</h1>

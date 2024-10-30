@@ -10,12 +10,16 @@
 
 /* Navigation bar styles */
 .nav {
-  background-color: #282c34;
-  padding: 1rem;
+  background-color: #282c34; 
+  padding: 1rem; 
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 151.4%;
+  position: fixed; 
+  top: 0;
+  left: 0;
+  right: 0; 
+  z-index: 1000;
 }
 
 .nav .homePage {

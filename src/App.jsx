@@ -2,12 +2,12 @@ import { useState } from 'react'
 
 // testing desktop import { useAuth } from "./auth/SessionProvider"; make session provider for authentication? ~davis 
 import reactLogo from './assets/react.svg'
-//import './styles/test.css'
+import Home from "./pages/Home";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
-import Home from "./pages/Home";
-import { BrowserRouter } from 'react-router-dom';
-//import './styles/App.css'
+import TrackPackage from "./pages/trackPackage"
+import './styles/App.css'
+import { Routes, Route } from 'react-router-dom';
 
 
 function App() {
@@ -38,9 +38,19 @@ function App() {
       
     </>
     */
-      <main className="App">
-        <Home />
-      </main>
+      <div className="App">
+          <Routes>
+
+            <Route path="/" element={<Home />} />
+
+            <Route path="/track-package" element={<TrackPackage />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/login" element={<Login />} />
+
+          </Routes>
+
+      </div>
+      
       
   )
 }

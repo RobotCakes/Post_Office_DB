@@ -2,6 +2,7 @@ import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { Link, useNavigate } from 'react-router-dom';
+import { GuestNavbar } from "../components/Navbars";
 
 const TrackPackage = () => {
   const [trackingNumber, setTrackingNumber] = useState("");
@@ -18,8 +19,8 @@ const TrackPackage = () => {
       return;
     }
 
-    if (trackingNumber.length < 10) {
-      setError("Tracking number must be at least 10 characters long.");
+    if (trackingNumber.length < 7) {
+      setError("Tracking number must be at least 7 characters long.");
       return;
     }
 
@@ -40,6 +41,7 @@ const TrackPackage = () => {
 
   return (
     <div className="track-package">
+      <GuestNavbar />
       <h1>Track Your Package</h1>
       <form onSubmit={handleSubmit} style={{ maxWidth: "400px", margin: "0 auto" }}>
         <label htmlFor="trackingNumber">Enter Tracking Number:</label>
