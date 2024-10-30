@@ -716,7 +716,20 @@ async function ManagerTotalPackagesDeleted(response, timeframe){
         throw err;
     }
 }
-// Admin // 
+// Admin //
+module.exports = {
+    AdminIncomeBasedOnPayment,
+    AdminIncomeBasedOnPackage,
+    AdminTotalPacketsIncomingNOutgoing,
+    AdminTotalSuppliesSold,
+    AdminTotalPackagesDeleted,
+    ManagerIncomeBasedOnPayment,
+    ManagerIncomeBasedOnPackage,
+    ManagerTotalPacketsIncomingNOutgoing,
+    ManagerTotalSuppliesSold,
+    ManagerEmployeeWorkload,
+    ManagerTotalPackagesDeleted
+}; 
 exports.AdminIncomeBasedOnPayment = AdminIncomeBasedOnPayment;
 exports.AdminIncomeBasedOnPackage = AdminIncomeBasedOnPackage;
 exports.AdminTotalPacketsIncomingNOutgoing = AdminTotalPacketsIncomingNOutgoing;
