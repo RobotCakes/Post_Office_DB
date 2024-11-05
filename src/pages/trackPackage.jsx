@@ -2,7 +2,9 @@ import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import { GuestNavbar } from "../components/Navbars";
+import '../styles/home.css';
 
 const TrackPackage = () => {
   const [trackingNumber, setTrackingNumber] = useState("");
@@ -10,7 +12,7 @@ const TrackPackage = () => {
   const [isTracking, setIsTracking] = useState(false);
   const [trackingResult, setTrackingResult] = useState(null);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Validate tracking number
@@ -28,15 +30,28 @@ const TrackPackage = () => {
     setError("");
     setIsTracking(true);
 
-    // Simulate an API call with a delay
-    setTimeout(() => {
-      setTrackingResult({
-        status: "In Transit",
-        location: "Houston, TX",
-        expectedDelivery: "October 28, 2024"
+    try {
+      const response = await axios.post(`http://localhost:3000/guest/track`, {
+        trackingNumber: trackingNumber
       });
+      const location = `${response.data.city}, ${response.data.state}`;
+      const reformatDate = new Date(response.data.timeOfStatus).toLocaleString();
+      
+      setTrackingResult({
+          status: response.data.status,
+          location: location,
+          timeOfStatus: reformatDate
+      });
+
+  } catch (error) {
+      if (error.response && error.response.status === 404) {
+          setError("Tracking number not found.");
+      } else {
+          setError("Error fetching tracking information. Please try again later.");
+      }
+  } finally {
       setIsTracking(false);
-    }, 2000);
+  }
   };
 
   return (
@@ -73,7 +88,7 @@ const TrackPackage = () => {
           <h2>Tracking Status</h2>
           <p>Status: {trackingResult.status}</p>
           <p>Current Location: {trackingResult.location}</p>
-          <p>Expected Delivery: {trackingResult.expectedDelivery}</p>
+          <p>Time of Status: {trackingResult.timeOfStatus}</p>
         </div>
       )}
     </div>

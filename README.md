@@ -21,7 +21,7 @@ To set up and run this project locally, follow these steps:
 
 3. **Start the development server**:
     ```bash
-    yarn start
+    yarn dev
     ```
 
 ### Node.js

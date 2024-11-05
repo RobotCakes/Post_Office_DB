@@ -29,37 +29,46 @@ const Login = () => {
     setErrMsg('');
 
     try {
-        const response = await axios.post('http://localhost:3000/auth/login', {
+        const response = await axios.post('http://localhost:3000/guest/login', {
             username: user,
             password: pwd,
         });
 
         if (response.data.message === 'Login successful') {
-            const role = response.data.user.role;
+            const { ID: id, role } = response.data.user; 
 
-            if (role === 'admin') {
+            //Storing id and role locally so it can be used for querying later
+            localStorage.setItem('userId', id);
+            localStorage.setItem('userRole', role);
+
+            if(role === 'admin') {
                 navigate('/admin-home');
-            } else if (role === 'employee') {
+            }else if(role === 'employee') {
                 navigate('/employee-home');
-            } else if (role === 'customer') {
+            }else if(role === 'customer' || role === 'business') {
                 navigate('/customer-home');
+            }else if(role === 'manager'){
+                navigate('/manager-home');
             }
             setSuccess(true);
         }
     } catch (error) {
-        console.error('Login error:', error); // Log the error for debugging
+        console.error('Login error:', error); 
         if (error.response) {
+            console.error('Response data:', error.response.data); 
             setErrMsg(error.response.data.message);
         } else if (error.request) {
+            console.error('Request data:', error.request); 
             setErrMsg('No response received from server');
         } else {
+            console.error('Error setting up the request:', error.message);
             setErrMsg('Error setting up the request');
         }
     }
   };
 
   return (
-    <>
+    <div className="container">
         <GuestNavbar />
       {success ? (
           <section className="login-container">
@@ -104,7 +113,7 @@ const Login = () => {
         </div>
       </section>
     )}
-  </>
+  </div>
   );
 };
 
