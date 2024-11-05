@@ -3,6 +3,7 @@ import { faCheck, faTimes, faEye, faEyeSlash } from "@fortawesome/free-solid-svg
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { GuestNavbar } from "../components/Navbars";
+import axios from 'axios';
 import '../styles/Signup.css';
 
 const USER_REGEX = /^[A-z0-9-_]{4,20}$/;
@@ -25,6 +26,8 @@ const Signup = () => {
     const [validMatch, setValidMatch] = useState(false);
     const [matchFocus, setMatchFocus] = useState(false);
     const [showMatchPwd, setShowMatchPwd] = useState(false); // Toggle confirm password visibility
+
+    const [accountType, setAccountType] = useState('personal');
 
     const [errMsg, setErrMsg] = useState('');
     const [success, setSuccess] = useState(false);
@@ -54,18 +57,32 @@ const Signup = () => {
             setErrMsg("Invalid Entry");
             return;
         }
-        console.log(user, pwd);
-        setSuccess(true);
+        try {
+            console.log("Account Type:", accountType);
+            const response = await axios.post('http://localhost:3000/guest/signup', {
+                username: user,
+                password: pwd,
+                accountType: accountType
+            });
+
+            if (response.data.message === 'Signup successful') {
+                setSuccess(true);
+                console.log("Signup success");
+            }
+        } catch (error) {
+            console.error('Signup error:', error);
+            setErrMsg('Signup failed, please try again');
+        }
     };
 
     return (
-        <>
+        <div className="container">
             <GuestNavbar />
             {success ? (
                 <section className="signup-container">
-                    <h1>Success!</h1>
-                    <p>
-                        <Link to="/login">Sign In</Link>
+                    <h1>Success!<br /></h1>
+                    <p>Your account has been created successfully. <br />
+                        <Link to="/login" className="btn">Sign In</Link>
                     </p>
                 </section>
             ) : (
@@ -135,7 +152,27 @@ const Signup = () => {
                                 <button type="button" onClick={() => setShowMatchPwd(prev => !prev)}>
                                     <FontAwesomeIcon icon={showMatchPwd ? faEyeSlash : faEye} />
                                 </button>
+                                
                             </div>
+                                {pwdFocus  && (
+                                    <ul className="password-requirements">
+                                        <li>8-20 characters</li>
+                                        <li>At least one uppercase letter</li>
+                                        <li>At least one lowercase letter</li>
+                                        <li>At least one number</li>
+                                        <li>At least one special character (!, @, or $)</li>
+                                    </ul>
+                                )}
+                            <label htmlFor="accountType">Account Type:</label>
+                                <select 
+                                    id="accountType" 
+                                    value={accountType} 
+                                    onChange={(e) => setAccountType(e.target.value)} 
+                                    className="signup-input"
+                                >
+                                    <option value="personal">Personal Account</option>
+                                    <option value="business">Business Account</option>
+                            </select>
 
                             <button className="signup-button" disabled={!validName || !validPwd || !validMatch}>Sign Up</button>
                         </form>
@@ -145,7 +182,7 @@ const Signup = () => {
                     </div>
                 </section>
             )}
-        </>
+        </div>
     );
 };
 

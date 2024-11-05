@@ -24,9 +24,12 @@ pool.connect()
 
 module.exports = pool;
 
-const authRouter = require('./auth.cjs');
+
+
+const guestRouter = require('./guest.cjs');
 const cors = require('cors');
-const express = require('express')
+const express = require('express');
+const session = require('express-session');
 
 const app = express();
 const port = 3000;
@@ -34,9 +37,19 @@ const port = 3000;
 app.use(cors());
 app.use(express.json());
 
-app.use('/auth', authRouter);
+app.use(session({
+    secret: 'sHPLbKnF62nZ',
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        secure: false, //Set to true if using HTTPS
+        maxAge: 1000 * 60 * 60 //1 hour
+    }
+}));
+
+app.use('/guest', guestRouter);
 
 app.listen(port, () => {
-    console.log('Auth Router:', authRouter);
+    console.log('Guest Router:', guestRouter);
     console.log(`Server running on http://localhost:${port}`);
 });

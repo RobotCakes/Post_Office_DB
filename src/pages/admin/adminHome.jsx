@@ -33,3 +33,5 @@ const Home = () => {
         </nav>
     )
 }
+
+export default Home;

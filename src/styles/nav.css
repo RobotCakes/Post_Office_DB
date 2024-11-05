@@ -1,0 +1,47 @@
+.nav {
+    background-color: #282c34;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+    align-items: center;
+    top:0;
+    position: fixed;
+    width: 100%;
+}
+
+  
+.nav .homePage {
+    font-size: 24px;
+    color: #61dafb;
+    text-decoration: none;
+    margin-right: 2rem;
+}
+
+
+.nav ul {
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+    flex:1;
+    gap:2rem;
+}
+
+.nav li {
+    margin: 0 1.2rem;
+    white-space: nowrap;
+}
+
+.nav a {
+    color: white;
+    text-decoration: none;
+    padding: 0rem 1rem;
+}
+
+.nav a.active {
+    font-weight: bold;
+    color: #61dafb;
+}
