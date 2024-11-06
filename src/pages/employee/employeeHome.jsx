@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useMatch, useResolvedPath, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import '../../styles/employeeHome.css';
 
@@ -25,7 +25,7 @@ const EmployeeHome = () => {
           <Link to="/employee-home" className="homePage">Employee Dashboard</Link>
           <ul>
             <CustomLink to="/manage-packages">Manage Packages</CustomLink>
-            <CustomLink to="/employee-supplies">Supplies</CustomLink>
+            <CustomLink to="/manage-supplies">Supplies</CustomLink>
             <CustomLink to="/incoming-packages">Incoming Packages</CustomLink>
             <CustomLink to="/employee-profile">Profile</CustomLink>
             <CustomLink to="/logout">Logout</CustomLink>
@@ -43,7 +43,7 @@ const EmployeeHome = () => {
           padding: '50px'
         }}>
           <div style={{ maxWidth: '800px', margin: '0 auto' }}>
-            <h1>Welcome to the Employee Dashboard</h1>
+            <h1>Employee Dashboard</h1>
             <p>Access package management, supplies, and other employee resources here.</p>
           </div>
   
