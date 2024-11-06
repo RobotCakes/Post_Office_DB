@@ -118,7 +118,91 @@ function sendEJSFile(response, filename, msgtxt) {
         return;
       });
 }
+async function addPackage(response, postData){
+    const pool = await sql.connect(config);
+    var req = new sql.Request();
+    var querystring = require('querystring');
+    var params = querystring.parse(postData);
+    const params = JSON.parse(postData);
+    const { senderName, senderAddress, receiverName, receiverAddress, receiverUID, senderUID, expectedDeliveryDate} = params;
 
+    const resultTrackingInfo = await pool.request()
+        .input('senderName', sql.Int, senderName)
+        .input('senderAddress', sql.Int, senderAddress)
+        .input('receiverName', sql.Int, receiverName)
+        .input('receiverAddress', sql.Int, receiverAddress)
+        .input('receiverUID', sql.Int, receiverUID)
+        .input('senderUID', sql.Int, senderUID)
+        .input('expectedDeliveryDate', sql.sql.DateTime, expectedDeliveryDate)
+        .query(`
+            INSERT INTO dbo.trackinginfo (senderName, senderAddress, receiverName, receiverAddress, receiverUID, senderUID, expectedDeliveryDate)
+            OUTPUT INSERTED.trackingNumber
+            VALUES (@senderName, @senderAddress, @receiverName, @receiverAddress, @receiverUID, @senderUID, @expectedDeliveryDate)
+        `);
+
+    const trackingNumber = resultTrackingInfo.recordset[0].trackingNumber;
+
+    const { packageContent, packageLength, packageWidth, packageHeight, weight, deliverPrice, isDelivery, signatureRequired, deliveryPriority, isFragile } = params;
+    
+    const resultPackage = await pool.request()
+        .input('trackingNumber', sql.NVarChar(12), trackingNumber)
+        .input('packageContent', sql.NVarChar(255), packageContent)
+        .input('packageLength', sql.Float, packageLength)
+        .input('packageWidth', sql.Float, packageWidth)
+        .input('packageHeight', sql.Float, packageHeight)
+        .input('weight', sql.Float, weight)
+        .input('deliverPrice', sql.Float, deliverPrice)
+        .input('isDelivery', sql.Bit, isDelivery)
+        .input('signatureRequired', sql.Bit, signatureRequired)
+        .input('deliveryPriority', sql.Int, deliveryPriority)
+        .input('isFragile', sql.Bit, isFragile)
+        .query(`
+            INSERT INTO dbo.package (trackingNumber, weight, deliverPrice, isDelivery, signatureRequired, deliveryPriority, isFragile)
+            OUTPUT INSERTED.PID
+            VALUES (@trackingNumber, @weight, @deliverPrice, @isDelivery, @signatureRequired, @deliveryPriority, @isFragile)
+        `);
+
+    const packagePID = resultPackage.recordset[0].PID;
+
+    const { state, updatedBy, timeOfStatus, currOID, nextOID, userTypeUpdate } = params;
+
+    await pool.request()
+        .input('state', sql.NVarChar(100), state)
+        .input('updatedBy', sql.Int, updatedBy)
+        .input('timeOfStatus', sql.DateTime, timeOfStatus || new Date()) 
+        .input('currOID', sql.Int, currOID)
+        .input('PID', sql.Int, packagePID)
+        .input('nextOID', sql.Int, nextOID)
+        .input('userTypeUpdate', sql.NVarChar(50), userTypeUpdate)
+        .query(`
+            INSERT INTO dbo.statuses (state, updatedBy, timeOfStatus, currOID, PID, nextOID, userTypeUpdate)
+            VALUES (@state, @updatedBy, @timeOfStatus, @currOID, @PID, @nextOID, @userTypeUpdate)
+        `);
+
+    const resultStatus = await pool.request()
+        .input('PID', sql.Int, packagePID)
+        .query(`
+            SELECT SID FROM statuses
+            WHERE PID = @PID
+            AND state = @state
+        `);
+
+    const currentStatus = resultStatus.recordset[0].SID;
+
+    await pool.request()
+        .input('currentStatus', sql.Int, currentStatus)
+        .input('trackingNumber', sql.NVarChar(12), trackingNumber)
+        .query(`
+            UPDATE dbo.trackinginfo
+            SET currentStatus = @currentStatus
+            WHERE trackingNumber = @trackingNumber
+        `);
+
+    response.status(200).json({ message: 'Package added successfully' });
+}
+async function addLogin(response){
+
+}
 async function displayingCustomerPackages(response){
     let query;
 
