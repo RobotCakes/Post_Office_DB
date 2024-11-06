@@ -120,16 +120,307 @@ function sendEJSFile(response, filename, msgtxt) {
 }
 
 async function displayingCustomerPackages(response){
-    /**/ 
+    let query;
+
+    query = `
+        SELECT 
+            ti.trackingNumber, p.packageContent, s.currentLocation, ti.expectedDeliveryDate
+        FROM 
+            dbo.packages AS p,
+            dbo.trackingInfo AS ti,
+            dbo.statuses AS s,
+        WHERE 
+            ti.senderUID = @userID,
+            ti.trackingNumber = p.trackingNumber,
+            s.PID = p.PID,
+            ti.currentStatus = s.SID,
+        `;
+    try {
+        const pool = await poolPromise;
+        const result = await pool.request().query(query);
+        return result.recordset;
+    } catch (err) {
+        console.error('SQL query failed:', err);
+        throw err;
+    }
 }
 async function displayingEmployeePackages(response){
-    /**/
+    query = `
+        SELECT 
+            ti.trackingNumber AS Tracking Number, p.packageContent AS Content, TIMESTAMPDIFF(HOUR, s.timeOfStatus, NOW()) AS Time within Office,, p.deliveryPriority AS Priority
+        FROM 
+            dbo.packages AS p,
+            dbo.trackingInfo AS ti,
+            dbo.statuses AS s,
+        WHERE 
+            s.currOID = @officeID,
+            ti.currentStatus = s.SID,
+            p.trackingNumber = ti.trackingNumber,
+            s.PID = p.PID,
+        ORDER BY p.priority DESC,
+        `;
+    try {
+        const pool = await poolPromise;
+        const result = await pool.request().query(query);
+        return result.recordset;
+    } catch (err) {
+        console.error('SQL query failed:', err);
+        throw err;
+    }
 }
-async function displayingAdminPackages(response){
-    /**/
+async function displayingManagerPackages(response){
+    query = `
+        SELECT 
+            ti.trackingNumber AS Tracking Number, p.packageContent AS Content, TIMESTAMPDIFF(HOUR, s.timeOfStatus, NOW()) AS Time within Office,, p.deliveryPriority AS Priority
+        FROM 
+            dbo.packages AS p,
+            dbo.trackingInfo AS ti,
+            dbo.statuses AS s,
+        WHERE 
+            s.currOID = @officeID,
+            ti.currentStatus = s.SID,
+            p.trackingNumber = ti.trackingNumber,
+            s.PID = p.PID,
+        ORDER BY p.priority DESC,
+        `;
+    try {
+        const pool = await poolPromise;
+        const result = await pool.request().query(query);
+        return result.recordset;
+    } catch (err) {
+        console.error('SQL query failed:', err);
+        throw err;
+    }
 }
+async function displayingLocationSupplies(response){
+    let query1;
+    let query2;
+
+
+    query1 = `
+        SELECT 
+            su.supplyID AS ID, su.quanity AS Quanity, su.description AS Details,
+        FROM
+            dbo.supplies AS su
+        `;
+
+    query2 = `
+        SELECT 
+            su.supplyID AS ID, su.quanity AS Quanity, su.description AS Details,
+        FROM
+            dbo.supplies AS su
+        WHERE
+            su.OID = @officeID
+        `;
+    try {
+        const pool = await poolPromise;
+        const result = await pool.request().query(query);
+        return result.recordset;
+    } catch (err) {
+        console.error('SQL query failed:', err);
+        throw err;
+    }
+}
+async function displayingEmployeeIncomingPackages(response){
+    let query1;
+
+    query1 = `
+        SELECT 
+            ti.trackingNumber AS Tracking Number, p.packageContent AS Content, s.currentOID AS Current Location, p.deliveryPriority,
+        FROM
+            dbo.packages AS p,
+            dbo.trackingInfo AS ti,
+            dbo.statuses AS s,
+        WHERE 
+            s.nextOID = @officeID,
+            ti.currentStatus = s.SID,
+            p.trackingNumber = ti.trackingNumber,
+            s.PID = p.PID,
+        ORDER BY p.priority DESC,
+        `;
+    try {
+        const pool = await poolPromise;
+        const result = await pool.request().query(query);
+        return result.recordset;
+    } catch (err) {
+        console.error('SQL query failed:', err);
+        throw err;
+    }
+}
+async function displayingManagerManageEmployees(response){
+    let query1;
+    /* YOU NEED TO JOIN THIS */
+    query1 = `
+        SELECT 
+            e.EID AS EmployeeID, 
+            n.firstName AS First Name, 
+            n.lastName AS Last Name,
+            e.employeeStartDate AS Start Date,
+        FROM
+            dbo.employee AS e
+        WHERE 
+            e.isManager = 1,
+            e.OID = @officeID,
+        ORDER BY e.EID DESC,
+        `;
+    try {
+        const pool = await poolPromise;
+        const result = await pool.request().query(query);
+        return result.recordset;
+    } catch (err) {
+        console.error('SQL query failed:', err);
+        throw err;
+    }
+}
+async function displayingAdminManageEmployees(response){
+    let query1;
+    /* YOU NEED TO JOIN THIS */
+    query1 = `
+        SELECT 
+            e.EID AS EmployeeID, 
+            n.firstName AS First Name, 
+            n.lastName AS Last Name,
+            o.name AS Office Name,
+            o.EID AS Direct Manager
+        FROM
+            dbo.employee AS e,
+            dbo.offices AS o,
+        WHERE 
+            e.isManager = 1,
+        ORDER BY o.name DESC,
+        `;
+    try {
+        const pool = await poolPromise;
+        const result = await pool.request().query(query);
+        return result.recordset;
+    } catch (err) {
+        console.error('SQL query failed:', err);
+        throw err;
+    }
+}
+async function displayingAdminManageManagers(response){
+    let query1;
+    /* YOU NEED TO JOIN THIS */
+    query1 = `
+        SELECT 
+            e.EID AS EmployeeID, 
+            n.firstName AS First Name, 
+            n.lastName AS Last Name,
+            o.name AS Office Name,
+        FROM
+            dbo.employee AS e,
+            dbo.offices AS o,
+        WHERE
+            e.isManager = 1 
+        ORDER BY o.name DESC,
+        `;
+    try {
+        const pool = await poolPromise;
+        const result = await pool.request().query(query);
+        return result.recordset;
+    } catch (err) {
+        console.error('SQL query failed:', err);
+        throw err;
+    }
+}
+async function displayingAdminManageSupplies(response){
+    let query1;
+    /* YOU NEED TO JOIN THIS */
+    query1 = `
+        SELECT 
+            su.supplyID AS Supply ID,
+            su.name AS Supply Name,
+            o.name AS Office Name,
+        FROM
+            dbo.supplies AS su,
+            dbo.offices AS o,
+        ORDER BY o.name DESC,
+        `;
+    try {
+        const pool = await poolPromise;
+        const result = await pool.request().query(query);
+        return result.recordset;
+    } catch (err) {
+        console.error('SQL query failed:', err);
+        throw err;
+    }
+}
+async function displayingManagerManageTrucks(response){
+    let query1;
+    /* YOU NEED TO JOIN THIS */
+    query1 = `
+        SELECT 
+            tr.licensePlate AS LicensePlate,
+            tr.currDriver AS Driver,
+            tr.truckCreatedOn AS Creation Date,
+        FROM
+            dbo.truck AS tr
+        WHERE
+            tr.OID = @officeID,
+            tr.isDeleted = false,
+        ORDER BY tr.truckCreatedOn DESC,
+        `;
+    try {
+        const pool = await poolPromise;
+        const result = await pool.request().query(query);
+        return result.recordset;
+    } catch (err) {
+        console.error('SQL query failed:', err);
+        throw err;
+    }
+}
+async function displayingAdminManageTrucks(response){
+    let query1;
+    /* YOU NEED TO JOIN THIS */
+    query1 = `
+        SELECT 
+            tr.licensePlate AS LicensePlate,
+            tr.currDriver AS Driver,
+            o.name AS Office Name,
+        FROM
+            dbo.truck AS tr,
+            dbo.offices AS o,
+        ORDER BY o.name DESC,
+        `;
+    try {
+        const pool = await poolPromise;
+        const result = await pool.request().query(query);
+        return result.recordset;
+    } catch (err) {
+        console.error('SQL query failed:', err);
+        throw err;
+    }
+}
+async function displayingAdminManageOffices(response){
+    let query1;
+    /* YOU NEED TO JOIN THIS */
+    query1 = `
+        SELECT 
+            o.OID AS Office ID,
+            o.name AS Office Name,
+            o.officeAddress AS Address,
+            o.managerName AS Manager Name,
+        FROM
+            dbo.supplies AS su,
+            dbo.offices AS o,
+        ORDER BY o.name DESC,
+        `;
+    try {
+        const pool = await poolPromise;
+        const result = await pool.request().query(query);
+        return result.recordset;
+    } catch (err) {
+        console.error('SQL query failed:', err);
+        throw err;
+    }
+}
+
 module.exports = {
-    displayingPackages
+    displayingCustomerPackages,
+    displayingEmployeePackages,
+    displayingManagerPackages
 }
 exports.loginverify = loginverify;
-exports.displayingPackages(reponse)
+exports.displayingCustomerPackages(reponse)
+exports.displayingEmployeePackages(reponse)
+exports.displayingManagerPackages(reponse)
