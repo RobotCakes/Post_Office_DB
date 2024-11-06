@@ -27,7 +27,7 @@ const Home = () => {
                 <CustomLink to="/package-status">Package History</CustomLink>
                 {/* NOT REAL PAGE, JUST PLACEHOLDER*/}
                 <CustomLink to="/customer-profile">Profile</CustomLink>
-                <CustomLink to="/logout">Login</CustomLink>
+                <CustomLink to="/logout">Log Out</CustomLink>
             </ul>
         </nav>
     )
