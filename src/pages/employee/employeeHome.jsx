@@ -1,36 +1,17 @@
 import { useRef, useState, useEffect } from "react";
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useMatch, useResolvedPath, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import '../../styles/employeeHome.css';
+import { EmployeeNavbar } from "../../components/Navbars";
 
 const EmployeeHome = () => {
-    // CustomLink function to highlight active links
-    function CustomLink({ to, children, ...props }) {
-      const resolvedPath = useResolvedPath(to);
-      const isActive = useMatch({ path: resolvedPath.pathname, end: true });
-      return (
-        <li className={isActive ? "active" : ""}>
-          <Link to={to} {...props}>
-            {children}
-          </Link>
-        </li>
-      );
-    }
+    
   
     return (
       <div className="container">
         {/* Navigation bar */}
-        <nav className="nav">
-          <Link to="/employee-home" className="homePage">Employee Dashboard</Link>
-          <ul>
-            <CustomLink to="/manage-packages">Manage Packages</CustomLink>
-            <CustomLink to="/employee-supplies">Supplies</CustomLink>
-            <CustomLink to="/incoming-packages">Incoming Packages</CustomLink>
-            <CustomLink to="/employee-profile">Profile</CustomLink>
-            <CustomLink to="/logout">Logout</CustomLink>
-          </ul>
-        </nav>
+        <EmployeeNavbar />
   
         {/* Main content area */}
         <div className="home-content" style={{
@@ -59,7 +40,7 @@ const EmployeeHome = () => {
             <p>Low Supplies: Tape, Boxes</p>
           </div>
   
-          {/* Dashboard Links Section */}
+          {/* This should only be available for manager
           <div className="dashboard-links" style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(2, 1fr)',
@@ -74,9 +55,10 @@ const EmployeeHome = () => {
             <Link to="/manage-packages" className="dashboard-tile">Manage Packages</Link>
             <Link to="/employee-supplies" className="dashboard-tile">Manage Supplies</Link>
             <Link to="/manage-truck" className="dashboard-tile">Manage Trucks</Link>
-          </div>
+          </div>*/}
         </div>
-  
+          
+
         {/* Footer */}
         <footer className="footer">
           <p>&copy; 2024 United Mail Services - Employee Dashboard. All rights reserved.</p>

@@ -91,7 +91,7 @@ router.post('/track', async (req, res) => {
         const result = await pool.request()
             .input('trackingNumber', sql.Int, trackingNumber)
             .query(`
-                SELECT A.city, A.state, S.state as status, S.timeOfStatus 
+                SELECT A.city, A.state, S.state as status, S.timeOfStatus, T.expectedDelivery
                 FROM trackingInfo AS T, addresses AS A, statuses as S, office as O
                 WHERE T.trackingNumber = @trackingNumber AND T.currentStatus = S.SID AND S.currOID = O.OID AND O.officeAddress = A.addressID;
             `);
@@ -105,7 +105,8 @@ router.post('/track', async (req, res) => {
             city: trackingInfo.city,
             state: trackingInfo.state,
             status: trackingInfo.status,
-            timeOfStatus: trackingInfo.timeOfStatus
+            timeOfStatus: trackingInfo.timeOfStatus,
+            expectedDelivery: trackingInfo.expectedDelivery
         });
 
     } catch (error) {

@@ -4,8 +4,12 @@ import { Link, Routes, Route, useMatch, useResolvedPath } from "react-router-dom
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Profile = () => {
+    return(
+        <div className="container">
+            <h1>Edit Profile</h1>
+            
+        </div>
+    );
 
-
-
-}
+};
 export default Profile;
