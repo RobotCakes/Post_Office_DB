@@ -2,6 +2,7 @@ import { useRef, useState, useEffect } from "react";
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { Link, useMatch, useResolvedPath, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { EmployeeNavbar } from "../../components/Navbars";
 import '../../styles/employeeHome.css';
 import { EmployeeNavbar } from "../../components/Navbars";
 
@@ -24,7 +25,7 @@ const EmployeeHome = () => {
           padding: '50px'
         }}>
           <div style={{ maxWidth: '800px', margin: '0 auto' }}>
-            <h1>Welcome to the Employee Dashboard</h1>
+            <h1>Employee Dashboard</h1>
             <p>Access package management, supplies, and other employee resources here.</p>
           </div>
   
@@ -40,28 +41,13 @@ const EmployeeHome = () => {
             <p>Low Supplies: Tape, Boxes</p>
           </div>
   
-          {/* This should only be available for manager
-          <div className="dashboard-links" style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(2, 1fr)',
-            gap: '10px',
-            marginTop: '30px',
-            width: '100%',
-            maxWidth: '600px'
-          }}>
-            <Link to="/incoming-packages" className="dashboard-tile">Incoming Packages</Link>
-            <Link to="/manage-employee" className="dashboard-tile">Manage Employees</Link>
-            <Link to="/manage-location" className="dashboard-tile">Manage Locations</Link>
-            <Link to="/manage-packages" className="dashboard-tile">Manage Packages</Link>
-            <Link to="/employee-supplies" className="dashboard-tile">Manage Supplies</Link>
-            <Link to="/manage-truck" className="dashboard-tile">Manage Trucks</Link>
-          </div>*/}
+          
         </div>
           
 
         {/* Footer */}
         <footer className="footer">
-          <p>&copy; 2024 United Mail Services - Employee Dashboard. All rights reserved.</p>
+          <p>&copy; 2024 Texas Mail Services - Employee Dashboard. All rights reserved.</p>
         </footer>
       </div>
     );

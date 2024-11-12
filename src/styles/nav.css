@@ -1,23 +1,24 @@
 .nav {
     background-color: #282c34;
-    padding: 1rem;
+    padding: 0.5rem 2rem;
     display: flex;
+    justify-content: space-between;
     justify-content: space-around;
     padding: 10px 20px;
     align-items: center;
-    top:0;
+    top: 0;
     position: fixed;
     width: 100%;
+    z-index: 1000;
 }
 
-  
 .nav .homePage {
-    font-size: 24px;
+    font-size: 20px;
     color: #61dafb;
     text-decoration: none;
+    margin-right: 2rem; 
     margin-right: auto;
 }
-
 
 .nav ul {
     list-style-type: none;
@@ -31,17 +32,27 @@
 }
 
 .nav li {
-    margin: 0 1.2rem;
+    margin: 0;
     white-space: nowrap;
 }
 
 .nav a {
     color: white;
     text-decoration: none;
-    padding: 0rem 1rem;
+    padding: 0.5rem 1rem;
 }
 
 .nav a.active {
     font-weight: bold;
     color: #61dafb;
+}
+
+.logout-button {
+    background: none;
+    border: none;
+    color: white;
+    font: inherit;
+    cursor: pointer;
+    padding: 0.5rem 1rem; 
+    margin-left: 2rem; 
 }

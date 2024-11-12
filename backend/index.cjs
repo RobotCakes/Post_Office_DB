@@ -27,6 +27,7 @@ module.exports = pool;
 
 
 const guestRouter = require('./guest.cjs');
+const userRouter = require('./user.cjs')
 const cors = require('cors');
 const express = require('express');
 const session = require('express-session');
@@ -48,8 +49,10 @@ app.use(session({
 }));
 
 app.use('/guest', guestRouter);
+app.use('/user', userRouter);
 
 app.listen(port, () => {
     console.log('Guest Router:', guestRouter);
+    console.log('User Router:', userRouter);
     console.log(`Server running on http://localhost:${port}`);
 });
