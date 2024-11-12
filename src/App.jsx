@@ -12,6 +12,7 @@ import Login from "./pages/Login";
 import TrackPackage from "./pages/trackPackage"
 
 import CustomerHome from "./pages/customer/customerHome";
+import BusinessHome from "./pages/customer/businessHome";
 import PackageHistory from "./pages/customer/packageHistory";
 import PackageStatus from "./pages/customer/packageStatus";
 
@@ -53,6 +54,7 @@ function App() {
             <Route path="/login" element={<Login />} />
 
             <Route path="/customer-home" element={<CustomerHome />} />
+            <Route path ="/business-home" element={<BusinessHome />} />
             <Route path="/package-history" element={<PackageHistory />} />
             <Route path="/package-status" element={<PackageStatus />} />
             <Route path="/customer-profile" element={<CustomerProfile />} />

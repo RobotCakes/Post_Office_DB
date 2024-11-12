@@ -4,7 +4,6 @@ import { Link, useMatch, useResolvedPath, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { EmployeeNavbar } from "../../components/Navbars";
 import '../../styles/employeeHome.css';
-import { EmployeeNavbar } from "../../components/Navbars";
 
 const EmployeeHome = () => {
     

@@ -4,9 +4,10 @@ import { Link, useMatch, useResolvedPath } from "react-router-dom"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { CustomerNavbar } from "../../components/Navbars";
 import '../../styles/home.css';
-import { CustomerNavbar } from "../../components/Navbars";
 const Home = () => {
-    
+  const userID = localStorage.getItem('userID');
+  const userRole = localStorage.getItem('userRole');
+
     return (
         <div className="container">
           <CustomerNavbar />

@@ -45,16 +45,16 @@ const TrackPackage = () => {
           expectedDelivery: reformatExpected
       });
 
-  } catch (error) {
-      if (error.response && error.response.status === 404) {
-          setError("Tracking number not found.");
-      } else {
-          setError("Error fetching tracking information. Please try again later.");
-      }
-  } finally {
-      setIsTracking(false);
-  }
-  };
+    } catch (error) {
+        if (error.response && error.response.status === 404) {
+            setError("Tracking number not found.");
+        } else {
+            setError("Error fetching tracking information. Please try again later.");
+        }
+    } finally {
+        setIsTracking(false);
+    }
+    };
 
   return (
     <div className="track-package">

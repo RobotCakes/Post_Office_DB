@@ -1,26 +1,37 @@
-<<<<<<< HEAD
-import { useRef, useState, useEffect } from "react";
-import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
-import { Link, Routes, Route, useMatch, useResolvedPath } from "react-router-dom"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { CustomerNavbar } from "../../components/Navbars";
-
-const packageHistory = () => {
-    return(
-        <div className="container">
-            <CustomerNavbar />
-        </div>
-    );
-
-};
-export default packageHistory;
-=======
 import { useState, useEffect } from "react";
+import { Link, useMatch, useResolvedPath, useNavigate } from "react-router-dom"
 import { CustomerNavbar } from "../../components/Navbars";
+import axios from 'axios';
 import "../../styles/managePackage.css";
 
 const PackageHistory = () => {
   const [packages, setPackages] = useState([]);
+  const navigate = useNavigate();
+  const userID = localStorage.getItem('userID');
+  const userRole = localStorage.getItem('userRole');
+
+  useEffect(() => {
+    
+    const getHistory = async () => {
+      if (!userID) {
+        alert('User not logged in');
+        navigate('/');
+      }
+
+      try {
+        const response = await axios.post('http://localhost:3000/user/package-history', { 
+          userID: userID
+        });
+        setPackages(response.data); 
+      } catch (error) {
+        console.error('Error fetching packages:', error);
+        alert('Failed to fetch packages');
+      }
+    };
+
+    getHistory();
+  }, []);
+
 
   return (
     <div className="container">
@@ -41,14 +52,17 @@ const PackageHistory = () => {
             </tr>
           </thead>
           <tbody>
-            {packages.map((pkg) => (
-              <tr key={pkg.id}>
-                <td>{pkg.trackingNumber}</td>
-                <td>{pkg.status}</td>
-                <td>{pkg.packageContent}</td>
-                <td>{pkg.timeOfStatus}</td>
-              </tr>
-            ))}
+            {packages.map((pkg) => {
+                const reformatDate = new Date(pkg.timeOfStatus).toLocaleString();
+                return (
+                  <tr key={pkg.id}>
+                    <td>{pkg.trackingNumber}</td>
+                    <td>{pkg.status}</td>
+                    <td>{pkg.packageContent}</td>
+                    <td>{reformatDate}</td>
+                  </tr>
+                );
+              })}
           </tbody>
         </table>
       </div>
@@ -61,4 +75,3 @@ const PackageHistory = () => {
 };
 
 export default PackageHistory;
->>>>>>> bc41be54cb0631e22d3d5fe6cfcea328f42426b2
