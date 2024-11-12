@@ -2,6 +2,7 @@ import { useRef, useState, useEffect } from "react";
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { Link, useMatch, useResolvedPath, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { EmployeeNavbar } from "../../components/Navbars";
 import '../../styles/employeeHome.css';
 
 const EmployeeHome = () => {
@@ -21,16 +22,7 @@ const EmployeeHome = () => {
     return (
       <div className="container">
         {/* Navigation bar */}
-        <nav className="nav">
-          <Link to="/employee-home" className="homePage">Employee Dashboard</Link>
-          <ul>
-            <CustomLink to="/manage-packages">Manage Packages</CustomLink>
-            <CustomLink to="/manage-supplies">Supplies</CustomLink>
-            <CustomLink to="/incoming-packages">Incoming Packages</CustomLink>
-            <CustomLink to="/employee-profile">Profile</CustomLink>
-            <CustomLink to="/logout">Logout</CustomLink>
-          </ul>
-        </nav>
+        <EmployeeNavbar />
   
         {/* Main content area */}
         <div className="home-content" style={{
@@ -59,27 +51,12 @@ const EmployeeHome = () => {
             <p>Low Supplies: Tape, Boxes</p>
           </div>
   
-          {/* Dashboard Links Section */}
-          <div className="dashboard-links" style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(2, 1fr)',
-            gap: '10px',
-            marginTop: '30px',
-            width: '100%',
-            maxWidth: '600px'
-          }}>
-            <Link to="/incoming-packages" className="dashboard-tile">Incoming Packages</Link>
-            <Link to="/manage-employee" className="dashboard-tile">Manage Employees</Link>
-            <Link to="/manage-location" className="dashboard-tile">Manage Locations</Link>
-            <Link to="/manage-packages" className="dashboard-tile">Manage Packages</Link>
-            <Link to="/employee-supplies" className="dashboard-tile">Manage Supplies</Link>
-            <Link to="/manage-truck" className="dashboard-tile">Manage Trucks</Link>
-          </div>
+          
         </div>
   
         {/* Footer */}
         <footer className="footer">
-          <p>&copy; 2024 United Mail Services - Employee Dashboard. All rights reserved.</p>
+          <p>&copy; 2024 Texas Mail Services - Employee Dashboard. All rights reserved.</p>
         </footer>
       </div>
     );

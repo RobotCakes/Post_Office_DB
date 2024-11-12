@@ -76,7 +76,7 @@ const managePackage = () => {
   
         {/* Footer */}
         <footer className="footer">
-          <p>&copy; 2024 United Mail Services - Manage Packages. All rights reserved.</p>
+          <p>&copy; 2024 Texas Mail Services - Manage Packages. All rights reserved.</p>
         </footer>
       </div>
     );

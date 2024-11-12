@@ -78,11 +78,32 @@
     cursor: pointer;
   }
   
-  .footer {
-    width: 100%;
+  footer {
+    background-color: #282c34;
+    color: white;
+    padding: 2rem;
     text-align: center;
-    padding: 10px;
-    background-color: #333;
-    color: #fff;
+    margin-top: auto;
+    width: 100%;
+  }
+  
+  footer ul {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin: 1rem 0;
+  }
+  
+  footer a {
+    color: #61dafb;
+    text-decoration: none;
+    padding: 0.5rem;
+  }
+  
+  footer a:hover {
+    text-decoration: underline;
+    color: #8be9fd;
+    transition: color 0.2s ease;
   }
   

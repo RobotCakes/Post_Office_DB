@@ -35,6 +35,8 @@ import ManageAllEmployees from "./pages/admin/manageAllEmployees";
 import AdminReports from "./pages/reports/adminReports";
 import ManagerReports from "./pages/reports/managerReports";
 
+import CustomerProfile from "./pages/customer/Profile";
+
 
 function App() {
   const [count, setCount] = useState(0)
@@ -53,6 +55,7 @@ function App() {
             <Route path="/customer-home" element={<CustomerHome />} />
             <Route path="/package-history" element={<PackageHistory />} />
             <Route path="/package-status" element={<PackageStatus />} />
+            <Route path="/customer-profile" element={<CustomerProfile />} />
 
             <Route path="/employee-home" element={<EmployeeHome />} />
             <Route path="/admin-home" element={<AdminHome />} />
