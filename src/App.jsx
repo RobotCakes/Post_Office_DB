@@ -12,9 +12,14 @@ import Login from "./pages/Login";
 import TrackPackage from "./pages/trackPackage"
 
 import CustomerHome from "./pages/customer/customerHome";
-import BusinessHome from "./pages/customer/businessHome";
 import PackageHistory from "./pages/customer/packageHistory";
 import PackageStatus from "./pages/customer/packageStatus";
+
+import BusinessHome from "./pages/business/businessHome";
+import BusinessHistory from "./pages/business/businessHistory";
+import BusinessStatus from "./pages/business/businessStatus";
+import BusinessProfile from "./pages/business/businessProfile";
+import BusinessPackage from "./pages/business/businessPackage";
 
 import AdminHome from "./pages/admin/adminHome";
 import EmployeeHome from "./pages/employee/employeeHome";
@@ -54,10 +59,15 @@ function App() {
             <Route path="/login" element={<Login />} />
 
             <Route path="/customer-home" element={<CustomerHome />} />
-            <Route path ="/business-home" element={<BusinessHome />} />
             <Route path="/package-history" element={<PackageHistory />} />
             <Route path="/package-status" element={<PackageStatus />} />
             <Route path="/customer-profile" element={<CustomerProfile />} />
+
+            <Route path ="/business-home" element={<BusinessHome />} />
+            <Route path ="/business-package-create" element={<BusinessPackage />} />
+            <Route path ="/business-history" element={<BusinessHistory />} />
+            <Route path ="/business-status" element={<BusinessStatus />} />
+            <Route path ="/business-profile" element={<BusinessProfile />} />
 
             <Route path="/employee-home" element={<EmployeeHome />} />
             <Route path="/admin-home" element={<AdminHome />} />

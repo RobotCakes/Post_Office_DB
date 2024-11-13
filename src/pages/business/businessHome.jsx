@@ -5,14 +5,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { CustomerNavbar } from "../../components/Navbars";
 import '../../styles/home.css';
 const Home = () => {
-    
+    const userID = localStorage.getItem('userID');
     return (
         <div className="container">
           <CustomerNavbar />
 
           <div className="home-content">
             <div className="content-wrapper">
-              <h1>Welcome, Customer!</h1>
+              <h1>Welcome!</h1>
               <p>Track packages on the move, view your package history, edit your profile or order some supplies!</p>
               
 

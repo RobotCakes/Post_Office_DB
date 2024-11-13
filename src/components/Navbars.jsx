@@ -15,8 +15,8 @@ function CustomLink({ to, children, ...props }) {
 }
 
 export function handleLogout(navigate) {
-  localStorage.setItem("userId", null);
-  localStorage.setItem("userRole", null);
+  localStorage.removeItem("userId");
+  localStorage.removeItem("userRole");
   
   navigate("/login");
 }
