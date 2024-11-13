@@ -2,7 +2,6 @@
     background-color: #282c34;
     padding: 0.5rem 2rem;
     display: flex;
-    justify-content: space-between;
     justify-content: space-around;
     padding: 10px 20px;
     align-items: center;
@@ -17,7 +16,6 @@
     color: #61dafb;
     text-decoration: none;
     margin-right: 2rem; 
-    margin-right: auto;
 }
 
 .nav ul {

@@ -49,6 +49,7 @@ const PackageHistory = () => {
               <th>Status</th>
               <th>Content</th>
               <th>Time of Status</th>
+              <th>Final Destination</th>
             </tr>
           </thead>
           <tbody>

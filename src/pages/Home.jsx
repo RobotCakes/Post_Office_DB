@@ -81,6 +81,7 @@ const Home = () => {
       <footer>
         <div className="content-wrapper">
           <p>&copy; 2024 Texas Mail Services. All rights reserved.</p>
+          
         </div>
       </footer>
     </div>
