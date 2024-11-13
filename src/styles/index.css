@@ -13,6 +13,14 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100%;
+  overflow-x: hidden;
+}
 a {
   font-weight: 500;
   color: #646cff;
@@ -24,16 +32,17 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  width: 100vw;
+  max-width: none;
+  display: block;
 }
+
 
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
 }
+
 
 button {
   border-radius: 8px;

@@ -20,7 +20,7 @@ router.post('/login', async (req, res) => {
                 SELECT UID AS ID, 'customer' AS role FROM customer WHERE username = @username AND password = @password
                 UNION
                 SELECT UID AS ID, 'business' AS role FROM business WHERE username = @username AND password = @password
-            `); //Assuming usernames and passwords pairs don't match across tables
+            `);
 
         if (result.recordset.length === 0) {
             return res.status(401).json({ message: 'Invalid username or password' });
@@ -36,7 +36,7 @@ router.post('/login', async (req, res) => {
 });
 
 
-
+//Adding trigger to check for duplicate usernames in db
 router.post('/signup', async (req, res) => { 
     const { username, password, accountType } = req.body
 
@@ -55,9 +55,44 @@ router.post('/signup', async (req, res) => {
                         INSERT INTO customer (username, password, createdAt) 
                         VALUES (@username, @password, GETDATE())
                     `);
+                
+                //Done after the customer insert in case the trigger for username goes off
+                const nameResult = await pool.request() //Inserting nulls so the user can fill it out later
+                    .query(`
+                        INSERT INTO names (firstName, middleInitial, lastName) 
+                        VALUES (null, null, null); 
+                        SELECT SCOPE_IDENTITY() AS name_id;
+                    `);
+
+                const nameID = nameResult.recordset[0].name_id;
+
+                
+                const addressResult = await pool.request()
+                    .query(`
+                        INSERT INTO addresses (streetAddress) 
+                        VALUES (null);
+                        SELECT SCOPE_IDENTITY() AS address_id;
+                    `);
+
+                const addressID = addressResult.recordset[0].address_id;
+
+                
+                await pool.request()
+                    .input('addressID', sql.Int, addressID)
+                    .input('nameID', sql.Int, nameID)
+                    .input('username', sql.VarChar, username)
+                    .query(`
+                        UPDATE customer
+                        SET name = @nameID, address = @addressID
+                        WHERE username = @username;
+                    `);
+
                 res.json({ message: 'Signup successful' });
             } catch (error) {
                 console.error('Error during customer signup:', error.message);
+                if (error.message.includes('Username already exists')) {
+                    return res.status(400).json({ message: 'Username already exists.' });
+                }
                 res.status(500).json({ message: 'Error signing up customer' });
             }
         }else if(accountType === 'business'){
@@ -70,9 +105,44 @@ router.post('/signup', async (req, res) => {
                         INSERT INTO business (username, password, createdAt) 
                         VALUES (@username, @password, GETDATE())
                     `);
+
+                //Same stuff as customer just some changes to ownerName and warehouseAddress     
+                const nameResult = await pool.request()
+                    .query(`
+                        INSERT INTO names (firstName, middleInitial, lastName) 
+                        VALUES (null, null, null); 
+                        SELECT SCOPE_IDENTITY() AS name_id;
+                    `);
+
+                const nameID = nameResult.recordset[0].name_id;
+
+                
+                const addressResult = await pool.request()
+                    .query(`
+                        INSERT INTO addresses (streetAddress) 
+                        VALUES (null);
+                        SELECT SCOPE_IDENTITY() AS address_id;
+                    `);
+
+                const addressID = addressResult.recordset[0].address_id;
+
+                
+                await pool.request()
+                    .input('addressID', sql.Int, addressID)
+                    .input('nameID', sql.Int, nameID)
+                    .input('username', sql.VarChar, username)
+                    .query(`
+                        UPDATE business
+                        SET ownerName = @nameID, warehouseAddress = @addressID
+                        WHERE username = @username;
+                    `);
+
                 res.json({ message: 'Signup successful' });
             } catch (error) {
                 console.error('Error during business signup:', error.message);
+                if (error.message.includes('Username already exists')) {
+                    return res.status(400).json({ message: 'Username already exists.' });
+                }
                 res.status(500).json({ message: 'Error signing up business' });
             }
 

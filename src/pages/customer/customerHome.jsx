@@ -4,6 +4,7 @@ import { Link, useMatch, useResolvedPath } from "react-router-dom"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { CustomerNavbar } from "../../components/Navbars";
 import '../../styles/home.css';
+
 const Home = () => {
   const userID = localStorage.getItem('userID');
   const userRole = localStorage.getItem('userRole');
@@ -31,8 +32,8 @@ const Home = () => {
           </div>
 
           <footer className="footer">
-            <p>&copy; 2024 Texas Mail Services - Manage Packages. All rights reserved.</p>
-          </footer>
+            <p>&copy; 2024 Texas Mail Services - Employee Dashboard. All rights reserved.</p>
+        </footer>
         </div>
     )
 }

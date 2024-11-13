@@ -2,19 +2,20 @@
 container {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
     min-height: 100vh;
+    margin: 0 auto;
+    padding: 0;
     width: 100%;
-    padding: 2rem;
+    max-width: 100%;
 }
 
 .signup-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    background-color: #242424;
+    text-align: center;
+    color: white;
+    padding: 40px 20px;
+    border-radius: 15px;
+    max-width: 600px;
+    margin: 0 auto;
 }
 
 .signup-form {
@@ -39,6 +40,17 @@ container {
     display: block;
     margin-bottom: 5px;
     text-align: left;
+}
+
+.signup-container .btn {
+    display: inline-block;
+    background-color: #007BFF;
+    color: white;
+    padding: 15px 30px;
+    font-size: 18px;
+    text-decoration: none;
+    border-radius: 30px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .signup-input {

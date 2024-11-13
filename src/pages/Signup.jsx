@@ -71,7 +71,11 @@ const Signup = () => {
             }
         } catch (error) {
             console.error('Signup error:', error);
-            setErrMsg('Signup failed, please try again');
+            if (error.response && error.response.data.message) {
+                setErrMsg(error.response.data.message); //Mostly to handle matching usernames
+            } else {
+                setErrMsg('Signup failed, please try again');
+            }
         }
     };
 

@@ -47,12 +47,11 @@ export function CustomerNavbar() {
               <CustomLink to="/package-history">Package History</CustomLink>
               <CustomLink to="/package-status">Package Status</CustomLink>
               <CustomLink to="/customer-profile">Profile</CustomLink>
-              <li>
-                <button onClick={() => handleLogout(navigate)} className="logout-button">
-                  Logout
-                </button>
-              </li>
+              
           </ul>
+          <button onClick={() => handleLogout(navigate)} className="logout-button">
+                Logout
+          </button>
       </nav>
   )
 }

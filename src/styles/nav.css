@@ -1,14 +1,17 @@
+
 .nav {
     background-color: #282c34;
-    padding: 0.5rem 2rem;
+    max-width: none;
+    position: fixed;
+    top: 0;
+    left:0;
+    z-index: 1000;
     display: flex;
     justify-content: space-around;
-    padding: 10px 20px;
     align-items: center;
-    top: 0;
-    position: fixed;
-    width: 100%;
-    z-index: 1000;
+    padding: 5px 20px;
+    height: 55px;
+    width: 100vw;
 }
 
 .nav .homePage {
@@ -16,6 +19,8 @@
     color: #61dafb;
     text-decoration: none;
     margin-right: 2rem; 
+    white-space: no-wrap;
+    
 }
 
 .nav ul {
@@ -30,10 +35,11 @@
 }
 
 .nav li {
-    margin: 0;
+    display: inline-flex; 
+    align-items: center;   
+    margin: 0;             
     white-space: nowrap;
 }
-
 .nav a {
     color: white;
     text-decoration: none;
@@ -53,4 +59,5 @@
     cursor: pointer;
     padding: 0.5rem 1rem; 
     margin-left: 2rem; 
+    align-self: center;
 }

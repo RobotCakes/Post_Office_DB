@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useMatch, useResolvedPath, useNavigate } from "react-router-dom"
 import { CustomerNavbar } from "../../components/Navbars";
 import axios from 'axios';
-import "../../styles/managePackage.css";
+import "../../styles/manageSupplies.css";
 
 const PackageHistory = () => {
   const [packages, setPackages] = useState([]);
@@ -49,7 +49,8 @@ const PackageHistory = () => {
               <th>Status</th>
               <th>Content</th>
               <th>Time of Status</th>
-              <th>Final Destination</th>
+              <th>Sender Location</th>
+              <th>Receiver Location</th>
             </tr>
           </thead>
           <tbody>

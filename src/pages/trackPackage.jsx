@@ -57,7 +57,7 @@ const TrackPackage = () => {
     };
 
   return (
-    <div className="track-package">
+    <div className="container">
       <GuestNavbar />
       <h1>Track Your Package</h1>
       <form onSubmit={handleSubmit} style={{ maxWidth: "400px", margin: "0 auto" }}>

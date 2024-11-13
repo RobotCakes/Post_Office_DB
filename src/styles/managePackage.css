@@ -3,108 +3,88 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  max-width: 1200px;
   margin: 0 auto;
+  padding: 0;
+  width: 100%;
+  max-width: none;
+}
+
+
+.manage-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 3rem 1.5rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.search-input {
+  width: 100%;
+  max-width: 400px;
+  padding: 10px;
+  margin: 20px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.packages-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+.packages-table th, .packages-table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+.action-link {
+  color: #007bff;
+  text-decoration: none;
+  margin: 0 5px;
+}
+
+.action-link:hover {
+  color: #0056b3;
+}
+
+.delete-btn {
+  color: #d9534f;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+footer {
+  background-color: #282c34;
+  color: white;
+  padding: 2rem;
+  text-align: center;
+  margin-top: auto;
   width: 100%;
 }
-  
-  .nav {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    max-width: 1100px;
-    padding: 10px;
-    background-color: #333;
-    color: #fff;
-  }
-  
-  .nav ul {
-    list-style: none;
-    display: flex;
-    gap: 10px;
-  }
-  
-  .nav ul li a {
-    color: #fff;
-    text-decoration: none;
-  }
-  
-  .nav ul li a.active {
-    font-weight: bold;
-    color: #ffdd57;
-  }
-  
-  .manage-content {
-    text-align: center;
-    padding: 20px;
-    width: 100%;
-    max-width: 800px;
-  }
-  
-  .search-input {
-    width: 100%;
-    max-width: 400px;
-    padding: 10px;
-    margin: 20px 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .packages-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 20px 0;
-  }
-  
-  .packages-table th, .packages-table td {
-    padding: 10px;
-    border: 1px solid #ddd;
-    text-align: center;
-  }
-  
-  .action-link {
-    color: #007bff;
-    text-decoration: none;
-    margin: 0 5px;
-  }
-  
-  .action-link:hover {
-    color: #0056b3;
-  }
-  
-  .delete-btn {
-    color: #d9534f;
-    border: none;
-    background: none;
-    cursor: pointer;
-  }
-  
-  footer {
-    background-color: #282c34;
-    color: white;
-    padding: 2rem;
-    text-align: center;
-    margin-top: auto;
-    width: 100%;
-  }
-  
-  footer ul {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 1rem;
-    margin: 1rem 0;
-  }
-  
-  footer a {
-    color: #61dafb;
-    text-decoration: none;
-    padding: 0.5rem;
-  }
-  
-  footer a:hover {
-    text-decoration: underline;
-    color: #8be9fd;
-    transition: color 0.2s ease;
-  }
+
+footer ul {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+footer a {
+  color: #61dafb;
+  text-decoration: none;
+  padding: 0.5rem;
+}
+
+footer a:hover {
+  text-decoration: underline;
+  color: #8be9fd;
+  transition: color 0.2s ease;
+}
   
