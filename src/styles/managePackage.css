@@ -87,4 +87,75 @@ footer a:hover {
   color: #8be9fd;
   transition: color 0.2s ease;
 }
-  
+
+.custom-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 50%;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  transform: translate(-50%, -50%);
+  padding-top: 20px;
+}
+
+.custom-overlay {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.custom-modal h2,
+.custom-modal p,
+.custom-modal h3 {
+  margin-top:0;
+  color: #000; 
+  margin-bottom: 10px;
+}
+
+
+.custom-modal input[type="radio"], .custom-modal select {
+  margin-right: 10px;
+}
+
+.custom-modal label {
+  margin: 0px 0;
+  font-size: 16px;
+  color:black;
+}
+
+.custom-modal form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.info-button {
+  width: 100%;
+  padding: 12px;
+  background-color: #007bff;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.info-button:hover {
+  background-color: #0056b3;
+}
+
+.package-button {
+  margin: 10px 0;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.package-button:hover {
+  background-color: #0056b3;
+}

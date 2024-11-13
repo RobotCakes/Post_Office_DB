@@ -31,9 +31,6 @@ const Home = () => {
             </div>
           </div>
 
-          <footer className="footer">
-            <p>&copy; 2024 Texas Mail Services - Employee Dashboard. All rights reserved.</p>
-        </footer>
         </div>
     )
 }

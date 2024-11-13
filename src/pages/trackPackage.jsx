@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faTimes, faInfoCircle, faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { GuestNavbar } from "../components/Navbars";
@@ -59,41 +59,43 @@ const TrackPackage = () => {
   return (
     <div className="container">
       <GuestNavbar />
-      <h1>Track Your Package</h1>
-      <form onSubmit={handleSubmit} style={{ maxWidth: "400px", margin: "0 auto" }}>
-        <label htmlFor="trackingNumber">Enter Tracking Number:</label>
-        <input
-          type="text"
-          id="trackingNumber"
-          value={trackingNumber}
-          onChange={(e) => setTrackingNumber(e.target.value)}
-          placeholder="e.g. 1234567890"
-          style={{ width: "100%", padding: "10px", marginBottom: "10px", borderRadius: "5px", border: "1px solid #ccc" }}
-        />
-        {error && (
-          <p style={{ color: "red", fontSize: "14px" }}>
-            <FontAwesomeIcon icon={faTimes} /> {error}
-          </p>
-        )}
-        <button
-          type="submit"
-          className="btn btn-primary"
-          style={{ width: "100%", padding: "10px", borderRadius: "5px", backgroundColor: "#007bff", color: "#fff" }}
-        >
-          {isTracking ? "Tracking..." : "Track Package"}
-        </button>
-      </form>
+      <div className="home-content">
+        <h1>Track Your Package</h1>
+        <form onSubmit={handleSubmit} style={{ maxWidth: "400px", margin: "0 auto" }}>
+          <label htmlFor="trackingNumber">Enter Tracking Number:</label>
+          <input
+            type="text"
+            id="trackingNumber"
+            value={trackingNumber}
+            onChange={(e) => setTrackingNumber(e.target.value)}
+            placeholder="e.g. 1234567890"
+            style={{ width: "100%", padding: "10px", marginBottom: "10px", borderRadius: "5px", border: "1px solid #ccc" }}
+          />
+          {error && (
+            <p style={{ color: "red", fontSize: "14px" }}>
+              <FontAwesomeIcon icon={faTimes} /> {error}
+            </p>
+          )}
+          <button
+            type="submit"
+            className="btn btn-primary"
+            style={{ width: "100%", padding: "10px", borderRadius: "5px", backgroundColor: "#007bff", color: "#fff" }}
+          >
+            {isTracking ? "Tracking..." : "Track Package"}
+          </button>
+        </form>
 
-      {/* Display tracking result */}
-      {trackingResult && (
-        <div className="tracking-result" style={{ marginTop: "20px", textAlign: "center" }}>
-          <h2>Tracking Status</h2>
-          <p>Status: {trackingResult.status}</p>
-          <p>Current Location: {trackingResult.location}</p>
-          <p>Time of Status: {trackingResult.timeOfStatus}</p>
-          <p>Expected Delivery: {trackingResult.expectedDelivery}</p>
-        </div>
-      )}
+        {/* Display tracking result */}
+        {trackingResult && (
+          <div className="tracking-box">
+            <h2>Tracking Status</h2>
+            <p>Status: {trackingResult.status}</p>
+            <FontAwesomeIcon icon={faMapMarkerAlt} className="location-marker"/> <span className="highlight-location">Current Location: {trackingResult.location}</span>
+            <p>Time of Status: {trackingResult.timeOfStatus}</p>
+            <p>Expected Delivery: {trackingResult.expectedDelivery}</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
