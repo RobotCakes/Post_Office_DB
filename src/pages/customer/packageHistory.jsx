@@ -24,7 +24,7 @@ const PackageHistory = () => {
       }
 
       try {
-        const response = await axios.post('http://localhost:3000/user/package-history', { 
+        const response = await axios.post('https://post-backend-2f54f7162fc4.herokuapp.com/user/package-history', { 
           userID: userID
         });
         setPackages(response.data); 
@@ -44,9 +44,8 @@ const PackageHistory = () => {
     setModalData(null);
 
     try {
-      const response = await axios.post('http://localhost:3000/user/package-info', { 
-        trackingNumber: trackingNumber,
-        userID: userID
+      const response = await axios.post('https://post-backend-2f54f7162fc4.herokuapp.com/user/package-info', { 
+        trackingNumber: trackingNumber
       });
       console.log(response.data);
       setModalData(response.data);

@@ -29,7 +29,7 @@ const Login = () => {
     setErrMsg('');
 
     try {
-        const response = await axios.post('http://localhost:3000/guest/login', {
+        const response = await axios.post('https://post-backend-2f54f7162fc4.herokuapp.com/guest/login', {
             username: user,
             password: pwd,
         });
