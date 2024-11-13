@@ -31,7 +31,7 @@ const TrackPackage = () => {
     setIsTracking(true);
 
     try {
-      const response = await axios.post(`http://localhost:3000/guest/track`, {
+      const response = await axios.post(`https://post-backend-2f54f7162fc4.herokuapp.com/guest/track`, {
         trackingNumber: trackingNumber
       });
       const location = `${response.data.city}, ${response.data.state}`;

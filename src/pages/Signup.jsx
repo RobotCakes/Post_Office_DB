@@ -59,7 +59,7 @@ const Signup = () => {
         }
         try {
             console.log("Account Type:", accountType);
-            const response = await axios.post('http://localhost:3000/guest/signup', {
+            const response = await axios.post('https://post-backend-2f54f7162fc4.herokuapp.com/guest/signup', {
                 username: user,
                 password: pwd,
                 accountType: accountType
