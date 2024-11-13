@@ -15,6 +15,12 @@ import CustomerHome from "./pages/customer/customerHome";
 import PackageHistory from "./pages/customer/packageHistory";
 import PackageStatus from "./pages/customer/packageStatus";
 
+import BusinessHome from "./pages/business/businessHome";
+import BusinessHistory from "./pages/business/businessHistory";
+import BusinessStatus from "./pages/business/businessStatus";
+import BusinessProfile from "./pages/business/businessProfile";
+import BusinessPackage from "./pages/business/businessPackage";
+
 import AdminHome from "./pages/admin/adminHome";
 import EmployeeHome from "./pages/employee/employeeHome";
 import ManagerHome from "./pages/employee/managerHome";
@@ -35,6 +41,8 @@ import ManageAllEmployees from "./pages/admin/manageAllEmployees";
 import AdminReports from "./pages/reports/adminReports";
 import ManagerReports from "./pages/reports/managerReports";
 
+import CustomerProfile from "./pages/customer/Profile";
+
 
 function App() {
   const [count, setCount] = useState(0)
@@ -53,6 +61,13 @@ function App() {
             <Route path="/customer-home" element={<CustomerHome />} />
             <Route path="/package-history" element={<PackageHistory />} />
             <Route path="/package-status" element={<PackageStatus />} />
+            <Route path="/customer-profile" element={<CustomerProfile />} />
+
+            <Route path ="/business-home" element={<BusinessHome />} />
+            <Route path ="/business-package-create" element={<BusinessPackage />} />
+            <Route path ="/business-history" element={<BusinessHistory />} />
+            <Route path ="/business-status" element={<BusinessStatus />} />
+            <Route path ="/business-profile" element={<BusinessProfile />} />
 
             <Route path="/employee-home" element={<EmployeeHome />} />
             <Route path="/admin-home" element={<AdminHome />} />

@@ -1,10 +1,79 @@
-import { useRef, useState, useEffect } from "react";
-import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
-import { Link, Routes, Route, useMatch, useResolvedPath } from "react-router-dom"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useState, useEffect } from "react";
+import { Link, useMatch, useResolvedPath, useNavigate } from "react-router-dom"
+import { CustomerNavbar } from "../../components/Navbars";
+import axios from 'axios';
+import "../../styles/manageSupplies.css";
 
-const packageHistory = () => {
+const PackageHistory = () => {
+  const [packages, setPackages] = useState([]);
+  const navigate = useNavigate();
+  const userID = localStorage.getItem('userID');
+  const userRole = localStorage.getItem('userRole');
+
+  useEffect(() => {
+    
+    const getHistory = async () => {
+      if (!userID) {
+        alert('User not logged in');
+        navigate('/');
+      }
+
+      try {
+        const response = await axios.post('http://localhost:3000/user/package-history', { 
+          userID: userID
+        });
+        setPackages(response.data); 
+      } catch (error) {
+        console.error('Error fetching packages:', error);
+        alert('Failed to fetch packages');
+      }
+    };
+
+    getHistory();
+  }, []);
 
 
-}
-export default packageHistory;
+  return (
+    <div className="container">
+      <CustomerNavbar />
+
+      <div className="manage-content">
+        <h1>Package History</h1>
+        <p>View package history below.</p>
+
+        {/* Packages Table */}
+        <table className="packages-table">
+          <thead>
+            <tr>
+              <th>Tracking Number</th>
+              <th>Status</th>
+              <th>Content</th>
+              <th>Time of Status</th>
+              <th>Sender Location</th>
+              <th>Receiver Location</th>
+            </tr>
+          </thead>
+          <tbody>
+            {packages.map((pkg) => {
+                const reformatDate = new Date(pkg.timeOfStatus).toLocaleString();
+                return (
+                  <tr key={pkg.id}>
+                    <td>{pkg.trackingNumber}</td>
+                    <td>{pkg.status}</td>
+                    <td>{pkg.packageContent}</td>
+                    <td>{reformatDate}</td>
+                  </tr>
+                );
+              })}
+          </tbody>
+        </table>
+      </div>
+
+      <footer className="footer">
+        <p>&copy; 2024 Texas Mail Services - Manage Packages. All rights reserved.</p>
+      </footer>
+    </div>
+  );
+};
+
+export default PackageHistory;

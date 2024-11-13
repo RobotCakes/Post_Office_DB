@@ -6,29 +6,6 @@ import { GuestNavbar } from "../components/Navbars";
 import '../styles/home.css';
 
 const Home = () => {
-  
-  function CustomLink({ to, children, ...props }) {
-    const resolvedPath = useResolvedPath(to);
-    const isActive = useMatch({ path: resolvedPath.pathname, end: true });
-    return (
-      <li className={isActive ? "active" : ""}>
-        <Link to={to} {...props}>
-          {children}
-        </Link>
-      </li>
-    );
-  }
-
-  const [searchQuery, setSearchQuery] = useState("");
-
-  const handleSearchChange = (e) => {
-    setSearchQuery(e.target.value);
-  };
-
-  const handleSearchSubmit = (e) => {
-    e.preventDefault();
-    console.log("Search submitted:", searchQuery);
-  };
 
   return (
     <div className="container">
@@ -78,15 +55,9 @@ const Home = () => {
     
       
 
-      <footer>
-        <div className="content-wrapper">
-          <p>&copy; 2024 Texas Mail Services. All rights reserved.</p>
-          <ul>
-            <li><Link to="/privacy-policy">Privacy Policy</Link></li>
-            <li><Link to="/terms-of-service">Terms of Service</Link></li>
-          </ul>
-        </div>
-      </footer>
+      <footer className="footer">
+          <p>&copy; 2024 Texas Mail Services - Employee Dashboard. All rights reserved.</p>
+        </footer>
     </div>
   );
 };

@@ -35,20 +35,22 @@ const Login = () => {
         });
 
         if (response.data.message === 'Login successful') {
-            const { ID: id, role } = response.data.user; 
+            const { ID, role } = response.data.user; 
 
             //Storing id and role locally so it can be used for querying later
-            localStorage.setItem('userId', id);
+            localStorage.setItem('userID', ID);
             localStorage.setItem('userRole', role);
 
             if(role === 'admin') {
                 navigate('/admin-home');
-            }else if(role === 'employee') {
+            }else if(role === 'employee'){
                 navigate('/employee-home');
-            }else if(role === 'customer' || role === 'business') {
+            }else if(role === 'customer'){
                 navigate('/customer-home');
             }else if(role === 'manager'){
                 navigate('/manager-home');
+            }else if (role === 'business'){
+                navigate('/business-home');
             }
             setSuccess(true);
         }

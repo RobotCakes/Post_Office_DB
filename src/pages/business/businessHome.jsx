@@ -4,18 +4,15 @@ import { Link, useMatch, useResolvedPath } from "react-router-dom"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { CustomerNavbar } from "../../components/Navbars";
 import '../../styles/home.css';
-
 const Home = () => {
-  const userID = localStorage.getItem('userID');
-  const userRole = localStorage.getItem('userRole');
-
+    const userID = localStorage.getItem('userID');
     return (
         <div className="container">
           <CustomerNavbar />
 
           <div className="home-content">
             <div className="content-wrapper">
-              <h1>Welcome, Customer!</h1>
+              <h1>Welcome!</h1>
               <p>Track packages on the move, view your package history, edit your profile or order some supplies!</p>
               
 
@@ -32,8 +29,8 @@ const Home = () => {
           </div>
 
           <footer className="footer">
-            <p>&copy; 2024 Texas Mail Services - Employee Dashboard. All rights reserved.</p>
-        </footer>
+            <p>&copy; 2024 Texas Mail Services - Manage Packages. All rights reserved.</p>
+          </footer>
         </div>
     )
 }

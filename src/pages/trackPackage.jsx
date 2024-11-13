@@ -36,26 +36,28 @@ const TrackPackage = () => {
       });
       const location = `${response.data.city}, ${response.data.state}`;
       const reformatDate = new Date(response.data.timeOfStatus).toLocaleString();
-      
+      const reformatExpected = new Date(response.data.expectedDelivery).toLocaleString();
+
       setTrackingResult({
           status: response.data.status,
           location: location,
-          timeOfStatus: reformatDate
+          timeOfStatus: reformatDate,
+          expectedDelivery: reformatExpected
       });
 
-  } catch (error) {
-      if (error.response && error.response.status === 404) {
-          setError("Tracking number not found.");
-      } else {
-          setError("Error fetching tracking information. Please try again later.");
-      }
-  } finally {
-      setIsTracking(false);
-  }
-  };
+    } catch (error) {
+        if (error.response && error.response.status === 404) {
+            setError("Tracking number not found.");
+        } else {
+            setError("Error fetching tracking information. Please try again later.");
+        }
+    } finally {
+        setIsTracking(false);
+    }
+    };
 
   return (
-    <div className="track-package">
+    <div className="container">
       <GuestNavbar />
       <h1>Track Your Package</h1>
       <form onSubmit={handleSubmit} style={{ maxWidth: "400px", margin: "0 auto" }}>
@@ -89,6 +91,7 @@ const TrackPackage = () => {
           <p>Status: {trackingResult.status}</p>
           <p>Current Location: {trackingResult.location}</p>
           <p>Time of Status: {trackingResult.timeOfStatus}</p>
+          <p>Expected Delivery: {trackingResult.expectedDelivery}</p>
         </div>
       )}
     </div>
