@@ -77,7 +77,7 @@ const Profile = () => {
             return;
         }
         try {
-            const response = await axios.put('http://localhost:3000/user/update-info', {
+            const response = await axios.post('http://localhost:3000/user/update-info', {
                 userID: userID,
                 firstName: firstName,
                 middleInitial: middleInit,
@@ -86,7 +86,8 @@ const Profile = () => {
                 city: city,
                 state: state,
                 zipcode: zip,
-                password: password
+                country: country,
+                password: pwd
             });
 
             if (response.data.success) {
@@ -198,7 +199,7 @@ const Profile = () => {
                                 <input
                                     type="text"
                                     value={country}
-                                    onChange={(e) => setState(e.target.value)}
+                                    onChange={(e) => setCountry(e.target.value)}
                                     required
                                     maxLength="56"
                                 />
