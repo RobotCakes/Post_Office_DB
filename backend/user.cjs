@@ -1,3 +1,4 @@
+// ------------ASHLEY-------------------------------------------------
 const express = require('express');
 const sql = require('mssql');
 const router = express.Router();
@@ -90,6 +91,7 @@ router.post('/package-info', async (req, res) => {
     }    
 });
 
+// "Add" package to user's statuses or history by updating senderUID or receiverUID
 router.post('/add-package', async (req, res) => { 
     const { trackingNumber, role, userID } = req.body
 
@@ -136,4 +138,57 @@ router.post('/add-package', async (req, res) => {
     }    
 });
 
+// Getting customer info the moment they load into the profile page
+router.post('/customer-info', async (req, res) => { 
+    const { userID } = req.body
+
+    if(!userID){
+        return res.status(400).json({ message: 'User not logged in.' });
+    }
+
+    try {
+        
+        const result = await pool.request()
+            .input('userID', sql.Int, userID)
+            .query(` 
+                SELECT firstName, middleInitial, lastName, streetAddress, city, state, zipcode, country, password
+                FROM customer
+                JOIN names ON name = nameID
+                JOIN addresses on address = addressID
+                WHERE UID = @userID;
+            `);
+        
+        res.json(result.recordset[0]);
+    } catch (error) {
+        console.error('Error fetching package info:', error.message);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }    
+});
+
+// Updating profile (NOT DONE)
+router.post('/update-info', async (req, res) => { 
+    const { userID, firstName, middleInitial, lastName, streetAddress, city, state, zipcode, password} = req.body
+
+    if(!userID){
+        return res.status(400).json({ message: 'User not logged in.' });
+    }
+
+    try {
+        const result = await pool.request()
+                    .input('trackingNumber', sql.Int, trackingNumber)
+                    .input('userID', sql.Int, userID)
+                    .query(` 
+                        UPDATE trackinginfo
+                        SET senderUID = @userID
+                        WHERE trackingNumber = @trackingNumber;
+                    `);
+        
+        res.json(result.recordset[0]);
+    } catch (error) {
+        console.error('Error fetching package info:', error.message);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }    
+});
+
 module.exports = router;
+// ------------ASHLEY (END)-------------------------------------------------

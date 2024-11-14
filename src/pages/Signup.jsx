@@ -49,6 +49,7 @@ const Signup = () => {
         setErrMsg('');
     }, [user, pwd, matchPwd]);
 
+    // ------------ASHLEY-------------------------------------------------
     const handleSubmit = async (e) => {
         e.preventDefault();
         const v1 = USER_REGEX.test(user);
@@ -78,6 +79,7 @@ const Signup = () => {
             }
         }
     };
+    // ------------ASHLEY (END)-------------------------------------------------
 
     return (
         <div className="container">

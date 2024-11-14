@@ -1,3 +1,4 @@
+// ------------ASHLEY (Repurposed from Alejandro's Guest Home)-------------------------------------------------
 import { useRef, useState, useEffect } from "react";
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { Link, useMatch, useResolvedPath } from "react-router-dom"
@@ -16,6 +17,7 @@ const Home = () => {
           <div className="home-content">
             <div className="content-wrapper">
               <h1>Welcome, Customer!</h1>
+              <h3>UID: {userID} </h3>
               <p>Track packages on the move, view your package history, edit your profile or order some supplies!</p>
               
 
@@ -36,3 +38,4 @@ const Home = () => {
 }
 
 export default Home;
+// ------------ASHLEY (END)-------------------------------------------------

@@ -1,8 +1,10 @@
+// ------------ASHLEY-------------------------------------------------
 const express = require('express');
 const sql = require('mssql');
 const router = express.Router();
 const pool = require('./index.cjs'); 
 
+// Login auth
 router.post('/login', async (req, res) => {
     const { username, password } = req.body;
 
@@ -36,7 +38,7 @@ router.post('/login', async (req, res) => {
 });
 
 
-//Adding trigger to check for duplicate usernames in db
+// Improved sign up with a trigger to check for matching usernames
 router.post('/signup', async (req, res) => { 
     const { username, password, accountType } = req.body
 
@@ -56,8 +58,8 @@ router.post('/signup', async (req, res) => {
                         VALUES (@username, @password, GETDATE())
                     `);
                 
-                //Done after the customer insert in case the trigger for username goes off
-                const nameResult = await pool.request() //Inserting nulls so the user can fill it out later
+                // Done after the customer insert in case the trigger for username goes off
+                const nameResult = await pool.request() // Inserting nulls so the user can fill it out later
                     .query(`
                         INSERT INTO names (firstName, middleInitial, lastName) 
                         VALUES (null, null, null); 
@@ -106,7 +108,7 @@ router.post('/signup', async (req, res) => {
                         VALUES (@username, @password, GETDATE())
                     `);
 
-                //Same stuff as customer just some changes to ownerName and warehouseAddress     
+                // Same stuff as customer just some changes to ownerName and warehouseAddress     
                 const nameResult = await pool.request()
                     .query(`
                         INSERT INTO names (firstName, middleInitial, lastName) 
@@ -156,7 +158,7 @@ router.post('/signup', async (req, res) => {
     }
 });
 
-
+// Return status but it's like a simplified version
 router.post('/track', async (req, res) => {
     const { trackingNumber } = req.body;
 
@@ -189,3 +191,4 @@ router.post('/track', async (req, res) => {
 });
 
 module.exports = router;
+// ------------ASHLEY (END)-------------------------------------------------

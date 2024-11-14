@@ -32,13 +32,41 @@
 
 .packages-table {
   width: 100%;
-  border-collapse: collapse;
-  margin: 20px 0;
+  border-collapse: collapse; 
+  margin-top: 20px;
+  background-color: #dfe3e6;
+  font-size: 16px;
+  text-align: left;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.packages-table th, .packages-table td {
-  padding: 10px;
-  border: 1px solid #ddd;
+
+.packages-table th {
+  background-color: #282c34;
+  color: white;
+  padding: 12px 15px;
+  font-weight: bold;
+  border-bottom: 2px solid #0056b3; 
+  text-align: center;
+}
+
+.packages-table tr {
+  border-bottom: 1px solid #dddddd;
+}
+
+.packages-table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.packages-table tr:hover {
+  background-color: #f0f0f0;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.packages-table td {
+  padding: 12px 15px;
+  font-size: 14px;
+  color: #333; 
   text-align: center;
 }
 
@@ -115,6 +143,15 @@ footer a:hover {
 
 .custom-modal input[type="radio"], .custom-modal select {
   margin-right: 10px;
+}
+
+.custom-modal input[type="text"]{
+    background-color: #d8d8d8; 
+    border: 2px solid #888888;
+    padding: 10px;
+    border-radius: 5px; 
+    color: #333333; 
+    font-size: 16px; 
 }
 
 .custom-modal label {

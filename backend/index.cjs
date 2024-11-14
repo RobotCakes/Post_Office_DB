@@ -1,4 +1,5 @@
-//Connecting to DB
+// ------------ASHLEY-------------------------------------------------
+// Connecting to DB
 const sql = require('mssql');
 const config = {
     user: 'ashley',
@@ -33,7 +34,7 @@ const express = require('express');
 const session = require('express-session');
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
