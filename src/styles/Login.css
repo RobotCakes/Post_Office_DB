@@ -14,7 +14,6 @@
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    background-color: #242424;
 }
 
 .login-form {
@@ -41,6 +40,7 @@
     margin-bottom: 5px;
     text-align: left;
 }
+
 
 .login-input {
     width: 100%;

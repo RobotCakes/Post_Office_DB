@@ -24,6 +24,7 @@ const Login = () => {
       setErrMsg('');
   }, [user, pwd]);
 
+  // ------------ASHLEY-------------------------------------------------
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrMsg('');
@@ -68,6 +69,7 @@ const Login = () => {
         }
     }
   };
+  // ------------ASHLEY (END)-------------------------------------------------
 
   return (
     <div className="container">
