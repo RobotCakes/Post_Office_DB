@@ -167,25 +167,69 @@ router.post('/customer-info', async (req, res) => {
 
 // Updating profile (NOT DONE)
 router.post('/update-info', async (req, res) => { 
-    const { userID, firstName, middleInitial, lastName, streetAddress, city, state, zipcode, password} = req.body
+    const { userID, firstName, middleInitial, lastName, streetAddress, city, state, zipcode, country, password} = req.body
 
     if(!userID){
         return res.status(400).json({ message: 'User not logged in.' });
     }
 
     try {
-        const result = await pool.request()
-                    .input('trackingNumber', sql.Int, trackingNumber)
-                    .input('userID', sql.Int, userID)
-                    .query(` 
-                        UPDATE trackinginfo
-                        SET senderUID = @userID
-                        WHERE trackingNumber = @trackingNumber;
-                    `);
+        const nameResult = await pool.request()
+            .input('userID', sql.Int, userID)
+            .query(`
+                SELECT name 
+                FROM customer 
+                WHERE UID = @userID;
+            `);
+
+        const nameID = nameResult.recordset[0].name;
+
+        const addressResult = await pool.request()
+            .input('userID', sql.Int, userID)
+            .query(`
+                SELECT address 
+                FROM customer 
+                WHERE UID = @userID;
+            `);
+
+        const addressID = addressResult.recordset[0].address;
+
+        await pool.request()
+            .input('firstName', sql.VarChar, firstName)
+            .input('lastName', sql.VarChar, lastName)
+            .input('middleInitial', sql.VarChar, middleInitial)
+            .input('nameID', sql.Int, nameID)
+            .query(`
+                UPDATE names
+                SET firstName = @firstName, lastName = @lastName, middleInitial = @middleInitial
+                WHERE nameID = @nameID;
+            `);
         
-        res.json(result.recordset[0]);
+        await pool.request()
+            .input('streetAddress', sql.VarChar, streetAddress)
+            .input('city', sql.VarChar, city)
+            .input('state', sql.VarChar, state)
+            .input('zipcode', sql.Int, zipcode)
+            .input('country', sql.VarChar, country)
+            .input('addressID', sql.Int, addressID)
+            .query(`
+                UPDATE addresses
+                SET streetAddress = @streetAddress, city = @city, state = @state, zipcode = @zipcode, country = @country
+                WHERE addressID = @addressID;
+            `);
+        
+        await pool.request()
+            .input('userID', sql.Int, userID)
+            .input('password', sql.VarChar, password)
+            .query(`
+                UPDATE customer
+                SET password = @password
+                WHERE UID = @userID;
+            `);
+        
+        res.json({ success: true });
     } catch (error) {
-        console.error('Error fetching package info:', error.message);
+        console.error('Error updating user info:', error.message);
         res.status(500).json({ message: 'Internal Server Error' });
     }    
 });
