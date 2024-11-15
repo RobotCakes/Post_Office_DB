@@ -73,4 +73,15 @@
 .error-msg{
     color:red;
 }
-
+.input-field {
+    flex-grow: 1;
+    padding: 10px; 
+    background-color: #d8d8d8; 
+    border: 2px solid #888888;
+    border-radius: 5px; 
+    font-size: 16px; 
+    font-family: inherit; 
+    box-sizing: border-box; 
+    color: #333333;
+    width: 80%;
+}

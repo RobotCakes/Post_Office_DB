@@ -116,6 +116,16 @@ footer a:hover {
   transition: color 0.2s ease;
 }
 
+.error-message {
+  color: red;
+  font-size: 14px;
+  margin-top: 10px;
+  text-align: center; 
+  margin-left: auto; 
+  margin-right: auto; 
+  width: fit-content; 
+}
+
 .custom-modal {
   position: absolute;
   top: 50%;

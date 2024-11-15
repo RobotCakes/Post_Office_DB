@@ -131,16 +131,22 @@ const PackageHistory = () => {
           <div>
             <h2>Package Information</h2>
             <h3>Sender</h3>
-            <p>{modalData[0].senderLastName}, {modalData[0].senderFirstName} {modalData[0].senderMI} {modalData[0].senderStreet}, {modalData[0].senderCity}, {modalData[0].senderState} {modalData[0].senderZip}</p>
+            <p>{modalData[0].senderLastName}, {modalData[0].senderFirstName} {modalData[0].senderMI} {modalData[0].senderStreet}, {modalData[0].senderCity}, {modalData[0].senderState} {modalData[0].senderZip}, {modalData[0].senderCountry}</p>
 
             <h3>Receiver</h3>
-            <p>{modalData[0].receiverLastName}, {modalData[0].receiverFirstName} {modalData[0].receiverMI} {modalData[0].receiverStreet}, {modalData[0].receiverCity}, {modalData[0].receiverState} {modalData[0].receiverZip}</p>
+            <p>{modalData[0].receiverLastName}, {modalData[0].receiverFirstName} {modalData[0].receiverMI} {modalData[0].receiverStreet}, {modalData[0].receiverCity}, {modalData[0].receiverState} {modalData[0].receiverZip}, {modalData[0].receiverCountry}</p>
 
             <h3>Content</h3>
             <p>{modalData[0].packageContent}</p>
 
             <h3>Expected Delivery</h3>
             <p>{new Date(modalData[0].expectedDelivery).toLocaleString()}</p>
+
+            <h3>Package Details</h3>
+            <p>
+              {modalData[0].fragile ? "Fragile, " : ""}{modalData[0].delivery ? "Delivery" : "Pick-up at Post Office"}<br />
+              <strong>Special Instructions: </strong>{modalData[0].specialInstructions || "None"}
+            </p>
 
           </div>
         )}

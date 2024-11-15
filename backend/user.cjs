@@ -72,10 +72,12 @@ router.post('/package-info', async (req, res) => {
                         senderAddress.city AS senderCity,
                         senderAddress.state AS senderState,
                         senderAddress.zipcode AS senderZip,
+                        senderAddress.country AS senderCountry,
                         receiverAddress.streetAddress AS receiverStreet, 
                         receiverAddress.city AS receiverCity,
                         receiverAddress.state AS receiverState,
                         receiverAddress.zipcode AS receiverZip,
+                        receiverAddress.country AS receiverCountry,
                         senderName.firstName AS senderFirstName,
                         senderName.middleInitial AS senderMI,
                         senderName.lastName AS senderLastName,
@@ -83,6 +85,9 @@ router.post('/package-info', async (req, res) => {
                         receiverName.middleInitial AS receiverMI,
                         receiverName.lastName AS receiverLastName,
                         package.packageContent,
+                        package.isDelivery,
+                        package.isFragile,
+                        package.specialInstructions,
                         trackinginfo.expectedDelivery
                 FROM trackinginfo
                 JOIN package ON package.trackingNumber = trackinginfo.trackingNumber
@@ -102,7 +107,8 @@ router.post('/package-info', async (req, res) => {
 
 // "Add" package to user's statuses or history by updating senderUID or receiverUID
 router.post('/add-package', async (req, res) => { 
-    const { trackingNumber, role, userID } = req.body
+    let { trackingNumber, role, userID } = req.body
+    userID = parseInt(userID, 10);
 
     if (!trackingNumber || !role) {
         return res.status(400).json({ message: 'Nothing was entered.' });
@@ -112,9 +118,29 @@ router.post('/add-package', async (req, res) => {
         return res.status(400).json({ message: 'User not logged in.' });
     }
 
+
     try {
+        // Checks to make sure sender and receiver aren't the same
+        const result = await pool.request()
+            .input('trackingNumber', sql.Int, trackingNumber)
+            .query('SELECT senderUID, receiverUID FROM trackinginfo WHERE trackingNumber = @trackingNumber');
+        
+        if (result.recordset.length === 0) {
+            return res.status(404).json({ message: 'Tracking number not found.' });
+        }
+
+        const currentSenderUID = result.recordset[0].senderUID;
+        const currentReceiverUID = result.recordset[0].receiverUID;
+
+        if (role === 'sender' && userID === currentReceiverUID) {
+            return res.status(400).json({ message: 'Sender and receiver cannot be the same.' });
+        } else if (role === 'receiver' && userID === currentSenderUID) {
+            return res.status(400).json({ message: 'Sender and receiver cannot be the same.' });
+        }
+
         if(role === 'sender'){
             try {
+
                 await pool.request()
                     .input('trackingNumber', sql.Int, trackingNumber)
                     .input('userID', sql.Int, userID)
@@ -129,6 +155,7 @@ router.post('/add-package', async (req, res) => {
                 res.status(500).json({ message: 'Internal Server Error' });
             }  
         }else if(role === 'receiver'){
+
             await pool.request()
                     .input('trackingNumber', sql.Int, trackingNumber)
                     .input('userID', sql.Int, userID)
@@ -143,7 +170,7 @@ router.post('/add-package', async (req, res) => {
         }
         
     } catch (error) {
-        console.error('Error fetching package info:', error.message);
+        console.error('Error adding package info:', error.message);
         res.status(500).json({ message: 'Internal Server Error' });
     }    
 });

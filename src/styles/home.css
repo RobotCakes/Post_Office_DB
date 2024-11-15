@@ -32,8 +32,8 @@
 
 /* Search bar styles */
 input[type="text"] {
-  width: 100%;
-  max-width: 500px;
+  width: 600px;
+  max-width: none;
   padding: 0.75rem;
   font-size: 16px;
   border-radius: 5px;

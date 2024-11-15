@@ -117,14 +117,14 @@ const Profile = () => {
                     <form onSubmit={handleSubmit} className="profile-form">
                         <div className="input-format">
                             <label>
-                                Password: 
+                                Password:   </label>
                                 <input
                                     type="password"
                                     value={pwd}
                                     onChange={handlePasswordChange}
                                     required
                                 />
-                            </label>
+                            
                             {errMsg && <p className="error-msg">{errMsg}</p>}
                             <div className="password-requirements">
                                 <ul >
@@ -137,7 +137,7 @@ const Profile = () => {
                             </div>
                             <br />
                             <label>
-                                First Name:
+                                First Name:  </label>
                                 <input
                                     type="text"
                                     value={firstName}
@@ -145,20 +145,20 @@ const Profile = () => {
                                     required
                                     maxLength="20"
                                 />
-                            </label>
+                            
                             <br />
                             <label>
-                                Middle Initial:
+                                Middle Initial:   </label>
                                 <input
                                     type="text"
                                     value={middleInit}
                                     onChange={(e) => setMiddleInit(e.target.value)}
                                     maxLength="1"
                                 />
-                            </label>
+                            
                             <br />
                             <label>
-                                Last Name:
+                                Last Name:  </label>
                                 <input
                                     type="text"
                                     value={lastName}
@@ -166,10 +166,10 @@ const Profile = () => {
                                     required
                                     maxLength="20"
                                 />
-                            </label>
+                            
                             <br />
                             <label>
-                                Business Name:
+                                Business Name: </label>
                                 <input
                                     type="text"
                                     value={businessName}
@@ -177,10 +177,10 @@ const Profile = () => {
                                     required
                                     maxLength="50"
                                 />
-                            </label>
+                            
                             <br />
                             <label>
-                                Street Address:
+                                Street Address: </label>
                                 <input
                                     type="text"
                                     value={street}
@@ -188,12 +188,12 @@ const Profile = () => {
                                     required
                                     maxLength="50"
                                 />
-                            </label>
+                            
                             <br />
                             
                             
                             <label>
-                                Email:
+                                Email: </label>
                                 <input
                                     type="text"
                                     value={email}
@@ -201,10 +201,10 @@ const Profile = () => {
                                     required
                                     maxLength="30"
                                 />
-                            </label>
+                            
                             <br />
                             <label>
-                                City:
+                                City: </label>
                                 <input
                                     type="text"
                                     value={city}
@@ -212,10 +212,10 @@ const Profile = () => {
                                     required
                                     maxLength="20"
                                 />
-                            </label>
+                            
                             <br />
                             <label>
-                                State:
+                                State: </label>     
                                 <input
                                     type="text"
                                     value={state}
@@ -223,10 +223,9 @@ const Profile = () => {
                                     required
                                     maxLength="2"
                                 />
-                            </label>
+                            
                             <br />
-                            <label>
-                                Country:
+                            <label> Country: </label>
                                 <input
                                     type="text"
                                     value={country}
@@ -234,10 +233,9 @@ const Profile = () => {
                                     required
                                     maxLength="56"
                                 />
-                            </label>
+                            
                             <br />
-                            <label>
-                                Zip Code:
+                            <label> Zip Code: </label>
                                 <input
                                     type="text"
                                     value={zip}
@@ -251,7 +249,7 @@ const Profile = () => {
                                     maxLength="5"
                                     pattern="\d{5}"
                                 />
-                            </label>
+                            
                         </div>
                         <button type="submit">Save Changes</button>
                     </form>
