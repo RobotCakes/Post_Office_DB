@@ -54,7 +54,7 @@ const packageStatus = () => {
 
     try{
 
-      const response = await axios.post('https://post-backend-2f54f7162fc4.herokuapp.com/user/package-info', { 
+      const response = await axios.post('http://localhost:3000/user/package-info', { 
             trackingNumber: trackingNumber
         });
       console.log(response.data);
@@ -164,14 +164,17 @@ const packageStatus = () => {
         {modalData && (
           <div>
             <h2>Package Information</h2>
-            <h3>Sender Address</h3>
-            <p>{modalData[0].senderStreet}, {modalData[0].senderCity}, {modalData[0].senderState} {modalData[0].senderZip}</p>
+            <h3>Sender</h3>
+            <p>{modalData[0].senderLastName}, {modalData[0].senderFirstName} {modalData[0].senderMI} {modalData[0].senderStreet}, {modalData[0].senderCity}, {modalData[0].senderState} {modalData[0].senderZip}</p>
 
-            <h3>Receiver Address</h3>
-            <p>{modalData[0].receiverStreet}, {modalData[0].receiverCity}, {modalData[0].receiverState} {modalData[0].receiverZip}</p>
+            <h3>Receiver</h3>
+            <p>{modalData[0].receiverLastName}, {modalData[0].receiverFirstName} {modalData[0].receiverMI} {modalData[0].receiverStreet}, {modalData[0].receiverCity}, {modalData[0].receiverState} {modalData[0].receiverZip}</p>
 
             <h3>Content</h3>
             <p>{modalData[0].packageContent}</p>
+
+            <h3>Expected Delivery</h3>
+            <p>{new Date(modalData[0].expectedDelivery).toLocaleString()}</p>
 
           </div>
         )}

@@ -42,6 +42,10 @@ container {
     text-align: left;
 }
 
+.signup-container p, h1{
+    color:black;
+}
+
 .signup-container .btn {
     display: inline-block;
     background-color: #007BFF;
