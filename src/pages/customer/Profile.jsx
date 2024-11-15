@@ -18,6 +18,8 @@ const Profile = () => {
     const [zip, setZip] = useState('');
     const [country, setCountry] = useState('');
     const [pwd, setPwd] = useState('');
+    const [email, setEmail] = useState('');
+    const [phoneNumber, setPhoneNumer] = useState('');
     const [pwdValid, setPwdValid] = useState(false);
     const [errMsg, setErrMsg] = useState('');
     const userID = localStorage.getItem('userID');
@@ -46,7 +48,7 @@ const Profile = () => {
           }
     
           try {
-            const response = await axios.post('http://localhost:3000/user/customer-info', { 
+            const response = await axios.post('https://post-backend-2f54f7162fc4.herokuapp.com/user/customer-info', { 
               userID: userID
             });
             
@@ -59,6 +61,8 @@ const Profile = () => {
             setZip(response.data.zipcode);
             setCountry(response.data.country);
             setPwd(response.data.password);
+            setPhoneNumer(response.data.phoneNumber);
+            setEmail(response.data.email);
 
           } catch (error) {
             console.error('Error getting user info:', error);
@@ -77,7 +81,7 @@ const Profile = () => {
             return;
         }
         try {
-            const response = await axios.post('http://localhost:3000/user/update-info', {
+            const response = await axios.post('https://post-backend-2f54f7162fc4.herokuapp.com/user/update-info', {
                 userID: userID,
                 firstName: firstName,
                 middleInitial: middleInit,
@@ -87,7 +91,9 @@ const Profile = () => {
                 state: state,
                 zipcode: zip,
                 country: country,
-                password: pwd
+                password: pwd,
+                phoneNumber: phoneNumber,
+                email: email
             });
 
             if (response.data.success) {
@@ -169,6 +175,29 @@ const Profile = () => {
                                     onChange={(e) => setStreet(e.target.value)}
                                     required
                                     maxLength="50"
+                                />
+                            </label>
+                            <br />
+                            <label>
+                                Phone Number:
+                                <input
+                                    type="text"
+                                    value={phoneNumber}
+                                    onChange={(e) => setPhoneNumer(e.target.value)}
+                                    required
+                                    maxLength="20"
+                                />
+                            </label>
+                            <br />
+                            
+                            <label>
+                                Email:
+                                <input
+                                    type="text"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    required
+                                    maxLength="30"
                                 />
                             </label>
                             <br />

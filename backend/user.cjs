@@ -106,7 +106,7 @@ router.post('/add-package', async (req, res) => {
     try {
         if(role === 'sender'){
             try {
-                const result = await pool.request()
+                await pool.request()
                     .input('trackingNumber', sql.Int, trackingNumber)
                     .input('userID', sql.Int, userID)
                     .query(` 
@@ -114,13 +114,13 @@ router.post('/add-package', async (req, res) => {
                         SET senderUID = @userID
                         WHERE trackingNumber = @trackingNumber;
                     `);
-        
+                res.json({ success: true });
             } catch (error) {
                 console.error('Error updating sender UID:', error.message);
                 res.status(500).json({ message: 'Internal Server Error' });
             }  
         }else if(role === 'receiver'){
-            const result = await pool.request()
+            await pool.request()
                     .input('trackingNumber', sql.Int, trackingNumber)
                     .input('userID', sql.Int, userID)
                     .query(` 
@@ -128,6 +128,7 @@ router.post('/add-package', async (req, res) => {
                         SET receiverUID = @userID
                         WHERE trackingNumber = @trackingNumber;
                     `);
+            res.json({ success: true });
         }else{
             return res.status(400).json({ message: 'Invalid role.' });
         }
@@ -151,7 +152,7 @@ router.post('/customer-info', async (req, res) => {
         const result = await pool.request()
             .input('userID', sql.Int, userID)
             .query(` 
-                SELECT firstName, middleInitial, lastName, streetAddress, city, state, zipcode, country, password
+                SELECT firstName, middleInitial, lastName, streetAddress, city, state, zipcode, country, password, phoneNumber, email
                 FROM customer
                 JOIN names ON name = nameID
                 JOIN addresses on address = addressID
@@ -165,9 +166,9 @@ router.post('/customer-info', async (req, res) => {
     }    
 });
 
-// Updating profile (NOT DONE)
+// Updating profile
 router.post('/update-info', async (req, res) => { 
-    const { userID, firstName, middleInitial, lastName, streetAddress, city, state, zipcode, country, password} = req.body
+    const { userID, firstName, middleInitial, lastName, streetAddress, city, state, zipcode, country, password, email, phoneNumber} = req.body
 
     if(!userID){
         return res.status(400).json({ message: 'User not logged in.' });
@@ -221,9 +222,11 @@ router.post('/update-info', async (req, res) => {
         await pool.request()
             .input('userID', sql.Int, userID)
             .input('password', sql.VarChar, password)
+            .input('phoneNumber', sql.VarChar, phoneNumber)
+            .input('email', sql.VarChar, email)
             .query(`
                 UPDATE customer
-                SET password = @password
+                SET password = @password, phoneNumber = @phoneNumber, email = @email
                 WHERE UID = @userID;
             `);
         

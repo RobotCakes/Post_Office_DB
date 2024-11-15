@@ -68,26 +68,37 @@ const packageStatus = () => {
   };
 
 
+  const handleOpenAddPackageModal = () => {
+    setIsAddOpen(true); 
+  };
+
   const handleAddPackage = async (e) => {
-    setIsAddOpen(true);
-    setLoading(true);
-    setError("");
-    setModalData(null);
-    
+      e.preventDefault();  
+      setLoading(true);
+      setError(""); 
+      setModalData(null);
+      
+      if (!trackingNumber || !role) {
+        setError('Please provide both tracking number and role.');
+        setLoading(false);
+        return;
+    }
 
-    try {
-        const response = await axios.post('https://post-backend-2f54f7162fc4.herokuapp.com/user/add-package', { 
-            trackingNumber: trackingNumber,
-            role: role,
-            userID: userID
-        });
+      try {
+          const response = await axios.post('https://post-backend-2f54f7162fc4.herokuapp.com/user/add-package', { 
+              trackingNumber: trackingNumber,
+              role: role,
+              userID: userID
+          });
 
-        setIsAddOpen(false);
-        setTrackingNumber('');
-        setRole('');
-
-    } catch (err) {
-        setError("Failed to fetch package details. Please try again.");
+          if (response.data.success) {
+              alert('Package added.');
+              setIsAddOpen(false); 
+              setTrackingNumber('');
+              setRole('');
+          }
+      } catch (err) {
+          setError("Failed to add package. Please try again.");
     } finally {
         setLoading(false);
     }
@@ -100,7 +111,7 @@ const packageStatus = () => {
         <h1>Package Status</h1>
         <p>View all live packages.</p>
         <p>Don't see your package?</p>
-        <button onClick={handleAddPackage} className="package-button">
+        <button onClick={handleOpenAddPackageModal} className="package-button">
           Add Package
         </button>
 
@@ -171,7 +182,7 @@ const packageStatus = () => {
        {/* For "adding" packages */} 
        <ReactModal
         isOpen={isAddOpen}
-        onRequestClose={() => setIsAddOpen(false)} // Close the modal when the user clicks on "Cancel"
+        onRequestClose={() => setIsAddOpen(false)}
         contentLabel="Add Package"
         className="custom-modal"
         overlayClassName="custom-overlay"
