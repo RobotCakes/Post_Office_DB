@@ -84,7 +84,23 @@ export function ManagerNavbar(){
 
 
 export function BusinessNavbar(){
-
+  const navigate = useNavigate();
+  return(
+    
+      <nav className="nav">
+          <Link to="/business-home" className="homePage">Texas Mail Services</Link>
+          <ul>
+              <CustomLink to="/business-home">Home</CustomLink>
+              <CustomLink to="/business-history">Package History</CustomLink>
+              <CustomLink to="/business-status">Package Status</CustomLink>
+              <CustomLink to="/business-create-package">Create Package</CustomLink>
+              <CustomLink to="/business-profile">Profile</CustomLink>
+          </ul>
+          <button onClick={() => handleLogout(navigate)} className="logout-button">
+                Logout
+          </button>
+      </nav>
+  )
 }
 
 export function AdminNavbar(){

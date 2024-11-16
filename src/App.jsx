@@ -65,7 +65,7 @@ function App() {
             <Route path="/customer-profile" element={<CustomerProfile />} />
 
             <Route path ="/business-home" element={<BusinessHome />} />
-            <Route path ="/business-package-create" element={<BusinessPackage />} />
+            <Route path ="/business-create-package" element={<BusinessPackage />} />
             <Route path ="/business-history" element={<BusinessHistory />} />
             <Route path ="/business-status" element={<BusinessStatus />} />
             <Route path ="/business-profile" element={<BusinessProfile />} />

@@ -4,6 +4,22 @@ import { Link, Routes, Route, useMatch, useResolvedPath } from "react-router-dom
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const managePackage = () => {
+
+    const userID = localStorage.getItem('userID');
+    const userRole = localStorage.getItem('userRole');
+
+    useEffect(() => {
+    
+      const getInfo = async () => {
+          if (!userID || userRole != 'employee') {
+              alert('User not logged in');
+              navigate('/');
+          }
+      };
+
+      getInfo();
+    }, []);
+
     // State for managing packages data
     const [packages, setPackages] = useState([
       { id: 1, trackingNumber: "123ABC", status: "In Transit", destination: "New York, NY" },

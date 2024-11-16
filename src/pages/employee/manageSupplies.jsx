@@ -5,6 +5,21 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "../../styles/manageSupplies.css";
 
 const manageSupplies = () => {
+    const userID = localStorage.getItem('userID');
+    const userRole = localStorage.getItem('userRole');
+
+    useEffect(() => {
+    
+      const getInfo = async () => {
+          if (!userID || userRole != 'employee') {
+              alert('User not logged in');
+              navigate('/');
+          }
+      };
+
+      getInfo();
+    }, []);
+    
     // Supplies data state
     const [supplies, setSupplies] = useState([
       { id: 1, name: "Tape", quantity: 5, status: "Low" },

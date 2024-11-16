@@ -10,6 +10,18 @@ const Home = () => {
   const userID = localStorage.getItem('userID');
   const userRole = localStorage.getItem('userRole');
 
+  useEffect(() => {
+    
+    const getInfo = async () => {
+        if (!userID || userRole != 'customer') {
+            alert('User not logged in');
+            navigate('/');
+          }
+    };
+
+    getInfo();
+  }, []); 
+
     return (
         <div className="container">
           <CustomerNavbar />

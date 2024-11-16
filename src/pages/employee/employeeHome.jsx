@@ -6,7 +6,20 @@ import { EmployeeNavbar } from "../../components/Navbars";
 import '../../styles/employeeHome.css';
 
 const EmployeeHome = () => {
+    const userID = localStorage.getItem('userID');
+    const userRole = localStorage.getItem('userRole');
+
+    useEffect(() => {
     
+      const getInfo = async () => {
+          if (!userID || userRole != 'employee') {
+              alert('User not logged in');
+              navigate('/');
+          }
+      };
+
+      getInfo();
+    }, []);
   
     return (
       <div className="container">
