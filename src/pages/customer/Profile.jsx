@@ -42,10 +42,10 @@ const Profile = () => {
     useEffect(() => {
     
         const getInfo = async () => {
-          if (!userID) {
-            alert('User not logged in');
-            navigate('/');
-          }
+            if (!userID || userRole != 'customer') {
+                alert('User not logged in');
+                navigate('/');
+              }
     
           try {
             const response = await axios.post('https://post-backend-2f54f7162fc4.herokuapp.com/user/customer-info', { 

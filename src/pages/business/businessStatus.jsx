@@ -27,7 +27,7 @@ const packageStatus = () => {
   useEffect(() => {
     
     const getStatus = async () => {
-      if (!userID) {
+      if (!userID || userRole != 'business') {
         alert('User not logged in');
         navigate('/');
       }

@@ -42,10 +42,10 @@ const Profile = () => {
     useEffect(() => {
     
         const getInfo = async () => {
-          if (!userID) {
-            alert('User not logged in');
-            navigate('/');
-          }
+            if (!userID || userRole != 'business') {
+                alert('User not logged in');
+                navigate('/');
+            }
     
           try {
             const response = await axios.post('http://localhost:3000/user/business-info', { 

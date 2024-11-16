@@ -31,6 +31,18 @@ const CreatePackage = () => {
         e.preventDefault();  
     };
 
+    useEffect(() => {
+    
+        const getInfo = async () => {
+            if (!userID || userRole != 'business') {
+                alert('User not logged in');
+                navigate('/');
+            }
+        };
+    
+        getInfo();
+      }, []); 
+
     // These forms look so bad but I need them functional
     return (
         <div className="container">

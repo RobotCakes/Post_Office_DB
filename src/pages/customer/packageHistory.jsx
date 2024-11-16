@@ -19,7 +19,7 @@ const PackageHistory = () => {
   useEffect(() => {
     
     const getHistory = async () => {
-      if (!userID) {
+      if (!userID || userRole != 'customer') {
         alert('User not logged in');
         navigate('/');
       }
