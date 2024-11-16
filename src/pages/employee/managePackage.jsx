@@ -24,7 +24,7 @@ const managePackage = () => {
           <ul>
             <li><Link to="/employee-home">Dashboard</Link></li>
             <li><Link to="/manage-packages" className="active">Manage Packages</Link></li>
-            <li><Link to="/employee-supplies">Supplies</Link></li>
+            <li><Link to="/manage-supplies">Manage Supplies</Link></li>
             <li><Link to="/incoming-packages">Incoming Packages</Link></li>
             <li><Link to="/employee-profile">Profile</Link></li>
             <li><Link to="/logout">Logout</Link></li>

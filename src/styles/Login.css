@@ -73,11 +73,18 @@
     background-color: #f8d7da;
     padding: 10px;
     border-radius: 5px;
-    margin-bottom: 15px;
+    margin-bottom: 25px;
+    height: 30px; /* Reserve space for the message */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+    transition: opacity 0.3s ease;
 }
 
 .offscreen {
     display: none;
+    visibility: hidden;
 }
 
 .line {

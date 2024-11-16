@@ -64,7 +64,7 @@ export function EmployeeNavbar(){
       <Link to="/employee-home" className="homePage">Employee Dashboard</Link>
       <ul>
         <CustomLink to="/manage-packages">Manage Packages</CustomLink>
-        <CustomLink to="/employee-supplies">Manage Supplies</CustomLink>
+        <CustomLink to="/manage-supplies">Manage Supplies</CustomLink>
         <CustomLink to="/incoming-packages">Incoming Packages</CustomLink>
         <CustomLink to="/employee-profile">Profile</CustomLink>
         <li>

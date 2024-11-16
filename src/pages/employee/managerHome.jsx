@@ -25,7 +25,7 @@ const managerHome = () => {
                 <CustomLink to="/manage-packages">Manage Packages</CustomLink>
                 <CustomLink to="/manage-employee">Manage Employees</CustomLink>
                 <CustomLink to="/manage-truck">Manage Trucks</CustomLink>
-                <CustomLink to="/employee-supplies">Supplies</CustomLink>
+                <CustomLink to="/manage-supplies">Manage Supplies</CustomLink>
                 {/* NOT REAL PAGE, JUST PLACEHOLDER*/}
                 <CustomLink to="/incoming-packages">Incoming Packages</CustomLink>
                 <CustomLink to="/manager-reports">Reports</CustomLink>

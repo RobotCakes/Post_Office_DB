@@ -23,6 +23,7 @@ import BusinessPackage from "./pages/business/businessPackage";
 
 import AdminHome from "./pages/admin/adminHome";
 import EmployeeHome from "./pages/employee/employeeHome";
+import EmployeeProfile from "./pages/employee/employeeProfile";
 import ManagerHome from "./pages/employee/managerHome";
 import IncomingPackages from "./pages/employee/incomingPackages";
 import ManagePackage from "./pages/employee/managePackage";
@@ -77,6 +78,8 @@ function App() {
             <Route path="/manage-supplies" element={<ManageSupplies />} />
             <Route path="/manage-employees" element={<ManageEmployee />} />
             <Route path="/manage-trucks" element={<ManageTruck />} />
+            <Route path="/employee-profile" element={<EmployeeProfile />} />
+
 
             <Route path="/manage-all-locations" element={<ManageAllLocations />} />
             <Route path="/manage-all-offices" element={<ManageAllOffices />} />
