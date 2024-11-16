@@ -1,4 +1,4 @@
-/* incomingPackages.css */
+/* manageLocation.css */
 .container {
     display: flex;
     flex-direction: column;
@@ -49,20 +49,35 @@
     border-radius: 5px;
   }
   
-  .packages-table {
+  .locations-table {
     width: 100%;
     border-collapse: collapse;
     margin: 20px 0;
   }
   
-  .packages-table th, .packages-table td {
+  .locations-table th, .locations-table td {
     padding: 10px;
     border: 1px solid #ddd;
     text-align: center;
   }
   
-  .update-btn {
-    padding: 5px 10px;
+  .add-location-form {
+    text-align: left;
+    margin-top: 30px;
+    max-width: 400px;
+    width: 100%;
+  }
+  
+  .input-field, .select-field {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .add-location-button {
+    padding: 10px 20px;
     background-color: #28a745;
     color: #fff;
     border: none;
@@ -70,7 +85,7 @@
     cursor: pointer;
   }
   
-  .update-btn:hover {
+  .add-location-button:hover {
     background-color: #218838;
   }
   
