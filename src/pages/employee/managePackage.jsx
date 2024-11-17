@@ -23,25 +23,6 @@ const managePackage = () => {
       const [filterPackage, setFilterPackage] = useState([]);
       const [success, setSuccess] = useState('');
       const [isEditOpen, setIsEditOpen] = useState(false);
-      const [content, setContent] = useState('');
-      const [firstName, setFirstName] = useState('');
-      const [middleInitial, setMiddleInitial] = useState('');
-      const [lastName, setLastName] = useState('');
-      const [streetAddress, setStreet] = useState('');
-      const [city, setCity] = useState('');
-      const [state, setState] = useState('');
-      const [zipcode, setZipcode] = useState('');
-      const [country, setCountry] = useState('');
-      const [packageLength, setLength] = useState('');
-      const [packageHeight, setHeight] = useState('');
-      const [packageWidth, setWidth] = useState('');
-      const [weight, setWeight] = useState('');
-      const [isDelivery, setIsDelivery] = useState(false);
-      const [deliveryPriority, setPrio] = useState('');
-      const [isFragile, setFragile] = useState(false);
-      const [specialInstructions, setInst] = useState('');
-      const [deliverPrice, setPrice] = useState('');
-      const [senderUID, setUID] = useState('');
       const [deliveryPriorities, setDeliveryPriorities] = useState([]);
       const [offices, setOffices] = useState([]);
       const [selectedStatus, setSelectedStatus] = useState(null);
@@ -65,10 +46,10 @@ const managePackage = () => {
             setPackages(response.data); 
 
             const prioResponse = await axios.post('https://post-backend-2f54f7162fc4.herokuapp.com/data/get-prio');
-                setDeliveryPriorities(prioResponse.data);
+            setDeliveryPriorities(prioResponse.data);
 
             const officeResponse = await axios.post('https://post-backend-2f54f7162fc4.herokuapp.com/data/get-offices');
-              setOffices(officeResponse.data);
+            setOffices(officeResponse.data);
 
             const infoResponse = await axios.post('http://localhost:3000/employee/get-location', { userID });
             if (infoResponse.data && infoResponse.data.length > 0) {
@@ -187,6 +168,9 @@ const managePackage = () => {
     };
 
 
+    
+
+
     return (
       <div className="container">
         {userRole === 'employee' && <EmployeeNavbar />}
@@ -197,7 +181,7 @@ const managePackage = () => {
           <p>Create, view, and modify packages at the post office.</p>
           <p>Make sure to check package information before making any changes.</p>
 
-          <button className="create-button">
+          <button className="create-button" onClick={() => navigate('/create-package')}>
             Create Package
           </button>
 

@@ -120,7 +120,7 @@ router.post('/business-create-package', async (req, res) => {
             .input('trackingNumber', sql.Int, trackingNumber)
             .query(`
                 INSERT INTO statuses(state, updatedBy, timeOfStatus, currOID, PID, nextOID, userTypeUpdate, trackingNumber)
-                Values ('Created at Warehouse', @userID, GETDATE(), @nextOID, @PID, @nextOID, 'Business', @trackingNumber);
+                Values ('Created at Warehouse', @userID, GETDATE(), NULL, @PID, @nextOID, 'Business', @trackingNumber);
                 SELECT SCOPE_IDENTITY() AS SID;
             `);
 
