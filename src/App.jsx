@@ -9,11 +9,12 @@ import reactLogo from './assets/react.svg'
 import Home from "./pages/Home";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
-import TrackPackage from "./pages/trackPackage"
+import TrackPackage from "./pages/trackPackage";
 
 import CustomerHome from "./pages/customer/customerHome";
 import PackageHistory from "./pages/customer/packageHistory";
 import PackageStatus from "./pages/customer/packageStatus";
+import Supplies from "./pages/customer/supplies";
 
 import BusinessHome from "./pages/business/businessHome";
 import BusinessHistory from "./pages/business/businessHistory";
@@ -63,6 +64,7 @@ function App() {
             <Route path="/package-history" element={<PackageHistory />} />
             <Route path="/package-status" element={<PackageStatus />} />
             <Route path="/customer-profile" element={<CustomerProfile />} />
+            <Route path="/supplies" element={<Supplies />} />
 
             <Route path ="/business-home" element={<BusinessHome />} />
             <Route path ="/business-create-package" element={<BusinessPackage />} />
