@@ -28,7 +28,8 @@ module.exports = pool;
 
 
 const guestRouter = require('./guest.cjs');
-const userRouter = require('./user.cjs')
+const userRouter = require('./user.cjs');
+const dataRouter = require('./data.cjs');
 const cors = require('cors');
 const express = require('express');
 const session = require('express-session');
@@ -51,6 +52,7 @@ app.use(session({
 
 app.use('/guest', guestRouter);
 app.use('/user', userRouter);
+app.use('/data', dataRouter);
 
 app.listen(port, () => {
     console.log('Guest Router:', guestRouter);

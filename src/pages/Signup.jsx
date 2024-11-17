@@ -59,7 +59,7 @@ const Signup = () => {
             return;
         }
         try {
-            console.log("Account Type:", accountType);
+            
             const response = await axios.post('https://post-backend-2f54f7162fc4.herokuapp.com/guest/signup', {
                 username: user,
                 password: pwd,
@@ -73,7 +73,7 @@ const Signup = () => {
         } catch (error) {
             console.error('Signup error:', error);
             if (error.response && error.response.data.message) {
-                setErrMsg(error.response.data.message); //Mostly to handle matching usernames
+                setErrMsg(error.response.data.message); // Mostly to handle matching usernames
             } else {
                 setErrMsg('Signup failed, please try again');
             }

@@ -23,6 +23,7 @@ const Profile = () => {
     const [pwdValid, setPwdValid] = useState(false);
     const [errMsg, setErrMsg] = useState('');
     const userID = localStorage.getItem('userID');
+    const userRole = localStorage.getItem('userRole');
 
     const handlePasswordChange = (e) => {
         const password = e.target.value;
@@ -45,7 +46,7 @@ const Profile = () => {
             if (!userID || userRole != 'customer') {
                 alert('User not logged in');
                 navigate('/');
-              }
+            }
     
           try {
             const response = await axios.post('https://post-backend-2f54f7162fc4.herokuapp.com/user/customer-info', { 
@@ -237,7 +238,7 @@ const Profile = () => {
                             <label>
                                 Zip Code:
                                 <input
-                                    type="text"
+                                    type="number"
                                     value={zip}
                                     onChange={(e) => {
                                         const value = e.target.value;

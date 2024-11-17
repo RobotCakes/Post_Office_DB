@@ -144,7 +144,8 @@ const PackageHistory = () => {
 
             <h3>Package Details</h3>
             <p>
-              {modalData[0].fragile ? "Fragile, " : ""}{modalData[0].delivery ? "Delivery" : "Pick-up at Post Office"}<br />
+              {modalData[0].fragile ? "Fragile, " : ""}{modalData[0].delivery ? "Pick-up At Post Office": "Delivery"}<br />
+              {modalData[0].type} Delivery <br />
               <strong>Special Instructions: </strong>{modalData[0].specialInstructions || "None"}
             </p>
 

@@ -19,7 +19,7 @@ router.post('/package-history', async (req, res) => {
                 SELECT P.trackingNumber, S.state as status, P.packageContent, S.timeOfStatus
                 FROM trackinginfo as T, statuses as S, package as P
                 WHERE (T.senderUID = @userID OR T.receiverUID = @userID) AND P.trackingNumber = T.trackingNumber
-                        AND S.SID = T.currentStatus AND (S.state = 'Delivered' OR S.state = 'Cancelled');
+                        AND S.SID = T.currentStatus AND (S.state = 'Delivered' OR S.state = 'Cancelled') AND P.isDeleted = 'false';
             `);
         res.json(result.recordset);
     } catch (error) {
@@ -43,7 +43,8 @@ router.post('/package-status', async (req, res) => {
                 SELECT P.trackingNumber, S.state as status, S.timeOfStatus, A1.city as currentCity, A1.state as currentState, A2.city as nextCity, A2.state as nextState
                 FROM trackinginfo as T, statuses as S, package as P, office  as currOffice, office as nextOffice, addresses as A1, addresses as A2
                 WHERE (T.senderUID = @userID OR T.receiverUID = @userID) AND P.trackingNumber = T.trackingNumber
-                        AND S.SID = T.currentStatus AND (S.state <> 'Delivered' OR S.state <> 'Cancelled') 
+                        AND S.SID = T.currentStatus AND (S.state <> 'Delivered' OR S.state <> 'Cancelled')
+                        AND P.isDeleted = 'false' 
 						AND S.currOID = currOffice.OID AND currOffice.officeAddress = A1.addressID
 						AND S.nextOID = nextOffice.OID AND nextOffice.officeAddress = A2.addressID;
             `);
@@ -88,13 +89,15 @@ router.post('/package-info', async (req, res) => {
                         package.isDelivery,
                         package.isFragile,
                         package.specialInstructions,
-                        trackinginfo.expectedDelivery
+                        trackinginfo.expectedDelivery,
+                        dpr.type
                 FROM trackinginfo
                 JOIN package ON package.trackingNumber = trackinginfo.trackingNumber
                 JOIN addresses AS senderAddress ON trackinginfo.senderAddress = senderAddress.addressID
                 JOIN addresses AS receiverAddress ON trackinginfo.receiverAddress = receiverAddress.addressID
                 JOIN names AS senderName ON trackinginfo.senderName = senderName.nameID
                 JOIN names AS receiverName ON trackinginfo.receiverName = receiverName.nameID
+                JOIN deliveryprio AS dpr ON dpr.deliveryPrio = package.deliveryPriority
                 WHERE trackinginfo.trackingNumber = @trackingNumber;
             `);
 
