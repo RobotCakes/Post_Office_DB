@@ -27,6 +27,7 @@ const Home = () => {
           <div className="home-content">
             <div className="content-wrapper">
               <h1>Welcome!</h1>
+              <h3>UID: {userID}</h3>
               <p>Track packages on the move, view your package history, edit your profile or order some supplies!</p>
               
 

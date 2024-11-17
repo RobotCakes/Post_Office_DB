@@ -4,10 +4,12 @@ import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icon
 import { Link, useMatch, useResolvedPath } from "react-router-dom"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { BusinessNavbar } from "../../components/Navbars";
+import axios from 'axios';
 import '../../styles/profile.css';
 
 const CreatePackage = () => {
     const userID = localStorage.getItem('userID');
+    const userRole = localStorage.getItem('userRole');
     const [content, setContent] = useState('');
     const [firstName, setFirstName] = useState('');
     const [middleInitial, setMiddleInitial] = useState('');
@@ -21,14 +23,37 @@ const CreatePackage = () => {
     const [packageHeight, setHeight] = useState('');
     const [packageWidth, setWidth] = useState('');
     const [weight, setWeight] = useState('');
-    const [isDelivery, setIsDelivery] = useState('');
+    const [isDelivery, setIsDelivery] = useState(false);
     const [deliveryPriority, setPrio] = useState('');
-    const [isFragile, setFragile] = useState('');
-    const [specialInstructions, seteInst] = useState('');
-    const  [deliverPrice, setPrice] = useState('');
+    const [isFragile, setFragile] = useState(false);
+    const [specialInstructions, setInst] = useState('');
+    const [deliverPrice, setPrice] = useState('');
+    const [deliveryPriorities, setDeliveryPriorities] = useState([]);
+    const [offices, setOffices] = useState([]);
+    const [nextOID, setOID] = useState('');
 
-    const handleCreatePackage = (e) => {
-        e.preventDefault();  
+    const handleCreatePackage = async (e) => {
+        e.preventDefault(); 
+
+        try {
+            
+            const response = await axios.post('http://localhost:3000/data/business-create-package', {
+                userID, content, firstName, middleInitial, lastName, streetAddress, city, state, zipcode, country,
+                packageHeight, packageLength, packageWidth, weight, isDelivery, deliveryPriority, isFragile, 
+                specialInstructions, deliverPrice, nextOID
+            });
+
+            if (response.data.success) {
+                alert('Package Created.')
+            }
+        } catch (error) {
+            console.error('Could not create package:', error);
+            if (error.response && error.response.data.message) {
+                alert(error.response.data.message);
+            } else {
+                alert('Package creation failed. Please try again.');
+            }
+        }
     };
 
     useEffect(() => {
@@ -38,10 +63,35 @@ const CreatePackage = () => {
                 alert('User not logged in');
                 navigate('/');
             }
+
+            try {
+                const response = await axios.post('http://localhost:3000/data/get-prio');
+                setDeliveryPriorities(response.data);
+
+                const officeResponse = await axios.post('http://localhost:3000/data/get-offices');
+                setOffices(officeResponse.data);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                alert('Failed to fetch data.');
+            }
         };
     
         getInfo();
       }, []); 
+
+      const handlePriorityChange = (e) => {
+        const selectedPriority = e.target.value;
+        setPrio(selectedPriority);
+
+        // Find the corresponding price for the selected priority
+        const selectedPriorityObj = deliveryPriorities.find(
+            (priority) => priority.deliveryPrio === parseInt(selectedPriority)
+        );
+        if (selectedPriorityObj) {
+            const value = parseFloat(selectedPriorityObj.price).toFixed(2);
+            setPrice(value); 
+        }
+    };
 
     // These forms look so bad but I need them functional
     return (
@@ -108,16 +158,23 @@ const CreatePackage = () => {
                                 value={state} 
                                 required 
                                 onChange={(e) => setState(e.target.value)}
-                                maxLength={20}
+                                maxLength={2}
                             />
                         </div>
                         <div>
                             <label>Zipcode:</label>
                             <input 
-                                type="text" 
+                                type="number" 
                                 value={zipcode} 
-                                onChange={(e) => setZipcode(e.target.value)}
-                                maxLength={20}
+                                onChange={(e) => {
+                                    const value = e.target.value;
+                                    if (/^\d{0,5}$/.test(value)) {
+                                        setZipcode(value);
+                                    }
+                                }}
+                                required
+                                maxLength="5"
+                                pattern="\d{5}"
                             />
                         </div>
                         <div>
@@ -142,15 +199,114 @@ const CreatePackage = () => {
                         maxLength={255}
                         className="input-field"
                         />
+                        <br />
+                        <div>  
+                            <label>Length (Feet):</label>
+                            <input 
+                                type="number" 
+                                value={packageLength} 
+                                required 
+                                onChange={(e) => setLength(e.target.value)}
+                                maxLength={10}
+                            />
+                        </div>
+                        <div>  
+                            <label>Width (Feet):</label>
+                            <input 
+                                type="number" 
+                                value={packageWidth} 
+                                required 
+                                onChange={(e) => setWidth(e.target.value)}
+                                maxLength={10}
+                            />
+                        </div>
+                        <div>  
+                            <label>Height (Feet):</label>
+                            <input 
+                                type="number" 
+                                value={packageHeight} 
+                                required 
+                                onChange={(e) => setHeight(e.target.value)}
+                                maxLength={10}
+                            />
+                        </div>
+                        <div>  
+                            <label>Weight (Pounds):</label>
+                            <input 
+                                type="number" 
+                                value={weight} 
+                                required 
+                                onChange={(e) => setWeight(e.target.value)}
+                                maxLength={10}
+                            />
+                        </div>
+                        <br />
+                        <div className="checkbox-group">
+                            <label>
+                                Delivery Required
+                                <input
+                                type="checkbox"
+                                checked={isDelivery}
+                                onChange={(e) => setIsDelivery(e.target.checked)}
+                                />
+                            </label>
+                            <label>
+                                Fragile
+                                <input
+                                type="checkbox"
+                                checked={isFragile}
+                                onChange={(e) => setFragile(e.target.checked)}
+                                />
+                            </label>
+                        </div>
+                        <br />
+                        <div> 
+                        <label>
+                                Delivery Priority:
+                                <select
+                                    value={deliveryPriority}
+                                    onChange={handlePriorityChange}
+                                >
+                                    <option value="">Select Priority</option>
+                                    {deliveryPriorities.map((priority) => (
+                                        <option key={priority.deliveryPrio} value={priority.deliveryPrio}>
+                                            {priority.type}
+                                        </option>
+                                    ))}
+                                </select>
+                            </label>
+                        </div>
 
-                        <div></div>
-                    
+                        <div>
+                            <label>
+                                Drop-off Post Office:
+                                <select
+                                value={nextOID}
+                                onChange={(e) => setOID(e.target.value)}
+                                >
+                                <option value="">Select Office</option>
+                                {offices.map((office) => (
+                                    <option key={office.OID} value={office.OID}>
+                                    {office.city}
+                                    </option>
+                                ))}
+                                </select>
+                            </label>
+                        </div>
 
-
+                        <h3>Special Instructions:</h3>
+                            <textarea 
+                            type="text" 
+                            value={specialInstructions}  
+                            onChange={(e) => setInst(e.target.value)}
+                            placeholder="Ex. Handle with care"
+                            maxLength={100}
+                            className="input-field"
+                            />
+                        <br />
+                        
+                        <h3>Delivery Price: ${deliverPrice}</h3>
                 </div>
-
-                    
-
                     <button type="submit">Create Package</button>
                 </form>
           </div>

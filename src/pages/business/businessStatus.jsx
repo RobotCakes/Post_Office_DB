@@ -33,11 +33,12 @@ const packageStatus = () => {
       }
 
       try {
-        const response = await axios.post('https://post-backend-2f54f7162fc4.herokuapp.com/user/package-status', { 
+        const response = await axios.post('http://localhost:3000/user/package-status', { 
           userID: userID
         });
         
         setPackages(response.data); 
+
       } catch (error) {
         console.error('Error fetching packages:', error);
         alert('Failed to get package status');
@@ -208,7 +209,8 @@ const packageStatus = () => {
 
             <h3>Package Details</h3>
             <p>
-              {modalData[0].fragile ? "Fragile, " : ""}{modalData[0].delivery ? "Delivery" : "Pick-up At Post Office"}<br />
+              {modalData[0].fragile ? "Fragile, " : ""}{modalData[0].delivery ?  "Pick-up At Post Office": "Delivery"}<br />
+              {modalData[0].type} Delivery <br />
               <strong>Special Instructions: </strong>{modalData[0].specialInstructions || "None"}
             </p>
 

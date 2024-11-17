@@ -6,23 +6,7 @@
     justify-content: center;
     min-height: 100vh;
   }
-  
-  .nav ul {
-    list-style: none;
-    display: flex;
-    gap: 10px;
-  }
-  
-  .nav ul li a {
-    color: #fff;
-    text-decoration: none;
-  }
-  
-  .nav ul li a.active {
-    font-weight: bold;
-    color: #ffdd57;
-  }
-  
+
   .manage-content {
     text-align: center;
     padding: 20px;

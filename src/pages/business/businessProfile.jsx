@@ -23,7 +23,8 @@ const Profile = () => {
     const [pwdValid, setPwdValid] = useState(false);
     const [errMsg, setErrMsg] = useState('');
     const userID = localStorage.getItem('userID');
-
+    const userRole = localStorage.getItem('userRole');
+    
     const handlePasswordChange = (e) => {
         const password = e.target.value;
         setPwd(password);
@@ -237,7 +238,7 @@ const Profile = () => {
                             <br />
                             <label> Zip Code: </label>
                                 <input
-                                    type="text"
+                                    type="number"
                                     value={zip}
                                     onChange={(e) => {
                                         const value = e.target.value;
