@@ -1,7 +1,9 @@
+// This should be admin only, managers can't edit post offices
 import { useRef, useState, useEffect } from "react";
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { Link, Routes, Route, useMatch, useResolvedPath } from "react-router-dom"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { ManagerNavbar } from "../../components/Navbars";
 
 const manageLocation = () => {
     // State for location data
@@ -29,17 +31,7 @@ const manageLocation = () => {
     return (
       <div className="container">
         {/* Navigation bar */}
-        <nav className="nav">
-          <Link to="/employee-home" className="homePage">Employee Dashboard</Link>
-          <ul>
-            <li><Link to="/employee-home">Dashboard</Link></li>
-            <li><Link to="/manage-packages">Manage Packages</Link></li>
-            <li><Link to="/manage-location" className="active">Manage Locations</Link></li>
-            <li><Link to="/manage-supplies">Supplies</Link></li>
-            <li><Link to="/incoming-packages">Incoming Packages</Link></li>
-            <li><Link to="/logout">Logout</Link></li>
-          </ul>
-        </nav>
+        <ManagerNavbar />
   
         {/* Main content area */}
         <div className="manage-content">
@@ -118,10 +110,7 @@ const manageLocation = () => {
           </div>
         </div>
   
-        {/* Footer */}
-        <footer className="footer">
-          <p>&copy; 2024 United Mail Services - Manage Locations. All rights reserved.</p>
-        </footer>
+        
       </div>
     );
   };

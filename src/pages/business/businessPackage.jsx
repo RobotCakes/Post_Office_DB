@@ -37,7 +37,7 @@ const CreatePackage = () => {
 
         try {
             
-            const response = await axios.post('https://post-backend-2f54f7162fc4.herokuapp.com//data/business-create-package', {
+            const response = await axios.post('https://post-backend-2f54f7162fc4.herokuapp.com/data/business-create-package', {
                 userID, content, firstName, middleInitial, lastName, streetAddress, city, state, zipcode, country,
                 packageHeight, packageLength, packageWidth, weight, isDelivery, deliveryPriority, isFragile, 
                 specialInstructions, deliverPrice, nextOID

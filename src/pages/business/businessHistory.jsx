@@ -101,16 +101,12 @@ const PackageHistory = () => {
           <tbody>
           {(filterPackage.length > 0 ? filterPackage : packages).map((pkg) => {
                 const reformatDate = new Date(pkg.timeOfStatus).toLocaleString();
-                const currentLocation = `${pkg.currentCity}, ${pkg.currentState}`;
-                const nextLocation = `${pkg.nextCity}, ${pkg.nextState}`;
                 
                 return (
                   <tr key={pkg.id}>
                     <td>{pkg.trackingNumber}</td>
                     <td>{pkg.status}</td>
                     <td>{reformatDate}</td>
-                    <td>{currentLocation}</td>
-                    <td>{nextLocation}</td>
                     <td>
                       <button className="info-button" onClick={() => handleOpenModal(pkg.trackingNumber)}>
                         View

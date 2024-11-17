@@ -24,29 +24,29 @@ const packageStatus = () => {
     const [filterPackage, setFilterPackage] = useState([]);
 
 
-  useEffect(() => {
-    
-    const getStatus = async () => {
-      if (!userID || userRole != 'business') {
-        alert('User not logged in');
-        navigate('/');
-      }
+    useEffect(() => {
+      
+      const getStatus = async () => {
+        if (!userID || userRole != 'business') {
+          alert('User not logged in');
+          navigate('/');
+        }
 
-      try {
-        const response = await axios.post('https://post-backend-2f54f7162fc4.herokuapp.com/user/package-status', { 
-          userID: userID
-        });
-        
-        setPackages(response.data); 
+        try {
+          const response = await axios.post('http://localhost:3000/user/package-status', { 
+            userID: userID
+          });
+          
+          setPackages(response.data); 
 
-      } catch (error) {
-        console.error('Error fetching packages:', error);
-        alert('Failed to get package status');
-      }
-    };
+        } catch (error) {
+          console.error('Error fetching packages:', error);
+          alert('Failed to get package status');
+        }
+      };
 
-    getStatus();
-  }, []);
+      getStatus();
+    }, []);
 
   
 
@@ -161,8 +161,13 @@ const packageStatus = () => {
           <tbody>
             {(filterPackage.length > 0 ? filterPackage : packages).map((pkg) => {
                 const reformatDate = new Date(pkg.timeOfStatus).toLocaleString();
-                const currentLocation = `${pkg.currentCity}, ${pkg.currentState}`;
-                const nextLocation = `${pkg.nextCity}, ${pkg.nextState}`;
+                const currentLocation = pkg.currentCity && pkg.currentState 
+                  ? `${pkg.currentCity}, ${pkg.currentState}` 
+                  : '';
+
+                const nextLocation = pkg.nextCity && pkg.nextState 
+                  ? `${pkg.nextCity}, ${pkg.nextState}` 
+                  : '';
                 
                 return (
                   <tr key={pkg.id}>

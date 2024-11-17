@@ -2,6 +2,7 @@ import { useRef, useState, useEffect } from "react";
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { Link, Routes, Route, useMatch, useResolvedPath } from "react-router-dom"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { ManagerNavbar, EmployeeNavbar } from "../../components/Navbars";
 import "../../styles/manageSupplies.css";
 
 const manageSupplies = () => {
@@ -11,10 +12,10 @@ const manageSupplies = () => {
     useEffect(() => {
     
       const getInfo = async () => {
-          if (!userID || userRole != 'employee') {
-              alert('User not logged in');
-              navigate('/');
-          }
+        if (!userID || (userRole != 'employee' && userRole != 'manager')) {
+          alert('User not logged in');
+          navigate('/');
+        }
       };
 
       getInfo();
@@ -42,17 +43,8 @@ const manageSupplies = () => {
     return (
       <div className="container">
         {/* Navigation bar */}
-        <nav className="nav">
-          <Link to="/manage-supplies" className="homePage">Employee Dashboard</Link>
-          <ul>
-            <li><Link to="/employee-home">Dashboard</Link></li>
-            <li><Link to="/manage-packages">Manage Packages</Link></li>
-            <li><Link to="/manage-supplies" className="active">Manage Supplies</Link></li>
-            <li><Link to="/incoming-packages">Incoming Packages</Link></li>
-            <li><Link to="/employee-profile">Profile</Link></li>
-            <li><Link to="/logout">Logout</Link></li>
-          </ul>
-        </nav>
+        {userRole === 'employee' && <EmployeeNavbar />}
+        {userRole === 'manager' && <ManagerNavbar />}
   
         {/* Main content area */}
         <div className="manage-content">

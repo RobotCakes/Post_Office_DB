@@ -1,8 +1,9 @@
+// ------------ASHLEY-------------------------------------------------
 import { useRef, useState, useEffect } from "react";
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { Link, Routes, Route, useMatch, useResolvedPath, useNavigate } from "react-router-dom"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { EmployeeNavbar } from "../../components/Navbars";
+import { ManagerNavbar, EmployeeNavbar } from "../../components/Navbars";
 import "../../styles/managePackage.css";
 import axios from 'axios';
 import ReactModal from "react-modal";
@@ -16,16 +17,42 @@ const managePackage = () => {
       const [isModalOpen, setIsModalOpen] = useState(false);
       const [loading, setLoading] = useState(false);
       const [error, setError] = useState("");
-      const [trackingNumber, setTrackingNumber] = useState('');
+      const [tn, setTrackingNumber] = useState('');
+      const [pid, setPID] = useState('');
       const [searchPackage, setSearchPackage] = useState("");
       const [filterPackage, setFilterPackage] = useState([]);
       const [success, setSuccess] = useState('');
       const [isEditOpen, setIsEditOpen] = useState(false);
+      const [content, setContent] = useState('');
+      const [firstName, setFirstName] = useState('');
+      const [middleInitial, setMiddleInitial] = useState('');
+      const [lastName, setLastName] = useState('');
+      const [streetAddress, setStreet] = useState('');
+      const [city, setCity] = useState('');
+      const [state, setState] = useState('');
+      const [zipcode, setZipcode] = useState('');
+      const [country, setCountry] = useState('');
+      const [packageLength, setLength] = useState('');
+      const [packageHeight, setHeight] = useState('');
+      const [packageWidth, setWidth] = useState('');
+      const [weight, setWeight] = useState('');
+      const [isDelivery, setIsDelivery] = useState(false);
+      const [deliveryPriority, setPrio] = useState('');
+      const [isFragile, setFragile] = useState(false);
+      const [specialInstructions, setInst] = useState('');
+      const [deliverPrice, setPrice] = useState('');
+      const [senderUID, setUID] = useState('');
+      const [deliveryPriorities, setDeliveryPriorities] = useState([]);
+      const [offices, setOffices] = useState([]);
+      const [selectedStatus, setSelectedStatus] = useState(null);
+      const [selectedOffice, setSelectedOffice] = useState(1);
+      const [info, setInfo] = useState('');
+      const [isCreateOpen, setCreateOpen] = useState(false);
 
       useEffect(() => {
         
         const getStatus = async () => {
-          if (!userID || userRole != 'employee') {
+          if (!userID || (userRole != 'employee' && userRole != 'manager')) {
             alert('User not logged in');
             navigate('/');
           }
@@ -37,9 +64,22 @@ const managePackage = () => {
             
             setPackages(response.data); 
 
+            const prioResponse = await axios.post('https://post-backend-2f54f7162fc4.herokuapp.com/data/get-prio');
+                setDeliveryPriorities(prioResponse.data);
+
+            const officeResponse = await axios.post('https://post-backend-2f54f7162fc4.herokuapp.com/data/get-offices');
+              setOffices(officeResponse.data);
+
+            const infoResponse = await axios.post('http://localhost:3000/employee/get-location', { userID });
+            if (infoResponse.data && infoResponse.data.length > 0) {
+              setInfo(infoResponse.data[0].OID);
+            } else {
+              setInfo('No location assigned');
+            }
+            
           } catch (error) {
-            console.error('Error fetching packages:', error);
-            alert('Failed to get package status');
+            console.error('Error fetching information:', error);
+            alert('Failed to get information');
           }
         };
 
@@ -48,7 +88,7 @@ const managePackage = () => {
 
 
 
-      const handleOpenModal = async (trackingNumber) => {
+      const handleOpenModal = async (trackingNumber, PID) => {
         setIsModalOpen(true);
         setLoading(true);
         setError("");
@@ -62,12 +102,15 @@ const managePackage = () => {
             });
           console.log(response.data);
           setModalData(response.data);
+          setTrackingNumber(trackingNumber);
+          setPID(PID);
 
         } catch (err) {
           setError('Failed to fetch package. Please try again.');
         } finally {
           setLoading(false);
         }
+
       };
 
     const handleSearch = (e) => {
@@ -82,35 +125,55 @@ const managePackage = () => {
     };
 
 
+    // You HAVE to open package info before you do this I can't figure out a way to pass the trackingNumber and PID :(
+    const handleSubmit = async (e) => {
+      e.preventDefault(); 
+      
+     
+      if (!selectedStatus) {
+        setError('Please provide valid tracking number and information.');
+        setLoading(false);
+        return;
+      }
+    
+      try {
+        setLoading(true);   
+        setError("");     
+        setSuccess("");
 
-    const handleSubmit = async (trackingNumber, PID) => {
-      setSuccess("");
-
-      try{
 
         const response = await axios.post('http://localhost:3000/employee/package-edit', { 
-              trackingNumber: trackingNumber,
-              userID, userRole, PID
-          });
-
+          trackingNumber: tn, userID, userRole, selectedStatus, selectedOffice, currOID: info, PID: pid
+        });
+    
         setSuccess('Package status updated.');
-
+        setIsEditOpen(false); 
+    
       } catch (err) {
-
-        setError('Failed to update package. Please try again.');
+        console.log(tn);
+        console.log(pid);
+        setError('Failed to update package. Please try again. Be sure to check package info.');
       } finally {
         setLoading(false);
       }
     };
 
-    const handleDelete = async (PID) => {
-      setSuccess("");
+
+
+    const handleDelete = async (trackingNumber, PID) => {
+      const confirmDelete = window.confirm("Are you sure you want to delete this package?");
+
+      if (!confirmDelete) {
+        return; 
+      }
+
+      setSuccess(""); 
+      setLoading(true);
 
       try{
 
         const response = await axios.post('http://localhost:3000/employee/package-delete', { 
-              trackingNumber: trackingNumber,
-              userID, userRole, PID
+              trackingNumber, userID, userRole, PID, currOID: info
           });
 
         setSuccess('Package deleted.');
@@ -126,11 +189,17 @@ const managePackage = () => {
 
     return (
       <div className="container">
-        <EmployeeNavbar />
+        {userRole === 'employee' && <EmployeeNavbar />}
+        {userRole === 'manager' && <ManagerNavbar />}
 
         <div className="manage-content">
           <h1>Manage Packages</h1>
           <p>Create, view, and modify packages at the post office.</p>
+          <p>Make sure to check package information before making any changes.</p>
+
+          <button className="create-button">
+            Create Package
+          </button>
 
           <input
             type="text"
@@ -167,7 +236,7 @@ const managePackage = () => {
                       <td>{reformatDate}</td>
                       <td>{pkg.deliveryPriority}</td>
                       <td>
-                        <button className="info-button" onClick={() => handleOpenModal(pkg.trackingNumber)}>
+                        <button className="info-button" onClick={() => handleOpenModal(pkg.trackingNumber, pkg.PID)}>
                           View
                         </button>
                       </td>
@@ -175,7 +244,7 @@ const managePackage = () => {
                         <button className="info-button" onClick={() => setIsEditOpen(true)}>
                           Edit
                         </button>
-                        <button className="delete-button" onClick={() => handleDelete(pkg.PID)}>
+                        <button className="delete-button" onClick={() => handleDelete(pkg.trackingNumber,pkg.PID)}>
                           Delete
                         </button>
                       </td>
@@ -227,22 +296,61 @@ const managePackage = () => {
 
 
         <ReactModal
-          isOpen={isEditOpen}
-          onRequestClose={() => setIsEditOpen(false)}
-          contentLabel="Edit Package"
-          className="custom-modal"
-          overlayClassName="custom-overlay"
-        >
-          {loading && <p>Loading...</p>}
-          {error && <div className="error-message">{error}</div>}
-          {modalData && (
-            <div>
+              isOpen={isEditOpen}
+              onRequestClose={() => setIsEditOpen(false)}
+              contentLabel="Edit Package"
+              className="custom-modal"
+              overlayClassName="custom-overlay"
+            >
+              {loading && <p>Loading...</p>}
+              {error && <div className="error-message">{error}</div>}
               
+              <div>
+                <h2>Edit Package Status</h2>
+                <form onSubmit={(e) => {
+                  console.log("Form submit triggered");
+                  e.preventDefault();
+                  handleSubmit(e, tn, pid);
+                }}>
+                  <label htmlFor="status">Select Status:</label>
+                  <select
+                    id="status"
+                    value={selectedStatus}
+                    onChange={(e) => setSelectedStatus(e.target.value)}
+                  >
+                    <option value="">Select Status</option>
+                    <option value="In transit">In transit</option>
+                    <option value="Out for Delivery">Out for Delivery</option>
+                    <option value="Delivered">Delivered</option>
+                  </select>
 
-            </div>
-          )}
-          <button onClick={() => setIsEditOpen(false)}>Close</button>
-        </ReactModal>
+                  {selectedStatus === "In transit" && (
+                    <>
+                      <label htmlFor="office">Select Post Office:</label>
+                      <select
+                        id="office"
+                        value={selectedOffice}
+                        onChange={(e) => setSelectedOffice(e.target.value)}
+                      >
+                        <option value="">Select Next Post Office</option>
+                        {offices.map((office) => (
+                          <option key={office.OID} value={office.OID}>
+                             {office.city}
+                          </option>
+                        ))}
+                      </select>
+                    </>
+                  )}
+
+                  <button type="submit" disabled={loading}>
+                    Save Changes
+                  </button>
+                  <button type="button" onClick={() => setIsEditOpen(false)}>
+                    Close
+                  </button>
+                </form>
+              </div>
+            </ReactModal>
 
         
       </div>

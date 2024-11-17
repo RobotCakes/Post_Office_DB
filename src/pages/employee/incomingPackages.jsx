@@ -1,8 +1,9 @@
+// ------------ASHLEY-------------------------------------------------
 import { useRef, useState, useEffect } from "react";
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { Link, Routes, Route, useMatch, useResolvedPath, useNavigate } from "react-router-dom"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { EmployeeNavbar } from "../../components/Navbars";
+import { ManagerNavbar, EmployeeNavbar } from "../../components/Navbars";
 import "../../styles/managePackage.css";
 import axios from 'axios';
 import ReactModal from "react-modal";
@@ -24,7 +25,7 @@ const IncomingPackages = () => {
     useEffect(() => {
       
       const getStatus = async () => {
-        if (!userID || userRole != 'employee') {
+        if (!userID || (userRole != 'employee' && userRole != 'manager')) {
           alert('User not logged in');
           navigate('/');
         }
@@ -105,7 +106,8 @@ const IncomingPackages = () => {
 
   return (
     <div className="container">
-      <EmployeeNavbar />
+      {userRole === 'employee' && <EmployeeNavbar />}
+      {userRole === 'manager' && <ManagerNavbar />}
 
       <div className="manage-content">
         <h1>Incoming Packages</h1>

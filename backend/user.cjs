@@ -37,16 +37,35 @@ router.post('/package-status', async (req, res) => {
     }
 
     try {
-        const result = await pool.request()
+        const result = await pool.request() // Trying to optimize this
             .input('userID', sql.Int, userID)
             .query(`
-                SELECT P.trackingNumber, S.state as status, S.timeOfStatus, A1.city as currentCity, A1.state as currentState, A2.city as nextCity, A2.state as nextState
-                FROM trackinginfo as T, statuses as S, package as P, office  as currOffice, office as nextOffice, addresses as A1, addresses as A2
-                WHERE (T.senderUID = @userID OR T.receiverUID = @userID) AND P.trackingNumber = T.trackingNumber
-                        AND S.SID = T.currentStatus AND (S.state <> 'Delivered' AND S.state <> 'Cancelled')
-                        AND P.isDeleted = 'false' 
-						AND S.currOID = currOffice.OID AND currOffice.officeAddress = A1.addressID
-						AND S.nextOID = nextOffice.OID AND nextOffice.officeAddress = A2.addressID;
+                SELECT 
+                    P.trackingNumber, 
+                    S.state AS status, 
+                    S.timeOfStatus, 
+                    A1.city AS currentCity, 
+                    A1.state AS currentState, 
+                    A2.city AS nextCity, 
+                    A2.state AS nextState
+                FROM 
+                    trackinginfo AS T
+                JOIN 
+                    package AS P ON P.trackingNumber = T.trackingNumber
+                JOIN 
+                    statuses AS S ON S.SID = T.currentStatus
+                LEFT JOIN 
+                    office AS currOffice ON S.currOID = currOffice.OID
+                LEFT JOIN 
+                    office AS nextOffice ON S.nextOID = nextOffice.OID
+                LEFT JOIN 
+                    addresses AS A1 ON currOffice.officeAddress = A1.addressID
+                LEFT JOIN 
+                    addresses AS A2 ON nextOffice.officeAddress = A2.addressID
+                WHERE 
+                    (T.senderUID = @userID OR T.receiverUID = @userID)
+                    AND (S.state <> 'Delivered' AND S.state <> 'Cancelled')
+                    AND P.isDeleted = 'false';
             `);
         res.json(result.recordset);
     } catch (error) {

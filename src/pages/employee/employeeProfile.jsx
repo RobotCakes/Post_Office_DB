@@ -2,10 +2,13 @@ import { useRef, useState, useEffect } from "react";
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { Link, useMatch, useResolvedPath, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { EmployeeNavbar } from "../../components/Navbars";
+import { ManagerNavbar, EmployeeNavbar } from "../../components/Navbars";
 import '../../styles/employeeProfile.css';
 
 const employeeProfile = () => {
+    const userID = localStorage.getItem('userID');
+    const userRole = localStorage.getItem('userRole');
+
     const [employee, setEmployee] = useState({
       name: "John Doe",
       email: "johndoe@example.com",
@@ -30,18 +33,9 @@ const employeeProfile = () => {
     return (
       <div className="container">
         {/* Navigation bar */}
-        <nav className="nav">
-          <Link to="/employee-home" className="homePage">Employee Dashboard</Link>
-          <ul>
-            <li><Link to="/employee-home">Dashboard</Link></li>
-            <li><Link to="/manage-packages">Manage Packages</Link></li>
-            <li><Link to="/manage-location">Manage Locations</Link></li>
-            <li><Link to="/manage-supplies">Manage Supplies</Link></li>
-            <li><Link to="/incoming-packages">Incoming Packages</Link></li>
-            <li><Link to="/logout">Logout</Link></li>
-          </ul>
-        </nav>
-  
+        {userRole === 'employee' && <EmployeeNavbar />}
+        {userRole === 'manager' && <ManagerNavbar />}
+
         {/* Profile content */}
         <div className="profile-content">
           <h1>Employee Profile</h1>
@@ -105,10 +99,7 @@ const employeeProfile = () => {
           )}
         </div>
   
-        {/* Footer */}
-        <footer className="footer">
-          <p>&copy; 2024 United Mail Services - Employee Profile. All rights reserved.</p>
-        </footer>
+        
       </div>
     );
   };

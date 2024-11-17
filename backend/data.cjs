@@ -6,7 +6,7 @@ const pool = require('./index.cjs');
 
 router.post('/get-prio', async (req, res) => {
     try {
-        const result = await pool.query('SELECT * FROM deliveryprio;');
+        const result = await pool.request().query('SELECT * FROM deliveryprio;');
         res.json(result.recordset);
     } catch (error) {
         console.error('Error fetching delivery priorities:', error);
@@ -16,7 +16,7 @@ router.post('/get-prio', async (req, res) => {
 
 router.post('/get-offices', async (req, res) => {
     try {
-        const result = await pool.query('SELECT OID, city FROM office JOIN addresses ON officeAddress = addressID;');
+        const result = await pool.request().query('SELECT OID, city FROM office JOIN addresses ON officeAddress = addressID;');
         res.json(result.recordset);
     } catch (error) {
         console.error('Error fetching delivery priorities:', error);

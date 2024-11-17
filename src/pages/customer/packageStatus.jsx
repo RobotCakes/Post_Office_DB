@@ -134,8 +134,14 @@ const packageStatus = () => {
           <tbody>
             {packages.map((pkg) => {
                 const reformatDate = new Date(pkg.timeOfStatus).toLocaleString();
-                const currentLocation = `${pkg.currentCity}, ${pkg.currentState}`;
-                const nextLocation = `${pkg.nextCity}, ${pkg.nextState}`;
+                const currentLocation = pkg.currentCity && pkg.currentState 
+                  ? `${pkg.currentCity}, ${pkg.currentState}` 
+                  : ''; // Avoids outputting null, null
+
+                const nextLocation = pkg.nextCity && pkg.nextState 
+                  ? `${pkg.nextCity}, ${pkg.nextState}` 
+                  : '';
+
                 return (
                   <tr key={pkg.id}>
                     <td>{pkg.trackingNumber}</td>
