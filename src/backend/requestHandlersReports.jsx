@@ -1,5 +1,5 @@
 const { sql, poolPromise } = require('./db_connect.jsx');
-
+import axios from 'axios';
 // -------------------------------- ADMIN -------------------------------------------//
 async function AdminIncomeBasedOnPayment(response, timeframe) {
     let query;
@@ -213,7 +213,7 @@ async function AdminTotalSuppliesSold(response, timeframe) {
     }
 
 }
-async function AdminTotalPackagesDeleted(response, timeframe){
+async function AdminTotalPackagesDeleted(timeframe){
     let query;
 
     switch (timeframe) {
@@ -236,11 +236,11 @@ async function AdminTotalPackagesDeleted(response, timeframe){
             throw new Error('Invalid timeframe');
     }
     try {
-        const pool = await poolPromise;
-        const result = await pool.request().query(query);
-        return result.recordset;
+        const response = await axios.post('http://localhost:3001/admin/total-packages-deleted', { query });
+        console.log('Query result:', response.data);
+        return response.data;
     } catch (err) {
-        console.error('SQL query failed:', err);
+        console.error('Error sending query to backend:', err);
         throw err;
     }
 }
