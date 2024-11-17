@@ -1,38 +1,70 @@
+import { useRef, useState, useEffect } from "react";
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
-import { Link, useMatch, useResolvedPath } from "react-router-dom"
+import { Link, useMatch, useResolvedPath, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import '../../styles/home.css';
+import { ManagerNavbar } from "../../components/Navbars";
+import '../../styles/employeeHome.css';
 
 const managerHome = () => {
-    function CustomLink({ to, children, ...props }) {
-        const resolvedPath = useResolvedPath(to)
-        const isActive = useMatch({ path: resolvedPath.pathname, end: true })
-      
-        return (
-          <li className={isActive ? "active" : ""}>
-            <Link to={to} {...props}>
-              {children}
-            </Link>
-          </li>
-        )
-    }
+    const userID = localStorage.getItem('userID');
+    const userRole = localStorage.getItem('userRole');
+    const [info, setInfo] = useState('');
+
+    useEffect(() => {
+    
+      const getInfo = async () => {
+          if (!userID || userRole != 'employee') {
+              alert('User not logged in');
+              navigate('/');
+          }
+    
+              try {
+    
+                const infoResponse = await axios.post('http://localhost:3000/employee/get-location', { userID });
+                if (infoResponse.data && infoResponse.data.length > 0) {
+                  setInfo(infoResponse.data[0].city);
+                } else {
+                  setInfo('No location assigned');
+                }
+    
+              } catch (error) {
+                console.error('Error getting employee info:', error);
+                alert('Failed to get employee information.');
+              }
+    
+            };
+      getInfo();
+    }, []);
+    
     return (
-        <nav className = "nav">
-            <Link to="/" className="homePage">
-                Home
-            </Link>
-            <ul>
-                <CustomLink to="/manage-packages">Manage Packages</CustomLink>
-                <CustomLink to="/manage-employee">Manage Employees</CustomLink>
-                <CustomLink to="/manage-truck">Manage Trucks</CustomLink>
-                <CustomLink to="/manage-supplies">Manage Supplies</CustomLink>
-                {/* NOT REAL PAGE, JUST PLACEHOLDER*/}
-                <CustomLink to="/incoming-packages">Incoming Packages</CustomLink>
-                <CustomLink to="/manager-reports">Reports</CustomLink>
-                <CustomLink to="/manager-profile">Profile</CustomLink>
-                <CustomLink to="/logout">Login</CustomLink>
-            </ul>
-        </nav>
+        <div className="container">
+        {/* Navigation bar */}
+        <Manager />
+  
+        {/* Main content area */}
+        <div className="home-content" style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          minHeight: 'calc(100vh - 200px)', // Adjust this value based on nav and footer height
+          textAlign: 'center',
+          padding: '50px'
+        }}>
+          <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+            <h1>Manager Dashboard</h1>
+            <h3>EID: {userID}</h3>
+            <h3>Assigned Location: {info}</h3>
+            <p>Access package management, supplies, and other manager resources here.</p>
+          </div>
+  
+          
+        </div>
+          
+
+        
+      </div>
+
     )
 }
 

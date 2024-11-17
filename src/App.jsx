@@ -44,6 +44,7 @@ import AdminReports from "./pages/reports/adminReports";
 import ManagerReports from "./pages/reports/managerReports";
 
 import CustomerProfile from "./pages/customer/Profile";
+import CreatePackage from './pages/employee/createPackage';
 
 
 function App() {
@@ -81,6 +82,7 @@ function App() {
             <Route path="/manage-employees" element={<ManageEmployee />} />
             <Route path="/manage-trucks" element={<ManageTruck />} />
             <Route path="/employee-profile" element={<EmployeeProfile />} />
+            <Route path="/create-package" element={<CreatePackage/>} />
 
 
             <Route path="/manage-all-locations" element={<ManageAllLocations />} />

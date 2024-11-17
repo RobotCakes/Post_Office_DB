@@ -99,14 +99,15 @@ const PackageHistory = () => {
             </tr>
           </thead>
           <tbody>
-            {packages.map((pkg) => {
+          {(filterPackage.length > 0 ? filterPackage : packages).map((pkg) => {
                 const reformatDate = new Date(pkg.timeOfStatus).toLocaleString();
+                
                 return (
                   <tr key={pkg.id}>
                     <td>{pkg.trackingNumber}</td>
                     <td>{pkg.status}</td>
                     <td>{reformatDate}</td>
-                    <td> {/* Gets information on content, sender and receiver addresses */}
+                    <td>
                       <button className="info-button" onClick={() => handleOpenModal(pkg.trackingNumber)}>
                         View
                       </button>

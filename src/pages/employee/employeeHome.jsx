@@ -3,11 +3,13 @@ import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icon
 import { Link, useMatch, useResolvedPath, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { EmployeeNavbar } from "../../components/Navbars";
+import axios from 'axios';
 import '../../styles/employeeHome.css';
 
 const EmployeeHome = () => {
     const userID = localStorage.getItem('userID');
     const userRole = localStorage.getItem('userRole');
+    const [info, setInfo] = useState('');
 
     useEffect(() => {
     
@@ -16,8 +18,22 @@ const EmployeeHome = () => {
               alert('User not logged in');
               navigate('/');
           }
-      };
-
+    
+              try {
+    
+                const infoResponse = await axios.post('http://localhost:3000/employee/get-location', { userID });
+                if (infoResponse.data && infoResponse.data.length > 0) {
+                  setInfo(infoResponse.data[0].city);
+                } else {
+                  setInfo('No location assigned');
+                }
+    
+              } catch (error) {
+                console.error('Error getting employee info:', error);
+                alert('Failed to get employee information.');
+              }
+    
+            };
       getInfo();
     }, []);
   
@@ -38,10 +54,12 @@ const EmployeeHome = () => {
         }}>
           <div style={{ maxWidth: '800px', margin: '0 auto' }}>
             <h1>Employee Dashboard</h1>
+            <h3>EID: {userID}</h3>
+            <h3>Assigned Location: {info}</h3>
             <p>Access package management, supplies, and other employee resources here.</p>
           </div>
   
-          {/* Quick Stats Section */}
+          {/* Quick Stats Section 
           <div className="quick-stats" style={{
             width: '100%',
             maxWidth: '600px',
@@ -51,16 +69,13 @@ const EmployeeHome = () => {
             <h2>Quick Stats</h2>
             <p>Incoming Packages Today: 12</p>
             <p>Low Supplies: Tape, Boxes</p>
-          </div>
+          </div>*/}
   
           
         </div>
           
 
-        {/* Footer */}
-        <footer className="footer">
-          <p>&copy; 2024 Texas Mail Services - Employee Dashboard. All rights reserved.</p>
-        </footer>
+        
       </div>
     );
   };

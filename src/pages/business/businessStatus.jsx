@@ -24,29 +24,29 @@ const packageStatus = () => {
     const [filterPackage, setFilterPackage] = useState([]);
 
 
-  useEffect(() => {
-    
-    const getStatus = async () => {
-      if (!userID || userRole != 'business') {
-        alert('User not logged in');
-        navigate('/');
-      }
+    useEffect(() => {
+      
+      const getStatus = async () => {
+        if (!userID || userRole != 'business') {
+          alert('User not logged in');
+          navigate('/');
+        }
 
-      try {
-        const response = await axios.post('http://localhost:3000/user/package-status', { 
-          userID: userID
-        });
-        
-        setPackages(response.data); 
+        try {
+          const response = await axios.post('http://localhost:3000/user/package-status', { 
+            userID: userID
+          });
+          
+          setPackages(response.data); 
 
-      } catch (error) {
-        console.error('Error fetching packages:', error);
-        alert('Failed to get package status');
-      }
-    };
+        } catch (error) {
+          console.error('Error fetching packages:', error);
+          alert('Failed to get package status');
+        }
+      };
 
-    getStatus();
-  }, []);
+      getStatus();
+    }, []);
 
   
 
@@ -59,7 +59,7 @@ const packageStatus = () => {
 
     try{
 
-      const response = await axios.post('http://localhost:3000/user/package-info', { 
+      const response = await axios.post('https://post-backend-2f54f7162fc4.herokuapp.com/user/package-info', { 
             trackingNumber: trackingNumber
         });
       console.log(response.data);
@@ -79,6 +79,7 @@ const packageStatus = () => {
     const filtered = packages.filter((pkg) =>
         pkg.trackingNumber.toString().includes(query)
         );
+
     
     setFilterPackage(filtered);
   };
@@ -101,7 +102,7 @@ const packageStatus = () => {
     }
 
       try {
-          const response = await axios.post('http://localhost:3000/user/add-package', { 
+          const response = await axios.post('https://post-backend-2f54f7162fc4.herokuapp.com/user/add-package', { 
               trackingNumber: trackingNumber,
               role: role,
               userID: userID
@@ -158,10 +159,16 @@ const packageStatus = () => {
             </tr>
           </thead>
           <tbody>
-            {packages.map((pkg) => {
+            {(filterPackage.length > 0 ? filterPackage : packages).map((pkg) => {
                 const reformatDate = new Date(pkg.timeOfStatus).toLocaleString();
-                const currentLocation = `${pkg.currentCity}, ${pkg.currentState}`;
-                const nextLocation = `${pkg.nextCity}, ${pkg.nextState}`;
+                const currentLocation = pkg.currentCity && pkg.currentState 
+                  ? `${pkg.currentCity}, ${pkg.currentState}` 
+                  : '';
+
+                const nextLocation = pkg.nextCity && pkg.nextState 
+                  ? `${pkg.nextCity}, ${pkg.nextState}` 
+                  : '';
+                
                 return (
                   <tr key={pkg.id}>
                     <td>{pkg.trackingNumber}</td>
@@ -169,7 +176,7 @@ const packageStatus = () => {
                     <td>{reformatDate}</td>
                     <td>{currentLocation}</td>
                     <td>{nextLocation}</td>
-                    <td> {/* Gets information on content, sender and receiver addresses */}
+                    <td>
                       <button className="info-button" onClick={() => handleOpenModal(pkg.trackingNumber)}>
                         View
                       </button>

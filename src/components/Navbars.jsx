@@ -64,6 +64,7 @@ export function EmployeeNavbar(){
     <nav className="nav">
       <Link to="/employee-home" className="homePage">Employee Dashboard</Link>
       <ul>
+        <CustomLink to="/employee-home">Home</CustomLink>
         <CustomLink to="/manage-packages">Manage Packages</CustomLink>
         <CustomLink to="/manage-supplies">Manage Supplies</CustomLink>
         <CustomLink to="/incoming-packages">Incoming Packages</CustomLink>
@@ -74,13 +75,30 @@ export function EmployeeNavbar(){
           </button>
         </li>
       </ul>
-  </nav>
+    </nav>
   )
 }
 
 
 export function ManagerNavbar(){
-
+  const navigate = useNavigate();
+  return(
+    <nav className="nav">
+      <Link to="/manager-home" className="homePage">Manager Dashboard</Link>
+      <ul>
+        <CustomLink to="/manager-home">Home</CustomLink>
+        <CustomLink to="/manage-packages">Manage Packages</CustomLink>
+        <CustomLink to="/manage-supplies">Manage Supplies</CustomLink>
+        <CustomLink to="/incoming-packages">Incoming Packages</CustomLink>
+        <CustomLink to="/employee-profile">Profile</CustomLink>
+        <li>
+          <button onClick={() => handleLogout(navigate)} className="logout-button">
+            Logout
+          </button>
+        </li>
+      </ul>
+    </nav>
+  )
 }
 
 

@@ -49,7 +49,7 @@ const Profile = () => {
             }
     
           try {
-            const response = await axios.post('http://localhost:3000/user/business-info', { 
+            const response = await axios.post('https://post-backend-2f54f7162fc4.herokuapp.com/user/business-info', { 
               userID: userID
             });
             
@@ -83,7 +83,7 @@ const Profile = () => {
             return;
         }
         try {
-            const response = await axios.post('http://localhost:3000/user/business-profile-update', {
+            const response = await axios.post('https://post-backend-2f54f7162fc4.herokuapp.com/user/business-profile-update', {
                 userID: userID,
                 firstName: firstName,
                 middleInitial: middleInit,
