@@ -46,6 +46,7 @@ export function CustomerNavbar() {
               <CustomLink to="/customer-home">Home</CustomLink>
               <CustomLink to="/package-history">Package History</CustomLink>
               <CustomLink to="/package-status">Package Status</CustomLink>
+              <CustomLink to="/supplies">Supplies Store</CustomLink>
               <CustomLink to="/customer-profile">Profile</CustomLink>
               
           </ul>
