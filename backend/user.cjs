@@ -43,7 +43,7 @@ router.post('/package-status', async (req, res) => {
                 SELECT P.trackingNumber, S.state as status, S.timeOfStatus, A1.city as currentCity, A1.state as currentState, A2.city as nextCity, A2.state as nextState
                 FROM trackinginfo as T, statuses as S, package as P, office  as currOffice, office as nextOffice, addresses as A1, addresses as A2
                 WHERE (T.senderUID = @userID OR T.receiverUID = @userID) AND P.trackingNumber = T.trackingNumber
-                        AND S.SID = T.currentStatus AND (S.state <> 'Delivered' OR S.state <> 'Cancelled')
+                        AND S.SID = T.currentStatus AND (S.state <> 'Delivered' AND S.state <> 'Cancelled')
                         AND P.isDeleted = 'false' 
 						AND S.currOID = currOffice.OID AND currOffice.officeAddress = A1.addressID
 						AND S.nextOID = nextOffice.OID AND nextOffice.officeAddress = A2.addressID;
@@ -318,7 +318,7 @@ router.post('/business-profile-update', async (req, res) => {
                 WHERE UID = @userID;
             `);
 
-        const nameID = nameResult.recordset[0].name;
+        const nameID = nameResult.recordset[0].ownerName;
 
         const addressResult = await pool.request()
             .input('userID', sql.Int, userID)
@@ -328,7 +328,7 @@ router.post('/business-profile-update', async (req, res) => {
                 WHERE UID = @userID;
             `);
 
-        const addressID = addressResult.recordset[0].address;
+        const addressID = addressResult.recordset[0].warehouseAddress;
 
         await pool.request()
             .input('firstName', sql.VarChar, firstName)

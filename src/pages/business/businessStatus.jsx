@@ -33,7 +33,7 @@ const packageStatus = () => {
       }
 
       try {
-        const response = await axios.post('http://localhost:3000/user/package-status', { 
+        const response = await axios.post('https://post-backend-2f54f7162fc4.herokuapp.com/user/package-status', { 
           userID: userID
         });
         
@@ -59,7 +59,7 @@ const packageStatus = () => {
 
     try{
 
-      const response = await axios.post('http://localhost:3000/user/package-info', { 
+      const response = await axios.post('https://post-backend-2f54f7162fc4.herokuapp.com/user/package-info', { 
             trackingNumber: trackingNumber
         });
       console.log(response.data);
@@ -101,7 +101,7 @@ const packageStatus = () => {
     }
 
       try {
-          const response = await axios.post('http://localhost:3000/user/add-package', { 
+          const response = await axios.post('https://post-backend-2f54f7162fc4.herokuapp.com/user/add-package', { 
               trackingNumber: trackingNumber,
               role: role,
               userID: userID
