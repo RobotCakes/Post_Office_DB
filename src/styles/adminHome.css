@@ -1,0 +1,31 @@
+.admin-container {
+    text-align: center;
+    padding: 20px;
+    background-color: #f9f9f9;
+  }
+  
+  .admin-container h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+  
+  .admin-options {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+  }
+  
+  .admin-link {
+    text-decoration: none;
+    color: #fff;
+    background-color: #007bff;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .admin-link:hover {
+    background-color: #0056b3;
+  }
+  
