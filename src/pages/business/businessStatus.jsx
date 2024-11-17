@@ -79,6 +79,7 @@ const packageStatus = () => {
     const filtered = packages.filter((pkg) =>
         pkg.trackingNumber.toString().includes(query)
         );
+
     
     setFilterPackage(filtered);
   };
@@ -158,10 +159,11 @@ const packageStatus = () => {
             </tr>
           </thead>
           <tbody>
-            {packages.map((pkg) => {
+            {(filterPackage.length > 0 ? filterPackage : packages).map((pkg) => {
                 const reformatDate = new Date(pkg.timeOfStatus).toLocaleString();
                 const currentLocation = `${pkg.currentCity}, ${pkg.currentState}`;
                 const nextLocation = `${pkg.nextCity}, ${pkg.nextState}`;
+                
                 return (
                   <tr key={pkg.id}>
                     <td>{pkg.trackingNumber}</td>
@@ -169,7 +171,7 @@ const packageStatus = () => {
                     <td>{reformatDate}</td>
                     <td>{currentLocation}</td>
                     <td>{nextLocation}</td>
-                    <td> {/* Gets information on content, sender and receiver addresses */}
+                    <td>
                       <button className="info-button" onClick={() => handleOpenModal(pkg.trackingNumber)}>
                         View
                       </button>

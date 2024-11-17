@@ -64,3 +64,4 @@ To install Yarn, follow these steps:
 - **Start the app**: `yarn dev`
 - **Build the app for production**: `yarn build`
 - **Lint your code**: `yarn lint`
+- **Start the server**: `yarn server`
