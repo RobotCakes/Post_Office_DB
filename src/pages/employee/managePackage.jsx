@@ -39,7 +39,7 @@ const managePackage = () => {
           }
 
           try {
-            const response = await axios.post('http://localhost:3000/employee/get-at-office', { 
+            const response = await axios.post('https://post-backend-2f54f7162fc4.herokuapp.com/employee/get-at-office', { 
               userID: userID
             });
             
@@ -51,7 +51,7 @@ const managePackage = () => {
             const officeResponse = await axios.post('https://post-backend-2f54f7162fc4.herokuapp.com/data/get-offices');
             setOffices(officeResponse.data);
 
-            const infoResponse = await axios.post('http://localhost:3000/employee/get-location', { userID });
+            const infoResponse = await axios.post('https://post-backend-2f54f7162fc4.herokuapp.com/employee/get-location', { userID });
             if (infoResponse.data && infoResponse.data.length > 0) {
               setInfo(infoResponse.data[0].OID);
             } else {
@@ -123,7 +123,7 @@ const managePackage = () => {
         setSuccess("");
 
 
-        const response = await axios.post('http://localhost:3000/employee/package-edit', { 
+        const response = await axios.post('https://post-backend-2f54f7162fc4.herokuapp.com/employee/package-edit', { 
           trackingNumber: tn, userID, userRole, selectedStatus, selectedOffice, currOID: info, PID: pid
         });
     
@@ -153,7 +153,7 @@ const managePackage = () => {
 
       try{
 
-        const response = await axios.post('http://localhost:3000/employee/package-delete', { 
+        const response = await axios.post('https://post-backend-2f54f7162fc4.herokuapp.com/employee/package-delete', { 
               trackingNumber, userID, userRole, PID, currOID: info
           });
 

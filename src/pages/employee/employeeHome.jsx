@@ -21,7 +21,7 @@ const EmployeeHome = () => {
     
               try {
     
-                const infoResponse = await axios.post('http://localhost:3000/employee/get-location', { userID });
+                const infoResponse = await axios.post('https://post-backend-2f54f7162fc4.herokuapp.com/employee/get-location', { userID });
                 if (infoResponse.data && infoResponse.data.length > 0) {
                   setInfo(infoResponse.data[0].city);
                 } else {

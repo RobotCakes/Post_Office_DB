@@ -53,7 +53,7 @@ const managePackage = () => {
             const prioResponse = await axios.post('https://post-backend-2f54f7162fc4.herokuapp.com/data/get-prio');
             setDeliveryPriorities(prioResponse.data);
 
-            const infoResponse = await axios.post('http://localhost:3000/employee/get-location', { userID });
+            const infoResponse = await axios.post('https://post-backend-2f54f7162fc4.herokuapp.com/employee/get-location', { userID });
             if (infoResponse.data && infoResponse.data.length > 0) {
               setInfo(infoResponse.data[0].OID);
             } else {
@@ -88,7 +88,7 @@ const managePackage = () => {
 
         try {
             
-            const response = await axios.post('http://localhost:3000/employee/create-package', {
+            const response = await axios.post('https://post-backend-2f54f7162fc4.herokuapp.com/employee/create-package', {
                 userID, userRole, senderUID, content, firstName, middleInitial, lastName, streetAddress, city, state, zipcode, country,
                 packageHeight, packageLength, packageWidth, weight, isDelivery, deliveryPriority, isFragile, 
                 specialInstructions, deliverPrice, currOID: info

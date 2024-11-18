@@ -31,7 +31,7 @@ const IncomingPackages = () => {
         }
 
         try {
-          const response = await axios.post('http://localhost:3000/employee/get-incoming', { 
+          const response = await axios.post('https://post-backend-2f54f7162fc4.herokuapp.com/employee/get-incoming', { 
             userID: userID
           });
           
@@ -88,7 +88,7 @@ const IncomingPackages = () => {
 
     try{
 
-      const response = await axios.post('http://localhost:3000/employee/package-arrive', { 
+      const response = await axios.post('https://post-backend-2f54f7162fc4.herokuapp.com/employee/package-arrive', { 
             trackingNumber: trackingNumber,
             userID, userRole, PID
         });
