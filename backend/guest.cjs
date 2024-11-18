@@ -167,8 +167,9 @@ router.post('/track', async (req, res) => {
             .input('trackingNumber', sql.Int, trackingNumber)
             .query(`
                 SELECT A.city, A.state, S.state as status, S.timeOfStatus, T.expectedDelivery 
-                FROM trackingInfo AS T, addresses AS A, statuses as S, office as O
-                WHERE T.trackingNumber = @trackingNumber AND T.currentStatus = S.SID AND S.currOID = O.OID AND O.officeAddress = A.addressID;
+                FROM trackingInfo AS T, addresses AS A, statuses as S, office as O, package as P
+                WHERE T.trackingNumber = @trackingNumber AND T.currentStatus = S.SID AND S.currOID = O.OID AND O.officeAddress = A.addressID
+                        P.trackingNumber = @trackingNumber AND P.isDeleted = 0;
             `);
 
         if (result.recordset.length === 0) {

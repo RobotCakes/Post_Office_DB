@@ -2,7 +2,7 @@ import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icon
 import { Link, useMatch, useResolvedPath } from "react-router-dom"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import '../../styles/home.css';
-import { EmployeeNavbar } from "../../components/Navbars";
+import { AdminNavbar, EmployeeNavbar } from "../../components/Navbars";
 
 const Home = () => {
     function CustomLink({ to, children, ...props }) {
@@ -18,20 +18,7 @@ const Home = () => {
         )
     }
     return (
-        <nav className = "nav">
-            <Link to="/" className="homePage">
-                Admin Home
-            </Link>
-            <ul>
-                {/* NOT REAL PAGE, JUST PLACEHOLDER*/}
-                <CustomLink to="/admin-manage-packages">Manage Packages</CustomLink>
-                <CustomLink to="/admin-supplies">Supplies</CustomLink>
-                <CustomLink to="/admin-incoming-packages">Incoming Packages</CustomLink>
-                <CustomLink to="/admin-reports">Reports</CustomLink>
-                <CustomLink to="/admin-profile">Profile</CustomLink>
-                <CustomLink to="/logout">Logout</CustomLink>
-            </ul>
-        </nav>
+        <AdminNavbar />
     )
 }
 

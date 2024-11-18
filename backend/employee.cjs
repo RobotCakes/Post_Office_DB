@@ -35,7 +35,7 @@ router.post('/get-incoming', async (req, res) => {
                 FROM trackinginfo as T, statuses as S, package as P, employee as E
                 WHERE P.trackingNumber = T.trackingNumber
                         AND S.SID = T.currentStatus AND (S.state <> 'Delivered' AND S.state <> 'Cancelled')
-                        AND P.isDeleted = 'false' 
+                        AND P.isDeleted = 0 
 						AND E.EID = @userID AND S.nextOID = E.OID
                         AND (S.state = 'In Transit' OR S.state = 'Created at Warehouse')
                 ORDER BY P.deliveryPriority ASC;
@@ -62,7 +62,7 @@ router.post('/get-at-office', async (req, res) => {
                 FROM trackinginfo as T, statuses as S, package as P, employee as E
                 WHERE P.trackingNumber = T.trackingNumber
                         AND S.SID = T.currentStatus AND (S.state <> 'Delivered' AND S.state <> 'Cancelled')
-                        AND P.isDeleted = 'false' 
+                        AND P.isDeleted = 0
 						AND E.EID = @userID AND S.currOID = E.OID
                 ORDER BY P.deliveryPriority ASC;
             `);
@@ -242,7 +242,6 @@ router.post('/create-package', async (req, res) => {
             throw new Error(`No customer found with UID: ${userID}`);
         }
 
-        console.log('Sender Info:', senderInfo.recordset);
 
         const nameResult = await pool.request()
             .input('firstName', sql.VarChar, firstName)
@@ -353,7 +352,79 @@ router.post('/create-package', async (req, res) => {
     }
 });
 
+router.post('/employee-info', async (req, res) => { 
+    const { userID } = req.body
 
+    if(!userID){
+        return res.status(400).json({ message: 'User not logged in.' });
+    }
+
+    try {
+        
+        const result = await pool.request()
+            .input('userID', sql.Int, userID)
+            .query(` 
+                SELECT firstName, middleInitial, lastName, password, phoneNumber, email
+                FROM employee
+                JOIN names ON nameID = employeeName
+                WHERE EID = @userID;
+            `);
+        
+        res.json(result.recordset[0]);
+    } catch (error) {
+        console.error('Error fetching employee info:', error.message);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }    
+});
+
+
+router.post('/update-info', async (req, res) => { 
+    const { userID, userRole, firstName, middleInitial, lastName, streetAddress, city, state, zipcode, country, password, email, phoneNumber} = req.body
+
+    if(!userID){
+        return res.status(400).json({ message: 'User not logged in.' });
+    }
+
+    try {
+        const nameResult = await pool.request()
+            .input('userID', sql.Int, userID)
+            .query(`
+                SELECT employeeName
+                FROM employee 
+                WHERE EID = @userID;
+            `);
+
+        const nameID = nameResult.recordset[0].employeeName;
+
+        await pool.request()
+            .input('firstName', sql.VarChar, firstName)
+            .input('lastName', sql.VarChar, lastName)
+            .input('middleInitial', sql.VarChar, middleInitial)
+            .input('nameID', sql.Int, nameID)
+            .query(`
+                UPDATE names
+                SET firstName = @firstName, lastName = @lastName, middleInitial = @middleInitial
+                WHERE nameID = @nameID;
+            `);
+        
+        await pool.request()
+            .input('userID', sql.Int, userID)
+            .input('password', sql.VarChar, password)
+            .input('phoneNumber', sql.VarChar, phoneNumber)
+            .input('email', sql.VarChar, email)
+            .input('userRole', sql.VarChar, userRole)
+            .query(`
+                UPDATE employee
+                SET password = @password, phoneNumber = @phoneNumber, email = @email, userTypeModify = @userRole, lastUpdatedAt = GETDATE(), lastUpdatedBy = @userID
+                WHERE EID = @userID;
+            `);
+        
+        res.json({ success: true });
+    } catch (error) {
+        console.error('Error updating user info:', error.message);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }    
+});
 
 module.exports = router;
 // ------------ASHLEY (END)-------------------------------------------------
