@@ -124,7 +124,7 @@ const managePackage = () => {
                                   onChange={(e) => setUID(e.target.value)}
                                   maxLength={20}
                                   />
-                      <h3>Receiver</h3>
+                            <h3>Receiver</h3>
                               <div className="input-format">
                                   <label>First Name:</label>
                                   <input 

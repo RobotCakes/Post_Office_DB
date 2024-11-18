@@ -1,3 +1,4 @@
+//ASHLEY
 const express = require('express');
 const sql = require('mssql');
 const router = express.Router();
@@ -232,8 +233,54 @@ router.post('/create-package', async (req, res) => {
         return res.status(400).json({ message: 'Missing information.' });
     }
 
+        const addressID = addressResult.recordset[0].address_id;
+
+        // Getting expected delivery
+        let expectedDelivery;
+        switch (deliveryPriority) {
+            case '0': // Overnight
+                expectedDelivery = 'DATEADD(day, 1, GETDATE())';
+                break;
+            case '1': // Express
+                expectedDelivery = 'DATEADD(day, 3, GETDATE())';
+                break;
+            case '2': // Normal
+                expectedDelivery = 'DATEADD(day, 7, GETDATE())';
+                break;
+            default:
+                expectedDelivery = 'DATEADD(day, 7, GETDATE())'; // default
+                break;
+        }
+
+        const createTracking = await pool.request()
+            .input('senderName', sql.Int, senderInfo.recordset[0].name)
+            .input('senderAddress', sql.Int, senderInfo.recordset[0].address)
+            .input('userID', sql.Int, senderUID)
+            .input('receiverName', sql.Int, nameID)
+            .input('receiverAddress', sql.Int, addressID) // Always assume receiver is guest (user can add package to history with tracknum)
+            .query(`
+                INSERT INTO trackinginfo (senderName, senderAddress, receiverName, receiverAddress, receiverUID, senderUID, expectedDelivery)
+                VALUES (@senderName, @senderAddress, @receiverName, @receiverAddress, NULL, @userID, ${expectedDelivery});
+                SELECT SCOPE_IDENTITY() AS trackingNumber;
+            `);
+        
+        const trackingNumber = createTracking.recordset[0].trackingNumber;
+
+        const createPackage = await pool.request()
+            .input('content', sql.VarChar, content)
+            .input('length', sql.Float, packageLength)
+            .input('width', sql.Float, packageWidth)
+            .input('height', sql.Float, packageHeight)
+            .input('weight', sql.Float, weight)
+            .input('price', sql.Float, deliverPrice)
+            .input('isDelivery', sql.Bit, isDelivery)
+            .input('prio', sql.Int, deliveryPriority)
+            .input('inst', sql.VarChar, specialInstructions)
+            .input('isFragile', sql.Bit, isFragile)
+
     try {
         const result = await pool.request()
+
             .input('trackingNumber', sql.Int, trackingNumber)
             .input('userID', sql.Int, userID)
             .input('userRole', sql.VarChar, userRole)

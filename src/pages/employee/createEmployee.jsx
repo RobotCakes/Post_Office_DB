@@ -39,7 +39,7 @@ const createEmployee = () => {
 
         try {
             
-            const response = await axios.post('http://localhost:3000/manager/add-employee', {
+            const response = await axios.post('https://post-backend-2f54f7162fc4.herokuapp.com/manager/add-employee', {
                 userID, userRole, firstName, lastName, middleInitial,email, username, pwd
             });
 

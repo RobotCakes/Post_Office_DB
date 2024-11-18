@@ -65,7 +65,7 @@ router.post('/package-status', async (req, res) => {
                 WHERE 
                     (T.senderUID = @userID OR T.receiverUID = @userID)
                     AND (S.state <> 'Delivered' AND S.state <> 'Cancelled')
-                    AND P.isDeleted = 'false';
+                    AND P.isDeleted = 0;
             `);
         res.json(result.recordset);
     } catch (error) {

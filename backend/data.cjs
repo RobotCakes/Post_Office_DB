@@ -86,7 +86,7 @@ router.post('/business-create-package', async (req, res) => {
             .input('receiverAddress', sql.Int, addressID) // Always assume receiver is guest (user can add package to history with tracknum)
             .query(`
                 INSERT INTO trackinginfo (senderName, senderAddress, receiverName, receiverAddress, receiverUID, senderUID, expectedDelivery)
-                VALUES (@senderName, @senderAddress, @receiverName, @receiverAddress, @userID, @userID, ${expectedDelivery});
+                VALUES (@senderName, @senderAddress, @receiverName, @receiverAddress, NULL, @userID, ${expectedDelivery});
                 SELECT SCOPE_IDENTITY() AS trackingNumber;
             `);
         
