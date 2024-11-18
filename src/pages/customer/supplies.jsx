@@ -12,7 +12,7 @@ const Supplies = () => {
     const fetchSupplies = async () => {
       setLoading(true);
       try {
-        const response = await axios.get('http://localhost:3000/supplies');
+        const response = await axios.get('https://post-backend-2f54f7162fc4.herokuapp.com/supplies/supplies');
         setSupplies(response.data);
       } catch (error) {
         setError("Failed to load supplies. Please try again.");
