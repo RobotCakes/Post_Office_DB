@@ -123,6 +123,7 @@ export function BusinessNavbar(){
 }
 
 export function AdminNavbar(){
+  const navigate = useNavigate();
   return (
     <nav className = "nav">
             <Link to="/admin-home" className="homePage">Admin Dashboard</Link>
@@ -133,9 +134,10 @@ export function AdminNavbar(){
                 <CustomLink to="/admin-supplies">Supplies</CustomLink>
                 <CustomLink to="/admin-incoming-packages">Incoming Packages</CustomLink>
                 <CustomLink to="/admin-reports">Reports</CustomLink>
-                <CustomLink to="/admin-profile">Profile</CustomLink>
-                <CustomLink to="/logout">Logout</CustomLink>
             </ul>
+            <button onClick={() => handleLogout(navigate)} className="logout-button">
+                Logout
+            </button>
         </nav>
     )
 }

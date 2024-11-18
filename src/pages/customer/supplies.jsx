@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import "../../styles/supplies.css";
-import { CustomerNavbar } from "../../components/Navbars";
+import {CustomerNavbar } from "../../components/Navbars";
 
 const Supplies = () => {
   const [supplies, setSupplies] = useState([]);
@@ -77,7 +77,7 @@ const Supplies = () => {
 
   return (
     <div className="container">
-      <CustomerNavbar /> {/* Add the Navbar component here */}
+      <CustomerNavbar />
       <h1>Supplies</h1>
       {loading && <p>Loading...</p>}
       {error && <p style={{ color: "red" }}>{error}</p>}

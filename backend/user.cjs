@@ -19,7 +19,7 @@ router.post('/package-history', async (req, res) => {
                 SELECT P.trackingNumber, S.state as status, P.packageContent, S.timeOfStatus
                 FROM trackinginfo as T, statuses as S, package as P
                 WHERE (T.senderUID = @userID OR T.receiverUID = @userID) AND P.trackingNumber = T.trackingNumber
-                        AND S.SID = T.currentStatus AND (S.state = 'Delivered' OR S.state = 'Cancelled') AND P.isDeleted = 'false';
+                        AND S.SID = T.currentStatus AND (S.state = 'Delivered' OR S.state = 'Cancelled') AND P.isDeleted = 0;
             `);
         res.json(result.recordset);
     } catch (error) {
