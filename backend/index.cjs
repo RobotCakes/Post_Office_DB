@@ -31,7 +31,8 @@ const guestRouter = require('./guest.cjs');
 const userRouter = require('./user.cjs');
 const dataRouter = require('./data.cjs');
 const emRouter = require('./employee.cjs');
-const supRouter = require('./supplies.cjs')
+const supRouter = require('./supplies.cjs');
+const manaRouter = require('./manager.cjs');
 const cors = require('cors');
 const express = require('express');
 const session = require('express-session');
@@ -57,6 +58,7 @@ app.use('/user', userRouter);
 app.use('/data', dataRouter);
 app.use('/employee', emRouter);
 app.use('/supplies', supRouter);
+app.use('/manager', manaRouter);
 
 app.listen(port, () => {
     console.log('Guest Router:', guestRouter);

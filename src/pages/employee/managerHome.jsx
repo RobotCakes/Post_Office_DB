@@ -1,3 +1,4 @@
+//ASHLEY
 import { useRef, useState, useEffect } from "react";
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { Link, useMatch, useResolvedPath, useNavigate } from "react-router-dom";
@@ -5,10 +6,22 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ManagerNavbar } from "../../components/Navbars";
 import '../../styles/employeeHome.css';
 import axios from 'axios';
+import { Button, Card, Row, Col, Container } from 'react-bootstrap';
+
 const managerHome = () => {
     const userID = localStorage.getItem('userID');
     const userRole = localStorage.getItem('userRole');
     const [info, setInfo] = useState('');
+    const navigate = useNavigate();
+
+    const navigateToReports = () => {
+      navigate('/manager-reports');
+    };
+
+    const navigateToManageEmployees = () => {
+      navigate('/manage-employees');
+    };
+
 
     useEffect(() => {
     
@@ -57,10 +70,38 @@ const managerHome = () => {
             <h3>Assigned Location: {info}</h3>
             <p>Access package management, supplies, and other manager resources here.</p>
           </div>
+
+          <Container>
+            <Row className="my-4">
+              {/* Reports Card */}
+              <Col sm={4}>
+                <Card>
+                  <Card.Body>
+                    <Card.Title>Reports</Card.Title>
+                    <Button variant="primary" onClick={navigateToReports}>
+                      Go to Reports
+                    </Button>
+                  </Card.Body>
+                </Card>
+              </Col>
+
+              {/* Manage Employees Card */}
+              <Col sm={4}>
+                <Card>
+                  <Card.Body>
+                    <Card.Title>Manage Employees</Card.Title>
+                    <Button variant="secondary" onClick={navigateToManageEmployees}>
+                      Manage Employees
+                    </Button>
+                  </Card.Body>
+                </Card>
+              </Col>
+            </Row>
+          </Container>
   
-          
         </div>
           
+        
 
         
       </div>

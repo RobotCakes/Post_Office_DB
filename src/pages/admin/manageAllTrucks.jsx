@@ -4,7 +4,9 @@ import { Link, Routes, Route, useMatch, useResolvedPath } from "react-router-dom
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const manageAllTrucks = () => {
-
+    return (
+        <AdminNavbar />
+    )
 
 }
 export default manageAllTrucks;

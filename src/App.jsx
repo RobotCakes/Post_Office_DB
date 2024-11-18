@@ -45,7 +45,7 @@ import ManagerReports from "./pages/reports/managerReports";
 
 import CustomerProfile from "./pages/customer/Profile";
 import CreatePackage from './pages/employee/createPackage';
-
+import CreateEmployee from './pages/employee/createEmployee';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -83,6 +83,7 @@ function App() {
             <Route path="/manage-trucks" element={<ManageTruck />} />
             <Route path="/employee-profile" element={<EmployeeProfile />} />
             <Route path="/create-package" element={<CreatePackage/>} />
+            <Route path="/create-employee" element={<CreateEmployee />} />
 
 
             <Route path="/manage-all-locations" element={<ManageAllLocations />} />
