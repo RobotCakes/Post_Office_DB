@@ -14,8 +14,8 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { AdminNavbar } from "../../components/Navbars";
 const adminReports = () => {
-  const [queryType, setQueryType] = useState("AdminIncomeBasedOnPayment");
-  const [timeframe, setTimeframe] = useState("daily");
+  const [queryType, setQueryType] = useState();
+  const [timeframe, setTimeframe] = useState();
   const [reportData, setReportData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -29,17 +29,22 @@ const adminReports = () => {
   };
 
   const handleSubmit = async () => {
+    if (!queryType) {
+      setError("Please select table type");
+      console.error(err);
+    }
     setLoading(true);
     setError(null);
     try {
-      /* PROB WRONG FOR POST */
       const response = await axios.post(
-        "http://localhost:3001/admin/total-packages-deleted",
+        `http://localhost:3001/backend/admin-report/${queryType}`,
         {
           queryType,
           timeframe,
         }
       );
+      console.log(response);
+
       setReportData(response.data);
     } catch (err) {
       setError("Failed to fetch report data");
@@ -60,9 +65,6 @@ const adminReports = () => {
           </option>
           <option value="AdminIncomeBasedOnPackage">
             Admin Income Based On Package
-          </option>
-          <option value="AdminTotalPacketsIncomingNOutgoing">
-            Admin Total Packets Incoming & Outgoing
           </option>
           <option value="AdminTotalSuppliesSold">
             Admin Total Supplies Sold
@@ -89,7 +91,213 @@ const adminReports = () => {
           {loading ? "Loading..." : "Generate Report"}
         </button>
       </div>
+      {queryType === "AdminIncomeBasedOnPayment" && !!reportData && (
+        <>
+          <table
+            border="1"
+            style={{ borderCollapse: "collapse", width: "100%" }}
+          >
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Profession</th>
+              </tr>
+            </thead>
+            <tbody>
+              {reportData.sum?.map((item) => (
+                <tr key={item.id}>
+                  <td>{item.id}</td>
+                  <td>{item.name}</td>
+                  <td>{item.age}</td>
+                  <td>{item.profession}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
 
+          <table
+            border="1"
+            style={{ borderCollapse: "collapse", width: "100%" }}
+          >
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Profession</th>
+              </tr>
+            </thead>
+            <tbody>
+              {reportData.tuples?.map((item) => (
+                <tr key={item.id}>
+                  <td>{item.id}</td>
+                  <td>{item.name}</td>
+                  <td>{item.age}</td>
+                  <td>{item.profession}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </>
+      )}
+
+      {queryType === "AdminIncomeBasedOnPackage" && !!reportData && (
+        <>
+          <table
+            border="1"
+            style={{ borderCollapse: "collapse", width: "100%" }}
+          >
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Profession</th>
+              </tr>
+            </thead>
+            <tbody>
+              {reportData?.map((item) => (
+                <tr key={item.id}>
+                  <td>{item.id}</td>
+                  <td>{item.name}</td>
+                  <td>{item.age}</td>
+                  <td>{item.profession}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+
+          <table
+            border="1"
+            style={{ borderCollapse: "collapse", width: "100%" }}
+          >
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Profession</th>
+              </tr>
+            </thead>
+            <tbody>
+              {reportData?.map((item) => (
+                <tr key={item.id}>
+                  <td>{item.id}</td>
+                  <td>{item.name}</td>
+                  <td>{item.age}</td>
+                  <td>{item.profession}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </>
+      )}
+
+      {queryType === "AdminTotalSuppliesSold" && !!reportData && (
+        <>
+          <table
+            border="1"
+            style={{ borderCollapse: "collapse", width: "100%" }}
+          >
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Profession</th>
+              </tr>
+            </thead>
+            <tbody>
+              {reportData?.map((item) => (
+                <tr key={item.id}>
+                  <td>{item.id}</td>
+                  <td>{item.name}</td>
+                  <td>{item.age}</td>
+                  <td>{item.profession}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+
+          <table
+            border="1"
+            style={{ borderCollapse: "collapse", width: "100%" }}
+          >
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Profession</th>
+              </tr>
+            </thead>
+            <tbody>
+              {reportData?.map((item) => (
+                <tr key={item.id}>
+                  <td>{item.id}</td>
+                  <td>{item.name}</td>
+                  <td>{item.age}</td>
+                  <td>{item.profession}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </>
+      )}
+
+      {queryType === "AdminTotalPackagesDeleted" && !!reportData && (
+        <>
+          <table
+            border="1"
+            style={{ borderCollapse: "collapse", width: "100%" }}
+          >
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Profession</th>
+              </tr>
+            </thead>
+            <tbody>
+              {reportData?.map((item) => (
+                <tr key={item.id}>
+                  <td>{item.id}</td>
+                  <td>{item.name}</td>
+                  <td>{item.age}</td>
+                  <td>{item.profession}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+
+          <table
+            border="1"
+            style={{ borderCollapse: "collapse", width: "100%" }}
+          >
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Profession</th>
+              </tr>
+            </thead>
+            <tbody>
+              {reportData?.map((item) => (
+                <tr key={item.id}>
+                  <td>{item.id}</td>
+                  <td>{item.name}</td>
+                  <td>{item.age}</td>
+                  <td>{item.profession}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </>
+      )}
       {error && <div className="error">{error}</div>}
       {reportData && (
         <div className="report-results">
