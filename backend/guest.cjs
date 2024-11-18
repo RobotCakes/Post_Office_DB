@@ -168,7 +168,7 @@ router.post('/track', async (req, res) => {
             .query(`
                 SELECT A.city, A.state, S.state as status, S.timeOfStatus, T.expectedDelivery 
                 FROM trackingInfo AS T, addresses AS A, statuses as S, office as O, package as P
-                WHERE T.trackingNumber = @trackingNumber AND T.currentStatus = S.SID AND S.currOID = O.OID AND O.officeAddress = A.addressID
+                WHERE T.trackingNumber = @trackingNumber AND T.currentStatus = S.SID AND S.currOID = O.OID AND O.officeAddress = A.addressID AND
                         P.trackingNumber = @trackingNumber AND P.isDeleted = 0;
             `);
 
@@ -186,7 +186,7 @@ router.post('/track', async (req, res) => {
         });
 
     } catch (error) {
-        console.error('Error during login:', error.message);
+        console.error('Error fetching package:', error.message);
         res.status(500).json({ message: 'Internal Server Error' });
     }
 });

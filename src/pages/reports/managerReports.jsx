@@ -30,7 +30,7 @@ const managerReports = () => {
 
   const fetchReportData = async (report) => {
     try {
-      const response = await axios.post(`/api/reports/${report}`, {
+      const response = await axios.post(`https://post-backend-2f54f7162fc4.herokuapp.com/admin-reports/${report}`, {
         startDate: startDate.toISOString(),
         endDate: endDate.toISOString(),
       });
@@ -74,7 +74,7 @@ const managerReports = () => {
     try {
       /* DEF WRONG FOR POST */
       const response = await axios.post(
-        "http://localhost:3001/admin/total-packages-deleted",
+        "https://post-backend-2f54f7162fc4.herokuapp.com/admin-reports/total-packages-deleted",
         {
           queryType,
           timeframe,

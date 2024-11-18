@@ -3,7 +3,7 @@ const sql = require("mssql");
 const router = express.Router();
 const pool = require("./index.cjs");
 
-router.get("/AdminIncomeBasedOnPayment", async (req, res) => {
+router.post("/AdminIncomeBasedOnPayment", async (req, res) => {
   const { userID } = req.body;
   const { timeframe } = req.timeframe;
 
@@ -209,7 +209,7 @@ router.get("/AdminIncomeBasedOnPayment", async (req, res) => {
 });
 /*************************************************************************************/
 /*************************************************************************************/
-router.get("/AdminIncomeBasedOnPackage", async (req, res) => {
+router.post("/AdminIncomeBasedOnPackage", async (req, res) => {
   const { userID } = req.body;
   const { timeframe } = req.timeframe;
 
@@ -507,7 +507,7 @@ router.get("/AdminIncomeBasedOnPackage", async (req, res) => {
 });
 /*************************************************************************************/
 /*************************************************************************************/
-router.get("/AdminIncomeBasedOnPackage", async (req, res) => {
+router.post("/AdminIncomeBasedOnPackage", async (req, res) => {
   const { userID } = req.body;
   const { timeframe } = req.timeframe;
 
@@ -805,7 +805,7 @@ router.get("/AdminIncomeBasedOnPackage", async (req, res) => {
 });
 /*************************************************************************************/
 /*************************************************************************************/
-router.get("/AdminTotalSuppliesSold", async (req, res) => {
+router.post("/AdminTotalSuppliesSold", async (req, res) => {
   const { userID } = req.body;
   const { timeframe } = req.timeframe;
 
@@ -976,7 +976,7 @@ router.get("/AdminTotalSuppliesSold", async (req, res) => {
 });
 /*************************************************************************************/
 /*************************************************************************************/
-router.get("/AdminTotalPackagesDeleted", async (req, res) => {
+router.post("/AdminTotalPackagesDeleted", async (req, res) => {
   const { userID } = req.body;
   const { timeframe } = req.timeframe;
 
@@ -1234,3 +1234,4 @@ router.get("/AdminTotalPackagesDeleted", async (req, res) => {
 });
 /*************************************************************************************/
 /*************************************************************************************/
+module.exports = router;

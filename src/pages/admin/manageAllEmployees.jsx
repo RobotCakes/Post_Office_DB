@@ -8,9 +8,10 @@ const ManageAllEmployees = () => {
     const [employees, setEmployees] = useState([]);
     const [newEmployee, setNewEmployee] = useState({ firstName: '', lastName: '', position: '', officeID: '' });
 
+    {/* */}
     useEffect(() => {
         // Fetch all employees when the component is mounted
-        axios.get('/api/get-all-employees')
+        axios.get('https://post-backend-2f54f7162fc4.herokuapp.com/api/get-all-employees')
             .then(response => {
                 setEmployees(response.data);
             })
@@ -20,7 +21,7 @@ const ManageAllEmployees = () => {
     }, []);
 
     const handleAddEmployee = () => {
-        axios.post('/api/add-employee', newEmployee)
+        axios.post('https://post-backend-2f54f7162fc4.herokuapp.com/api/add-employee', newEmployee)
             .then(response => {
                 setEmployees([...employees, newEmployee]);
                 setNewEmployee({ firstName: '', lastName: '', position: '', officeID: '' });
@@ -31,7 +32,7 @@ const ManageAllEmployees = () => {
     };
 
     const handleRemoveEmployee = (EID) => {
-        axios.post('/api/remove-employee', { EID })
+        axios.post('https://post-backend-2f54f7162fc4.herokuapp.com/api/remove-employee', { EID })
             .then(response => {
                 setEmployees(employees.filter(employee => employee.EID !== EID));
             })
