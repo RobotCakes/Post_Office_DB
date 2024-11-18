@@ -3,7 +3,7 @@ import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icon
 import { Link, useMatch, useResolvedPath, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { AdminNavbar } from "../../components/Navbars";
-import '../../styles/adminHome.css';
+import '../../styles/home.css';
 
 
 const adminHome = () => {
