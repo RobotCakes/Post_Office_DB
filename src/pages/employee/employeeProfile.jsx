@@ -50,7 +50,7 @@ const Profile = () => {
           }
     
           try {
-            const response = await axios.post('http://localhost:3000/employee/employee-info', { 
+            const response = await axios.post('https://post-backend-2f54f7162fc4.herokuapp.com/employee/employee-info', { 
               userID: userID
             });
             
@@ -83,7 +83,7 @@ const Profile = () => {
             return;
         }
         try {
-            const response = await axios.post('http://localhost:3000/employee/update-info', {
+            const response = await axios.post('https://post-backend-2f54f7162fc4.herokuapp.com/employee/update-info', {
                 userID: userID,
                 userRole: userRole,
                 firstName: firstName,
@@ -177,7 +177,6 @@ const Profile = () => {
                                     type="text"
                                     value={phoneNumber}
                                     onChange={(e) => setPhoneNumer(e.target.value)}
-                                    required
                                     maxLength="20"
                                 />
                             </label>
