@@ -29,7 +29,7 @@ const Home = () => {
                 <CustomLink to="/admin-incoming-packages">Incoming Packages</CustomLink>
                 <CustomLink to="/admin-reports">Reports</CustomLink>
                 <CustomLink to="/admin-profile">Profile</CustomLink>
-                <CustomLink to="/logout">Login</CustomLink>
+                <CustomLink to="/logout">Logout</CustomLink>
             </ul>
         </nav>
     )
