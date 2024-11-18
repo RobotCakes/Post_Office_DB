@@ -1,39 +1,55 @@
+import { useRef, useState, useEffect } from "react";
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
-import { Link, useMatch, useResolvedPath } from "react-router-dom"
+import { Link, useMatch, useResolvedPath, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import '../../styles/home.css';
-import { EmployeeNavbar } from "../../components/Navbars";
+import { AdminNavbar } from "../../components/Navbars";
+import '../../styles/adminHome.css';
 
-const Home = () => {
-    function CustomLink({ to, children, ...props }) {
-        const resolvedPath = useResolvedPath(to)
-        const isActive = useMatch({ path: resolvedPath.pathname, end: true })
-      
-        return (
-          <li className={isActive ? "active" : ""}>
-            <Link to={to} {...props}>
-              {children}
-            </Link>
-          </li>
-        )
-    }
-    return (
-        <nav className = "nav">
-            <Link to="/" className="homePage">
-                Admin Home
-            </Link>
+
+const adminHome = () => {
+  const userID = localStorage.getItem('userID');
+  const userRole = localStorage.getItem('userRole');
+  const navigate = useNavigate(); // For navigation
+
+  useEffect(() => {
+    const getInfo = async () => {
+      if (!userID || userRole !== 'admin') {
+        alert('You must be logged in as an admin');
+        navigate('/');
+      }
+    };
+
+    getInfo();
+  }, [userID, userRole, navigate]); // Added dependencies to useEffect
+
+  return (
+    <div className="container">
+      <AdminNavbar /> 
+
+      <div className="home-content">
+        <div className="content-wrapper">
+          <h1>Welcome, Admin!</h1>
+          <h3>UID: {userID}</h3>
+          <p>Manage post office locations, oversee employee tasks, and manage package status updates!</p>
+
+          <div className="admin-services-section">
+            <h2>Admin Services</h2>
+            
+          </div>
+
+          <div className="services-section">
+            <h2>Post Office Locations</h2>
             <ul>
-                {/* NOT REAL PAGE, JUST PLACEHOLDER*/}
-                <CustomLink to="/admin-manage-packages">Manage Packages</CustomLink>
-                <CustomLink to="/admin-supplies">Supplies</CustomLink>
-                <CustomLink to="/admin-incoming-packages">Incoming Packages</CustomLink>
-                <CustomLink to="/admin-reports">Reports</CustomLink>
-                <CustomLink to="/admin-profile">Profile</CustomLink>
-                <CustomLink to="/logout">Logout</CustomLink>
+              <li>5001 N Mesa St, El Paso, TX, 79912</li>
+              <li>2001 Main St, Dallas, TX, 75201</li>
+              <li>1302 Texas Ave, Houston, TX, 77002</li>
+              <li>401 N Water St, Corpus Christi, TX, 78401</li>
             </ul>
-        </nav>
-    )
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }
 
-export default Home;
-
+export default adminHome;

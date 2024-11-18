@@ -29,3 +29,14 @@
     background-color: #0056b3;
   }
   
+  /* Assuming your navbar has a class like .admin-navbar */
+.admin-navbar {
+  position: fixed; /* Ensure the navbar stays in place */
+  top: 0; /* Adjust the distance from the top of the viewport */
+  left: 0;
+  width: 100%; /* Span the entire width */
+  z-index: 1000; /* Ensure it appears above other elements */
+  background-color: #f8f9fa; /* Optional: Set a background color for better visibility */
+  padding: 10px 20px; /* Add some padding to create space */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Add shadow for better visual distinction */
+}
