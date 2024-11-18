@@ -92,6 +92,7 @@ function App() {
             <Route path="/manage-all-supplies" element={<ManageAllSupplies />} />
             <Route path="/manage-all-trucks" element={<ManageAllTrucks />} />
             <Route path="/manage-all-employees" element={<ManageAllEmployees />} />
+            
 
             <Route path="/admin-reports" element={<AdminReports />} />
             <Route path="/manager-reports" element={<ManagerReports />} />

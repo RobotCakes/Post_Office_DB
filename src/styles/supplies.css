@@ -23,4 +23,21 @@
     border-radius: 5px;
     border: 1px solid #c3e6cb;
   }
+  .confirmation-dialog {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    border: 1px solid #ccc;
+    padding: 20px;
+    z-index: 1000;
+    text-align: center;
+  }
+  
+  .confirmation-dialog button {
+    margin: 0 10px;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
   

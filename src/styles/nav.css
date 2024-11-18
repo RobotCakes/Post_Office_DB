@@ -1,45 +1,43 @@
-
 .nav {
     background-color: #282c34;
     max-width: none;
     position: fixed;
     top: 0;
-    left:0;
+    left: 0;
     z-index: 1000;
     display: flex;
-    justify-content: space-around;
+    justify-content: flex-start; /* Align items to the left */
     align-items: center;
     padding: 5px 20px;
     height: 55px;
     width: 100vw;
+    gap: 1rem; /* Add a small gap between child elements */
 }
 
 .nav .homePage {
     font-size: 20px;
     color: #61dafb;
     text-decoration: none;
-    margin-right: 2rem; 
-    white-space: no-wrap;
-    
+    margin-right: 1rem; /* Reduce the space between homePage and the menu */
+    white-space: nowrap;
 }
 
 .nav ul {
     list-style-type: none;
     display: flex;
-    justify-content: center;
     align-items: center;
     padding: 0;
     margin: 0;
-    flex:1;
-    gap:20px;
+    gap: 20px; /* Adjust gap between menu items */
 }
 
 .nav li {
-    display: inline-flex; 
-    align-items: center;   
-    margin: 0;             
+    display: inline-flex;
+    align-items: center;
+    margin: 0;
     white-space: nowrap;
 }
+
 .nav a {
     color: white;
     text-decoration: none;
@@ -57,12 +55,12 @@
     color: black;
     font: inherit;
     cursor: pointer;
-    padding: 0.5rem 1rem; 
-    margin-left: 2rem; 
+    padding: 0.5rem 1rem;
+    margin-left: auto; /* Push logout button to the far right */
     align-self: center;
     transition: background-color 0.3s;
 }
 
 .logout-button:hover {
     background-color: gray;
-  }
+}

@@ -3,7 +3,7 @@ import { useRef, useState, useEffect } from "react";
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { Link, Routes, Route, useMatch, useResolvedPath } from "react-router-dom"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {CustomerNavbar} from "../../components/Navbars"
+import {CustomerNavbar} from "../../components/Navbars";
 import axios from 'axios';
 import "../../styles/profile.css"
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@$]).{8,20}$/;
