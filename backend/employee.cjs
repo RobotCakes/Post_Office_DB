@@ -290,11 +290,11 @@ router.post('/create-package', async (req, res) => {
         const createTracking = await pool.request()
             .input('senderName', sql.Int, senderInfo.recordset[0].name)
             .input('senderAddress', sql.Int, senderInfo.recordset[0].address)
-            .input('userID', sql.Int, userID)
+            .input('userID', sql.Int, senderUID)
             .input('receiverName', sql.Int, nameID)
             .input('receiverAddress', sql.Int, addressID) // Always assume receiver is guest (user can add package to history with tracknum)
             .query(`
-                INSERT INTO trackinginfo (senderName, senderAddress, receiverName, receiverAddress, receiverUID, senderUID, expectedDelivery)
+                INSERT INTO trackinginfo (senderName, senderAddress, receiverName, receiverAddress, senderUID, receiverUID, expectedDelivery)
                 VALUES (@senderName, @senderAddress, @receiverName, @receiverAddress, @userID, NULL, ${expectedDelivery});
                 SELECT SCOPE_IDENTITY() AS trackingNumber;
             `);
