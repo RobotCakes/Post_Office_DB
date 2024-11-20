@@ -58,12 +58,20 @@ router.post('/get-at-office', async (req, res) => {
         const result = await pool.request()
             .input('userID', sql.Int, userID)
             .query(`
-                SELECT P.trackingNumber, S.state as status, S.timeOfStatus, P.deliveryPriority, P.PID
-                FROM trackinginfo as T, statuses as S, package as P, employee as E
-                WHERE P.trackingNumber = T.trackingNumber
-                        AND S.SID = T.currentStatus AND (S.state <> 'Delivered' AND S.state <> 'Cancelled')
-                        AND P.isDeleted = 0
-						AND E.EID = @userID AND S.currOID = E.OID
+                SELECT P.trackingNumber, S.state AS status, S.timeOfStatus, 
+                    P.deliveryPriority, P.PID, A1.city AS currCity, A1.state AS currState, A2.city AS nextCity, A2.state AS nextState
+                FROM trackinginfo AS T
+                JOIN statuses AS S ON S.SID = T.currentStatus AND (S.state <> 'Delivered' AND S.state <> 'Cancelled')
+                JOIN package AS P ON P.trackingNumber = T.trackingNumber AND P.isDeleted = 0
+                JOIN employee AS E ON E.EID = @userID AND S.currOID = E.OID
+                LEFT JOIN 
+                    office AS currOffice ON S.currOID = currOffice.OID
+                LEFT JOIN 
+                    office AS nextOffice ON S.nextOID = nextOffice.OID
+                LEFT JOIN 
+                    addresses AS A1 ON currOffice.officeAddress = A1.addressID
+                LEFT JOIN 
+                    addresses AS A2 ON nextOffice.officeAddress = A2.addressID
                 ORDER BY P.deliveryPriority ASC;
             `);
         res.json(result.recordset);
@@ -239,8 +247,33 @@ router.post('/create-package', async (req, res) => {
             .query('SELECT name, address FROM customer WHERE UID = @userID');
 
         if (!senderInfo.recordset.length) {
-            throw new Error(`No customer found with UID: ${userID}`);
+            throw new Error(`No customer found with UID: ${senderUID}`);
         }
+
+        const senderNameResult = await pool.request()
+            .input('senderNameID', sql.Int, senderInfo.recordset[0].name)
+            .query(`
+                INSERT INTO names (firstName, middleInitial, lastName)
+                SELECT firstName, middleInitial, lastName
+                FROM names
+                WHERE nameID = @senderNameID;
+                SELECT SCOPE_IDENTITY() AS name_id;
+            `);
+
+        const senderNameID = senderNameResult.recordset[0].name_id; 
+
+        
+        const senderAddressResult = await pool.request()
+            .input('senderAddressID', sql.Int, senderInfo.recordset[0].address)
+            .query(`
+                INSERT INTO addresses (streetAddress, city, state, zipcode, country)
+                SELECT streetAddress, city, state, zipcode, country
+                FROM addresses
+                WHERE addressID = @senderAddressID;
+                SELECT SCOPE_IDENTITY() AS address_id;
+            `);
+
+        const senderAddressID = senderAddressResult.recordset[0].address_id;
 
 
         const nameResult = await pool.request()
@@ -288,8 +321,8 @@ router.post('/create-package', async (req, res) => {
         }
 
         const createTracking = await pool.request()
-            .input('senderName', sql.Int, senderInfo.recordset[0].name)
-            .input('senderAddress', sql.Int, senderInfo.recordset[0].address)
+            .input('senderName', sql.Int, senderNameID)
+            .input('senderAddress', sql.Int, senderAddressID)
             .input('userID', sql.Int, senderUID)
             .input('receiverName', sql.Int, nameID)
             .input('receiverAddress', sql.Int, addressID) // Always assume receiver is guest (user can add package to history with tracknum)

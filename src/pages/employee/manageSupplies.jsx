@@ -8,6 +8,11 @@ import "../../styles/manageSupplies.css";
 const manageSupplies = () => {
     const userID = localStorage.getItem('userID');
     const userRole = localStorage.getItem('userRole');
+    const [supplies, setSupplies] = useState([
+      { id: 1, name: "Tape", quantity: 5, status: "Low" },
+      { id: 2, name: "Boxes", quantity: 20, status: "In Stock" },
+      { id: 3, name: "Envelopes", quantity: 50, status: "In Stock" },
+    ]);
 
     useEffect(() => {
     
@@ -22,11 +27,7 @@ const manageSupplies = () => {
     }, []);
     
     // Supplies data state
-    const [supplies, setSupplies] = useState([
-      { id: 1, name: "Tape", quantity: 5, status: "Low" },
-      { id: 2, name: "Boxes", quantity: 20, status: "In Stock" },
-      { id: 3, name: "Envelopes", quantity: 50, status: "In Stock" },
-    ]);
+    
   
     const [searchQuery, setSearchQuery] = useState("");
   
@@ -92,10 +93,6 @@ const manageSupplies = () => {
           </table>
         </div>
   
-        {/* Footer */}
-        <footer className="footer">
-          <p>&copy; 2024 United Mail Services - Manage Supplies. All rights reserved.</p>
-        </footer>
       </div>
     );
   };

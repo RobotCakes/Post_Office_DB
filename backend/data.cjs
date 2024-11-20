@@ -34,6 +34,31 @@ router.post('/business-create-package', async (req, res) => {
             .input('userID', sql.Int, userID)
             .query('SELECT ownerName, warehouseAddress FROM business WHERE UID = @userID');
 
+        const senderNameResult = await pool.request()
+            .input('senderNameID', sql.Int, businessInfo.recordset[0].ownerName)
+            .query(`
+                INSERT INTO names (firstName, middleInitial, lastName)
+                SELECT firstName, middleInitial, lastName
+                FROM names
+                WHERE nameID = @senderNameID;
+                SELECT SCOPE_IDENTITY() AS name_id;
+            `);
+
+        const senderNameID = senderNameResult.recordset[0].name_id; 
+
+        
+        const senderAddressResult = await pool.request()
+            .input('senderAddressID', sql.Int, senderInfo.recordset[0].warehouseAddress)
+            .query(`
+                INSERT INTO addresses (streetAddress, city, state, zipcode, country)
+                SELECT streetAddress, city, state, zipcode, country
+                FROM addresses
+                WHERE addressID = @senderAddressID;
+                SELECT SCOPE_IDENTITY() AS address_id;
+            `);
+
+        const senderAddressID = senderAddressResult.recordset[0].address_id;
+
         const nameResult = await pool.request()
             .input('firstName', sql.VarChar, firstName)
             .input('middleInitial', sql.VarChar, middleInitial)
@@ -79,8 +104,8 @@ router.post('/business-create-package', async (req, res) => {
         }
 
         const createTracking = await pool.request()
-            .input('senderName', sql.Int, businessInfo.recordset[0].ownerName)
-            .input('senderAddress', sql.Int, businessInfo.recordset[0].warehouseAddress)
+            .input('senderName', sql.Int, senderNameID)
+            .input('senderAddress', sql.Int, senderAddressID)
             .input('userID', sql.Int, userID)
             .input('receiverName', sql.Int, nameID)
             .input('receiverAddress', sql.Int, addressID) // Always assume receiver is guest (user can add package to history with tracknum)

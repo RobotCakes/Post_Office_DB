@@ -20,7 +20,7 @@ router.post('/get-employees', async (req, res) => {
             .input('userID', sql.Int, userID)
             .input('managerOID', sql.TinyInt, managerOID)
             .query(`
-                SELECT firstName, middleInitial, lastName, EID, email, isDeleted
+                SELECT firstName, middleInitial, lastName, EID, email, isDeleted, username, password
                 FROM employee 
                 JOIN names ON nameID = employeeName
                 WHERE OID = @managerOID`);
@@ -54,9 +54,27 @@ router.post('/delete-employees', async (req, res) => {
 });
 
 router.post('/add-employee', async (req, res) => {
-    const { userID, userRole, firstName, lastName, middleInitial, email, username, pwd } =  req.body;
+    const { userID, userRole, firstName, lastName, middleInitial, email, username, pwd, isManager, OID } =  req.body;
     try {
         console.log(req.body);
+
+        const dupe = await pool.request()
+            .input('username', sql.VarChar, username)
+            .query(`
+                SELECT AID AS ID FROM admin WHERE username = @username
+                UNION
+                SELECT EID AS ID FROM employee WHERE username = @username AND isDeleted = 0
+                UNION
+                SELECT UID AS ID FROM customer WHERE username = @username
+                UNION
+                SELECT UID AS ID FROM business WHERE username = @username
+            `);
+        
+        if (dupe.recordset.length > 0) {
+            console.log('Username exists elsewhere.');
+            return res.status(400).json({ success: false, message: 'Username already exists.' });
+        }
+        
 
         const nameResult = await pool.request()
             .input('firstName', sql.VarChar, firstName)
@@ -70,14 +88,6 @@ router.post('/add-employee', async (req, res) => {
 
         const nameID = nameResult.recordset[0].name_id;
 
-        const manager = await pool.request().input('userID', sql.Int, userID)
-            .query(`
-                SELECT OID
-                FROM employee 
-                WHERE EID = @userID;`);
-        
-        const managerOID = manager.recordset[0].OID;
-
         const result = await pool.request()
             .input('nameID', sql.Int, nameID)
             .input('userID', sql.Int, userID)
@@ -85,10 +95,11 @@ router.post('/add-employee', async (req, res) => {
             .input('email', sql.VarChar, email)
             .input('username', sql.VarChar, username)
             .input('pwd', sql.VarChar, pwd)
-            .input('managerOID', sql.TinyInt, managerOID)
+            .input('managerOID', sql.TinyInt, OID)
+            .input('isManager', sql.Bit, isManager)
             .query(`
                 INSERT INTO employee (employeeName, username, password, isManager, email, employeeStartDate, employeeCreatedOn, employeeCreatedBy, userTypeCreate, OID) 
-                VALUES (@nameID, @username, @pwd, 0, @email, GETDATE(), GETDATE(), @userID, @userRole, @managerOID); 
+                VALUES (@nameID, @username, @pwd, @isManager, @email, GETDATE(), GETDATE(), @userID, @userRole, @managerOID); 
                 SELECT SCOPE_IDENTITY() AS name_id;
             `);
 
@@ -99,5 +110,6 @@ router.post('/add-employee', async (req, res) => {
         res.status(500).json({ error: 'Failed to fetch employees info' });
     }
 });
+
 
 module.exports = router;

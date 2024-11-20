@@ -87,7 +87,7 @@ const managePackage = () => {
 
         try {
             
-            const response = await axios.post('https://post-backend-2f54f7162fc4.herokuapp.com/employee/create-package', {
+            const response = await axios.post('http://localhost:3000/employee/create-package', {
                 userID, userRole, senderUID, content, firstName, middleInitial, lastName, streetAddress, city, state, zipcode, country,
                 packageHeight, packageLength, packageWidth, weight, isDelivery, deliveryPriority, isFragile, 
                 specialInstructions, deliverPrice, currOID: info
@@ -200,6 +200,7 @@ const managePackage = () => {
                                       pattern="\d{5}"
                                   />
                               </div>
+                              <br />
                               <div>
                                   <label>Country:</label>
                                   <input 

@@ -15,9 +15,9 @@ router.post('/login', async (req, res) => {
             .query(`
                 SELECT AID AS ID, 'admin' AS role FROM admin WHERE username = @username AND password = @password
                 UNION
-                SELECT EID AS ID, 'employee' AS role FROM employee WHERE username = @username AND password = @password AND isManager = 0
+                SELECT EID AS ID, 'employee' AS role FROM employee WHERE username = @username AND password = @password AND isManager = 0 AND isDeleted = 0
                 UNION
-                SELECT EID AS ID, 'manager' AS role FROM employee WHERE username = @username AND password = @password AND isManager = 1
+                SELECT EID AS ID, 'manager' AS role FROM employee WHERE username = @username AND password = @password AND isManager = 1 AND isDeleted = 0
                 UNION
                 SELECT UID AS ID, 'customer' AS role FROM customer WHERE username = @username AND password = @password
                 UNION

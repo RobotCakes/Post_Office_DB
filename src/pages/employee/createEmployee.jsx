@@ -21,26 +21,42 @@ const createEmployee = () => {
     const [pwd, setpwd] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
+    const [isManager, setIsManager] = useState(false); // Added to make porting to admin easier
+    const [OID, setOID] = useState('');
 
     useEffect(() => {
         
         const getStatus = async () => {
-          if (!userID || (userRole != 'employee' && userRole != 'manager')) {
-            alert('User not logged in');
-            navigate('/');
-          }
+            if (!userID || (userRole != 'employee' && userRole != 'manager')) {
+                alert('User not logged in');
+                navigate('/');
+            }
+
+            try {
+                const infoResponse = await axios.post('https://post-backend-2f54f7162fc4.herokuapp.com/employee/get-location', { userID });
+                if (infoResponse.data && infoResponse.data.length > 0) {
+                    setOID(infoResponse.data[0].OID);
+                } else {
+                    console.log('No location assigned');
+                }
+
+            } catch (error) {
+                console.error('Error fetching information:', error);
+                alert('Failed to get information');
+            }
         };
 
         getStatus();
       }, []);
+
 
       const handleEmployee = async (e) => {
         e.preventDefault();
 
         try {
             
-            const response = await axios.post('https://post-backend-2f54f7162fc4.herokuapp.com/manager/add-employee', {
-                userID, userRole, firstName, lastName, middleInitial,email, username, pwd
+            const response = await axios.post('http://localhost:3000/manager/add-employee', {
+                userID, userRole, firstName, lastName, middleInitial,email, username, pwd, isManager, OID
             });
 
             if (response.data.success) {
