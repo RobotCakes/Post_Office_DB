@@ -41,8 +41,8 @@ const managerHome = () => {
                 }
     
               } catch (error) {
-                console.error('Error getting employee info:', error);
-                alert('Failed to get employee information.');
+                console.error('Error getting manager info:', error);
+                alert('Failed to get manager information.');
               }
     
             };

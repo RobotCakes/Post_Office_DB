@@ -86,7 +86,6 @@ export function ManagerNavbar(){
     <nav className="nav">
       <Link to="/manager-home" className="homePage">Manager Dashboard</Link>
       <ul>
-        <CustomLink to="/manager-home">Home</CustomLink>
         <CustomLink to="/manage-packages">Manage Packages</CustomLink>
         <CustomLink to="/manage-supplies">Manage Supplies</CustomLink>
         <CustomLink to="/incoming-packages">Incoming Packages</CustomLink>
@@ -128,12 +127,9 @@ export function AdminNavbar(){
     <nav className = "nav">
             <Link to="/admin-home" className="homePage">Admin Dashboard</Link>
       <ul>
-                <CustomLink to="/manage-all-employees">Manage Employees</CustomLink>
-                <CustomLink to="/admin-manage-offices">Manage Offices</CustomLink>
-                <CustomLink to="/manage-all-employees">Manage Packages</CustomLink>
+                <CustomLink to="/manage-all-packages">Manage Packages</CustomLink>
                 <CustomLink to="/admin-supplies">Supplies</CustomLink>
                 <CustomLink to="/admin-incoming-packages">Incoming Packages</CustomLink>
-                <CustomLink to="/admin-reports">Reports</CustomLink>
             </ul>
             <button onClick={() => handleLogout(navigate)} className="logout-button">
                 Logout
