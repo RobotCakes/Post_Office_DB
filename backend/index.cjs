@@ -32,6 +32,7 @@ const dataRouter = require("./data.cjs");
 const emRouter = require("./employee.cjs");
 const supRouter = require("./supplies.cjs");
 const manaRouter = require("./manager.cjs");
+const admRouter = require("./admin.cjs");
 const adminReportRouter = require("./admin-report.cjs");
 const managerReportRouter = require("./manager-report.cjs");
 const cors = require("cors");
@@ -62,6 +63,7 @@ app.use("/data", dataRouter);
 app.use("/employee", emRouter);
 app.use("/supplies", supRouter);
 app.use("/manager", manaRouter);
+app.use("/admin", admRouter);
 app.use("/admin-report", adminReportRouter);
 app.use("/manager-report", managerReportRouter);
 
