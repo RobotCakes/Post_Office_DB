@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import "../../styles/supplies.css";
-import {CustomerNavbar } from "../../components/Navbars";
+import { CustomerNavbar } from "../../components/Navbars";
+import { useNavigate } from "react-router-dom";
 
 const Supplies = () => {
   const [supplies, setSupplies] = useState([]);
@@ -10,25 +11,46 @@ const Supplies = () => {
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [showConfirm, setShowConfirm] = useState(false);
+  const [oid, setOid] = useState(""); // New state for OID filtering
+  const [availableOids, setAvailableOids] = useState([]); // Optional: Predefined OIDs
+  const navigate = useNavigate();
+
+  // Fetch OIDs (Optional, if you want to dynamically fetch available OIDs)
+  useEffect(() => {
+    const fetchOids = async () => {
+      try {
+        const response = await axios.get(
+          "https://post-backend-2f54f7162fc4.herokuapp.com/supplies/oids"
+        );
+        console.log("Fetched OIDs:", response.data); // Debugging log
+        setAvailableOids(response.data);
+      } catch (error) {
+        console.error("Error fetching OIDs:", error);
+      }
+    };
+  
+    fetchOids();
+  }, []);  
 
   useEffect(() => {
     const fetchSupplies = async () => {
-      setLoading(true);
-      try {
-        const response = await axios.get(
-          "https://post-backend-2f54f7162fc4.herokuapp.com/supplies/supplies"
-        );
-        setSupplies(response.data);
-      } catch (error) {
-        setError("Failed to load supplies. Please try again.");
-        console.error("Error fetching supplies:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  setLoading(true);
+  try {
+    const url = oid
+      ? `https://post-backend-2f54f7162fc4.herokuapp.com/supplies/supplies?oid=${oid}`
+      : "https://post-backend-2f54f7162fc4.herokuapp.com/supplies/supplies";
+    console.log("Fetching supplies with URL:", url); // Debug log
+    const response = await axios.get(url);
+    setSupplies(response.data);
+  } catch (error) {
+    console.error("Error fetching supplies:", error);
+  } finally {
+    setLoading(false);
+  }
+};
 
     fetchSupplies();
-  }, []);
+  }, [oid]); // Refetch supplies when OID changes
 
   const addToCart = (supply) => {
     const existingItem = cart.find((item) => item.supplyID === supply.supplyID);
@@ -56,23 +78,8 @@ const Supplies = () => {
     );
   };
 
-  const handlePurchase = async () => {
-    setShowConfirm(false);
-    try {
-      const response = await axios.post(
-        "https://post-backend-2f54f7162fc4.herokuapp.com/purchase",
-        { cart }
-      );
-      if (response.data.success) {
-        setSuccessMessage("Purchase completed successfully!");
-        setCart([]);
-      } else {
-        setError("Failed to complete purchase. Please try again.");
-      }
-    } catch (error) {
-      setError("Error processing purchase. Please try again.");
-      console.error("Purchase error:", error);
-    }
+  const handlePurchase = () => {
+    navigate("/payment", { state: { from: "/supplies" } }); // Pass the current page as state
   };
 
   return (
@@ -81,6 +88,8 @@ const Supplies = () => {
       <h1>Supplies</h1>
       {loading && <p>Loading...</p>}
       {error && <p style={{ color: "red" }}>{error}</p>}
+
+      
 
       <table className="supplies-table">
         <thead>
@@ -100,10 +109,7 @@ const Supplies = () => {
               <td>
                 <button
                   onClick={() => addToCart(supply)}
-                  disabled={
-                    cart.some((item) => item.supplyID === supply.supplyID) ||
-                    supply.quantity <= 0
-                  }
+                  disabled={supply.quantity <= 0}
                 >
                   Add to Cart
                 </button>
@@ -151,21 +157,10 @@ const Supplies = () => {
           {/* Display Total Amount */}
           <h3>Total Amount: ${calculateTotal().toFixed(2)}</h3>
 
-          {/* Confirm Purchase Modal */}
-          {showConfirm ? (
-            <div className="confirm-purchase">
-              <p>Are you sure you want to complete the purchase?</p>
-              <button onClick={handlePurchase}>Yes</button>
-              <button onClick={() => setShowConfirm(false)}>No</button>
-            </div>
-          ) : (
-            <button
-              className="purchase-button"
-              onClick={() => setShowConfirm(true)}
-            >
-              Complete Purchase
-            </button>
-          )}
+          {/* Confirm Purchase */}
+          <button className="purchase-button" onClick={handlePurchase}>
+            Complete Purchase
+          </button>
         </>
       )}
     </div>

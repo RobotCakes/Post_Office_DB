@@ -35,6 +35,7 @@ const manaRouter = require("./manager.cjs");
 const admRouter = require("./admin.cjs");
 const adminReportRouter = require("./admin-report.cjs");
 const managerReportRouter = require("./manager-report.cjs");
+const payRouter = require("./payment.cjs");
 const cors = require("cors");
 const express = require("express");
 const session = require("express-session");
@@ -66,6 +67,7 @@ app.use("/manager", manaRouter);
 app.use("/admin", admRouter);
 app.use("/admin-report", adminReportRouter);
 app.use("/manager-report", managerReportRouter);
+app.use("/payment", payRouter);
 
 app.listen(port, () => {
   console.log("Guest Router:", guestRouter);
