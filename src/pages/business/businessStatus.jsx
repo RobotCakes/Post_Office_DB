@@ -33,7 +33,7 @@ const packageStatus = () => {
         }
 
         try {
-          const response = await axios.post('http://localhost:3000/user/package-status', { 
+          const response = await axios.post('https://post-backend-2f54f7162fc4.herokuapp.com/user/package-status', { 
             userID: userID
           });
           
