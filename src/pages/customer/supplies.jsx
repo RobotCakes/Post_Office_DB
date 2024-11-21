@@ -19,8 +19,10 @@ const Supplies = () => {
   useEffect(() => {
     const fetchOids = async () => {
       try {
-        const response = ('https://post-backend-2f54f7162fc4.herokuapp.com/data/get-offices');
-        
+        const response = await axios.get(
+          "https://post-backend-2f54f7162fc4.herokuapp.com/supplies/oids"
+        );
+        console.log("Fetched OIDs:", response.data); // Debugging log
         setAvailableOids(response.data);
       } catch (error) {
         console.error("Error fetching OIDs:", error);
@@ -35,8 +37,8 @@ const Supplies = () => {
   setLoading(true);
   try {
     const url = oid
-      ? `http://localhost:3000/supplies/supplies?oid=${oid}`
-      : "http://localhost:3000/supplies/supplies";
+      ? `https://post-backend-2f54f7162fc4.herokuapp.com/supplies/supplies?oid=${oid}`
+      : "https://post-backend-2f54f7162fc4.herokuapp.com/supplies/supplies";
     console.log("Fetching supplies with URL:", url); // Debug log
     const response = await axios.get(url);
     setSupplies(response.data);
