@@ -3,35 +3,39 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ManagerNavbar } from "../../components/Navbars";
 import "../../styles/managePackage.css";
+import ReactModal from "react-modal";
 import axios from 'axios';
 
 const ManageEmployee = () => {
-  const userID = localStorage.getItem('userID');
-  const userRole = localStorage.getItem('userRole');
-  const [employeeList, setEmployeeList] = useState([]);
-  const [filterEmployee, setFilterEmployee] = useState([]);
-  const [searchEmployee, setSearchEmployee] = useState("");
-  const [success, setSuccess] = useState('');
-  const [error, setError] = useState('');
-  const navigate = useNavigate();
+    const userID = localStorage.getItem('userID');
+    const userRole = localStorage.getItem('userRole');
+    const [employeeList, setEmployeeList] = useState([]);
+    const [filterEmployee, setFilterEmployee] = useState([]);
+    const [searchEmployee, setSearchEmployee] = useState("");
+    const [success, setSuccess] = useState('');
+    const [error, setError] = useState('');
+    const [modalOpen, setModalOpen] = useState(false);
+    const [selectedEmployee, setSelectedEmployee] = useState(null);
+    const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+    const navigate = useNavigate();
 
-  useEffect(() => {
-    // Ensure manager is logged in
-    if (!userID || userRole !== 'manager') {
-      alert('User not logged in');
-      navigate('/');
-      return;
-    }
-
-    // Fetch employee data
-    const fetchEmployees = async () => {
-        try {
-            const response = await axios.post('https://post-backend-2f54f7162fc4.herokuapp.com/manager/get-employees', { userID });
-            setEmployeeList(response.data);
-        } catch (error) {
-            console.error('Error fetching employees:', error);
-            setError('Failed to fetch employee data');
+    useEffect(() => {
+        // Ensure manager is logged in
+        if (!userID || userRole !== 'manager') {
+        alert('User not logged in');
+        navigate('/');
+        return;
         }
+
+        // Fetch employee data
+        const fetchEmployees = async () => {
+            try {
+                const response = await axios.post('https://post-backend-2f54f7162fc4.herokuapp.com/manager/get-employees', { userID });
+                setEmployeeList(response.data);
+            } catch (error) {
+                console.error('Error fetching employees:', error);
+                setError('Failed to fetch employee data');
+            }
         };
 
         fetchEmployees();
@@ -50,7 +54,7 @@ const ManageEmployee = () => {
     };
 
     const handleDeleteEmployee = async (employeeID) => {
-        const confirmDelete = window.confirm("Are you sure you want to delete this employee?");
+        const confirmDelete = window.confirm("Are you sure you want to delete or reactivate this employee?");
 
         if (!confirmDelete) {
             return; 
@@ -67,6 +71,20 @@ const ManageEmployee = () => {
             setError('Failed to delete employee');
             console.log(error);
         }
+    };
+
+    const openModal = (emp) => {
+        setSelectedEmployee(emp);
+        setModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setSelectedEmployee(null);
+        setModalOpen(false);
+    };
+
+    const togglePasswordVisibility = () => {
+        setIsPasswordVisible((prev) => !prev);
     };
 
     return (
@@ -93,13 +111,14 @@ const ManageEmployee = () => {
                 {success && <p className="success-message">{success}</p>}
                 {error && <p className="error-message">{error}</p>}
 
-                {/* Employees Table */}
+
                 <table className="packages-table">
                 <thead>
                     <tr>
                         <th>Employee ID</th>
                         <th>Name</th>
                         <th>Email</th>
+                        <th>Login</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -109,6 +128,13 @@ const ManageEmployee = () => {
                         <td>{emp.EID}</td>
                         <td>{emp.firstName} {emp.middleInitial} {emp.lastName}</td>
                         <td>{emp.email}</td>
+                        <td>
+                            <button
+                                    className="info-button"
+                                    onClick={() => openModal(emp)}
+                                >
+                                    View
+                            </button></td>
                         <td>
                             <button
                                 className="info-button"
@@ -122,6 +148,28 @@ const ManageEmployee = () => {
                     </tbody>
                 </table>
             </div>
+            <ReactModal
+                isOpen={modalOpen}
+                onRequestClose={closeModal}
+                contentLabel="Employee Info"
+                className="custom-modal"
+                overlayClassName="custom-overlay"
+            >
+                <h2>Employee Details</h2>
+                {selectedEmployee && (
+                    <div>
+                        <p><strong>Username:</strong> {selectedEmployee.username}</p>
+                        <p>
+                            <strong>Password:</strong> 
+                            {isPasswordVisible ? selectedEmployee.password : '********'}
+                        </p>
+                        <button onClick={togglePasswordVisibility}>
+                            {isPasswordVisible ? 'Hide Password' : 'Show Password'}
+                        </button>
+                    </div>
+                )}
+                <button onClick={closeModal}>Close</button>
+            </ReactModal>
         </div>
     );
 };

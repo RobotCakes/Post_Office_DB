@@ -204,6 +204,7 @@ const managePackage = () => {
                 <th>Status</th>
                 <th>Time of Status</th>
                 <th>Priority</th>
+                <th>Next Location</th>
                 <th>Information</th>
                 <th>Actions</th>
               </tr>
@@ -211,6 +212,9 @@ const managePackage = () => {
             <tbody>
               {(filterPackage.length > 0 ? filterPackage : packages).map((pkg) => {
                   const reformatDate = new Date(pkg.timeOfStatus).toLocaleString();
+                  const nextLocation = pkg.nextCity && pkg.nextState 
+                  ? `${pkg.nextCity}, ${pkg.nextState}` 
+                  : '';
                   
                   return (
                     <tr key={pkg.id}>
@@ -219,6 +223,7 @@ const managePackage = () => {
                       <td>{pkg.status}</td>
                       <td>{reformatDate}</td>
                       <td>{pkg.deliveryPriority}</td>
+                      <td>{nextLocation}</td>
                       <td>
                         <button className="info-button" onClick={() => handleOpenModal(pkg.trackingNumber, pkg.PID)}>
                           View

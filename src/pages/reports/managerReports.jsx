@@ -10,6 +10,7 @@ import {
   Route,
   useMatch,
   useResolvedPath,
+  useNavigate
 } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
@@ -17,16 +18,27 @@ import { Tab, Tabs, Table, Form } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { ManagerNavbar } from "../../components/Navbars";
+import "../../styles/managePackage.css";
 
 const managerReports = () => {
-  const userID = localStorage.getItem("userID");
-  const userRole = localStorage.getItem("userRole");
+  const userID = localStorage.getItem('userID');
+  const userRole = localStorage.getItem('userRole');
   const [incomeData, setIncomeData] = useState([]);
   const [statusData, setStatusData] = useState([]);
   const [packageData, setPackageData] = useState([]);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [activeTab, setActiveTab] = useState("income");
+  const [timeframe, setTimeframe] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [reportData, setReportData] = useState('');
+  const navigate = useNavigate();
+  const [queryType, setQueryType] = useState('');
+
+  const handleQueryChange = (event) => {
+    setQueryType(event.target.value);
+  };
 
   const fetchReportData = async (report) => {
     try {
@@ -74,7 +86,7 @@ const managerReports = () => {
     try {
       /* DEF WRONG FOR POST */
       const response = await axios.post(
-        "https://post-backend-2f54f7162fc4.herokuapp.com/admin-reports/total-packages-deleted",
+        `https://post-backend-2f54f7162fc4.herokuapp.com/admin-reports/total-packages-deleted`,
         {
           queryType,
           timeframe,
