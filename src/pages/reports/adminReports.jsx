@@ -66,9 +66,6 @@ const adminReports = () => {
           <option value="AdminIncomeBasedOnPackage">
             Admin Income Based On Package
           </option>
-          <option value="AdminTotalSuppliesSold">
-            Admin Total Supplies Sold
-          </option>
           <option value="AdminTotalPackagesDeleted">
             Admin Total Packages Deleted
           </option>
@@ -99,19 +96,15 @@ const adminReports = () => {
           >
             <thead>
               <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Age</th>
-                <th>Profession</th>
+                <th>Office ID</th>
+                <th>Total Income</th>
               </tr>
             </thead>
             <tbody>
-              {reportData.sum?.map((item) => (
+              {reportData.tuples?.map((item) => (
                 <tr key={item.id}>
-                  <td>{item.id}</td>
-                  <td>{item.name}</td>
-                  <td>{item.age}</td>
-                  <td>{item.profession}</td>
+                  <td>{item.OID}</td>
+                  <td>{item.TotalIncome}</td>
                 </tr>
               ))}
             </tbody>
@@ -123,19 +116,26 @@ const adminReports = () => {
           >
             <thead>
               <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Age</th>
+                <th>Payment ID</th>
+                <th>Package ID</th>
+                <th>Amount</th>
+                <th>Content</th>
+                <th>Office Name</th>
                 <th>Profession</th>
+                <th>Time of Status</th>
+                <th>Current Office</th>
               </tr>
             </thead>
             <tbody>
-              {reportData.tuples?.map((item) => (
+              {reportData.sum?.map((item) => (
                 <tr key={item.id}>
-                  <td>{item.id}</td>
-                  <td>{item.name}</td>
-                  <td>{item.age}</td>
-                  <td>{item.profession}</td>
+                  <td>{item.paymentID}</td>
+                  <td>{item.packageID}</td>
+                  <td>{item.amount}</td>
+                  <td>{item.content}</td>
+                  <td>{item.OfficeName}</td>
+                  <td>{item.timeOfStatus}</td>
+                  <td>{item.currOID}</td>
                 </tr>
               ))}
             </tbody>
@@ -151,19 +151,15 @@ const adminReports = () => {
           >
             <thead>
               <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Age</th>
-                <th>Profession</th>
+                <th>Office Name</th>
+                <th>Total Delivery Income</th>
               </tr>
             </thead>
             <tbody>
               {reportData?.map((item) => (
                 <tr key={item.id}>
-                  <td>{item.id}</td>
                   <td>{item.name}</td>
-                  <td>{item.age}</td>
-                  <td>{item.profession}</td>
+                  <td>{item.totalDeliveryPrice}</td>
                 </tr>
               ))}
             </tbody>
@@ -175,71 +171,20 @@ const adminReports = () => {
           >
             <thead>
               <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Age</th>
-                <th>Profession</th>
+                <th>Package ID</th>
+                <th>Tracking Number</th>
+                <th>Delivery Price</th>
+                <th>Office Name</th>
+                <th>Updated By</th>
               </tr>
             </thead>
             <tbody>
               {reportData?.map((item) => (
                 <tr key={item.id}>
-                  <td>{item.id}</td>
+                  <td>{item.PID}</td>
+                  <td>{item.trackingNumber}</td>
+                  <td>{item.deliverPrice}</td>
                   <td>{item.name}</td>
-                  <td>{item.age}</td>
-                  <td>{item.profession}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </>
-      )}
-
-      {queryType === "AdminTotalSuppliesSold" && !!reportData && (
-        <>
-          <table
-            border="1"
-            style={{ borderCollapse: "collapse", width: "100%" }}
-          >
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Age</th>
-                <th>Profession</th>
-              </tr>
-            </thead>
-            <tbody>
-              {reportData?.map((item) => (
-                <tr key={item.id}>
-                  <td>{item.id}</td>
-                  <td>{item.name}</td>
-                  <td>{item.age}</td>
-                  <td>{item.profession}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-
-          <table
-            border="1"
-            style={{ borderCollapse: "collapse", width: "100%" }}
-          >
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Age</th>
-                <th>Profession</th>
-              </tr>
-            </thead>
-            <tbody>
-              {reportData?.map((item) => (
-                <tr key={item.id}>
-                  <td>{item.id}</td>
-                  <td>{item.name}</td>
-                  <td>{item.age}</td>
-                  <td>{item.profession}</td>
                 </tr>
               ))}
             </tbody>
@@ -255,19 +200,15 @@ const adminReports = () => {
           >
             <thead>
               <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Age</th>
-                <th>Profession</th>
+                <th>Total Packages Deleted</th>
+                <th>Employee ID</th>
               </tr>
             </thead>
             <tbody>
               {reportData?.map((item) => (
                 <tr key={item.id}>
-                  <td>{item.id}</td>
-                  <td>{item.name}</td>
-                  <td>{item.age}</td>
-                  <td>{item.profession}</td>
+                  <td>{item.Total_Packages_Deleted}</td>
+                  <td>{item.EmployeeNumber}</td>
                 </tr>
               ))}
             </tbody>
@@ -279,19 +220,21 @@ const adminReports = () => {
           >
             <thead>
               <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Age</th>
-                <th>Profession</th>
+                <th>Package ID</th>
+                <th>Tracking Number</th>
+                <th>Employee ID</th>
+                <th>Time of Deletion</th>
+                <th>Deleted at Office ID</th>
               </tr>
             </thead>
             <tbody>
               {reportData?.map((item) => (
                 <tr key={item.id}>
-                  <td>{item.id}</td>
-                  <td>{item.name}</td>
-                  <td>{item.age}</td>
-                  <td>{item.profession}</td>
+                  <td>{item.PID}</td>
+                  <td>{item.trackingNumber}</td>
+                  <td>{item.updatedBy}</td>
+                  <td>{item.timeOfStatus}</td>
+                  <td>{item.currOID}</td>
                 </tr>
               ))}
             </tbody>
