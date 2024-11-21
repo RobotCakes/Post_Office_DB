@@ -39,7 +39,7 @@ const managePackage = () => {
           }
 
           try {
-            const response = await axios.post('http://localhost:3000/employee/get-at-office', { 
+            const response = await axios.post('https://post-backend-2f54f7162fc4.herokuapp.com/employee/get-at-office', { 
               userID: userID
             });
             
@@ -123,7 +123,7 @@ const managePackage = () => {
         setSuccess("");
 
 
-        const response = await axios.post('http://localhost:3000/employee/package-edit', { 
+        const response = await axios.post('https://post-backend-2f54f7162fc4.herokuapp.com/employee/package-edit', { 
           trackingNumber: tn, userID, userRole, selectedStatus, selectedOffice, currOID: info, PID: pid
         });
     
