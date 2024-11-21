@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import "../../styles/supplies.css";
-import { CustomerNavbar } from "../../components/Navbars";
+import { BusinessNavbar, CustomerNavbar } from "../../components/Navbars";
 import { useNavigate } from "react-router-dom";
 
 const Supplies = () => {
@@ -84,7 +84,8 @@ const Supplies = () => {
 
   return (
     <div className="container">
-      <CustomerNavbar />
+      {userRole === 'customer' && <CustomerNavbar />}
+      {userRole === 'business' && <BusinessNavbar />}
       <h1>Supplies</h1>
       {loading && <p>Loading...</p>}
       {error && <p style={{ color: "red" }}>{error}</p>}
