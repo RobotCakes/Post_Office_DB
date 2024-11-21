@@ -15,6 +15,7 @@ import CustomerHome from "./pages/customer/customerHome";
 import PackageHistory from "./pages/customer/packageHistory";
 import PackageStatus from "./pages/customer/packageStatus";
 import Supplies from "./pages/customer/supplies";
+import Payment from "./pages/customer/payment";
 
 import BusinessHome from "./pages/business/businessHome";
 import BusinessHistory from "./pages/business/businessHistory";
@@ -66,6 +67,7 @@ function App() {
             <Route path="/package-status" element={<PackageStatus />} />
             <Route path="/customer-profile" element={<CustomerProfile />} />
             <Route path="/supplies" element={<Supplies />} />
+            <Route path="/payment" element={<Payment />} />
 
             <Route path ="/business-home" element={<BusinessHome />} />
             <Route path ="/business-create-package" element={<BusinessPackage />} />
