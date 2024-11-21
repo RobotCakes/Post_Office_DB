@@ -30,7 +30,7 @@ const ManageEmployee = () => {
         // Fetch employee data
         const fetchEmployees = async () => {
             try {
-                const response = await axios.post('http://localhost:3000/manager/get-employees', { userID });
+                const response = await axios.post('https://post-backend-2f54f7162fc4.herokuapp.com/manager/get-employees', { userID });
                 setEmployeeList(response.data);
             } catch (error) {
                 console.error('Error fetching employees:', error);

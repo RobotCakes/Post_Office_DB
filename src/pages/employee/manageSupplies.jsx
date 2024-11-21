@@ -43,7 +43,7 @@ const manageSupplies = () => {
             setInfo('No location assigned');
           }
 
-          const suppliesResponse = await axios.post('http://localhost:3000/manager/get-supplies')
+          const suppliesResponse = await axios.post('https://post-backend-2f54f7162fc4.herokuapp.com/manager/get-supplies')
           setSupplies(suppliesResponse.data);
 
         } catch (error) {
@@ -78,7 +78,7 @@ const manageSupplies = () => {
   
   
       try {
-        const response = await axios.post('http://localhost:3000/manager/add-supplies', newSupply);
+        const response = await axios.post('https://post-backend-2f54f7162fc4.herokuapp.com/manager/add-supplies', newSupply);
         setSuccess('Supply added successfully.');
         setShowModal(false);
       } catch (err) {
@@ -101,7 +101,7 @@ const manageSupplies = () => {
       const updatedQuantity = quantity + 50;
 
       try{
-        const response = await axios.post('http://localhost:3000/manager/restock-supplies', {updatedQuantity, userID, id});
+        const response = await axios.post('https://post-backend-2f54f7162fc4.herokuapp.com/manager/restock-supplies', {updatedQuantity, userID, id});
 
         setSuccess('Supply restocked successfully!');
 
@@ -124,7 +124,7 @@ const manageSupplies = () => {
       setLoading(true);
 
       try{
-        const response = await axios.post('http://localhost:3000/manager/delete-supplies', { id, userID });
+        const response = await axios.post('https://post-backend-2f54f7162fc4.herokuapp.com/manager/delete-supplies', { id, userID });
 
         setSuccess('Supply updated.');
 
