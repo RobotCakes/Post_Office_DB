@@ -61,7 +61,7 @@ router.post('/get-at-office', async (req, res) => {
                 SELECT P.trackingNumber, S.state AS status, S.timeOfStatus, 
                     P.deliveryPriority, P.PID, A1.city AS currCity, A1.state AS currState, A2.city AS nextCity, A2.state AS nextState
                 FROM trackinginfo AS T
-                JOIN statuses AS S ON S.SID = T.currentStatus AND (S.state <> 'Delivered' AND S.state <> 'Cancelled')
+                JOIN statuses AS S ON S.SID = T.currentStatus AND S.state <> 'Cancelled'
                 JOIN package AS P ON P.trackingNumber = T.trackingNumber AND P.isDeleted = 0
                 JOIN employee AS E ON E.EID = @userID AND S.currOID = E.OID
                 LEFT JOIN 
@@ -72,7 +72,11 @@ router.post('/get-at-office', async (req, res) => {
                     addresses AS A1 ON currOffice.officeAddress = A1.addressID
                 LEFT JOIN 
                     addresses AS A2 ON nextOffice.officeAddress = A2.addressID
-                ORDER BY P.deliveryPriority ASC;
+                ORDER BY  
+                    CASE 
+                        WHEN P.deliveryPriority IS NULL THEN 10 
+                        ELSE P.deliveryPriority                              
+                    END ASC;
             `);
         res.json(result.recordset);
     } catch (error) {
@@ -174,6 +178,17 @@ router.post('/package-edit', async (req, res) => {
                 SET currentStatus = @SID
                 WHERE trackingNumber = @trackingNumber;
             `);
+
+        if(selectedStatus === 'Delivered'){
+            await pool.request()
+            .input('trackingNumber', sql.Int, trackingNumber)
+            .input('SID', sql.Int, SID)
+            .query(`
+                UPDATE package
+                SET deliveryPriority = NULL
+                WHERE trackingNumber = @trackingNumber;
+            `);
+        }
 
         res.json({ success: true });
     } catch (error) {
