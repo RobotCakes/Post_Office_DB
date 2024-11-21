@@ -48,7 +48,7 @@ router.post('/business-create-package', async (req, res) => {
 
         
         const senderAddressResult = await pool.request()
-            .input('senderAddressID', sql.Int, senderInfo.recordset[0].warehouseAddress)
+            .input('senderAddressID', sql.Int, businessInfo.recordset[0].warehouseAddress)
             .query(`
                 INSERT INTO addresses (streetAddress, city, state, zipcode, country)
                 SELECT streetAddress, city, state, zipcode, country
